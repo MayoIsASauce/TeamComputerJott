@@ -7,6 +7,7 @@ package provided;
  **/
 
 import java.util.ArrayList;
+import java.util.stream.Collector.Characteristics;
 import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,8 +27,59 @@ public class JottTokenizer
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filename)))
         {
-          int c = reader.read();
+          
+            String line = "";
+            int line_num = 0;
+
+            while ((line = reader.readLine()) != null) {
+                line_num++;
+
+                boolean EOL = false;
+                for (int i=0; i < line.length()-1; i++) {
+                    int c = line.charAt(i);
+                    
+                    if (i+1 >= line.length()-1) EOL = true; // check if we have the last character in the line
+
+                    //#region DFA_LOGIC
+
+                    // =
+                    if (c == '=') {
+                        if (!EOL && line.charAt(i+1) == '=') {
+                            tokens.add(new Token("==", filename, line_num, TokenType.REL_OP));
+                        } else {
+                            tokens.add(new Token("=", filename, line_num, TokenType.ASSIGN));
+                        }
+                        continue;
+                    }
+
+                    // <>
+                    if (c == '<' || c == '>') {
+                        if (!EOL && line.charAt(i+1) == '=') {
+                            tokens.add(new Token(c + "=", filename, line_num, TokenType.REL_OP));
+                        } else {
+                            tokens.add(new Token(Character.toString(c), filename, line_num, TokenType.REL_OP));
+                        }
+                        continue;
+                    }
+
+                    // /+-*
+                    if (c == '/' || c == '+' || c == '-' || c == '*') {
+                        tokens.add(new Token(Character.toString(c), filename, line_num, TokenType.MATH_OP));
+                        continue;
+                    }
+
+                    // ;
+                    if (c == ';') {
+                        tokens.add(new Token(Character.toString(c), filename, line_num, TokenType.SEMICOLON));
+                        continue;
+                    }
+
+                    
+                    //#endregion
+                }
+            }
         }
+
         catch (IOException e)
         {
             e.printStackTrace();
