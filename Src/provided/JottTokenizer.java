@@ -27,56 +27,52 @@ public class JottTokenizer
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filename)))
         {
-          
-            String line = "";
+            int curr_chr = 0;
+            int next_chr = reader.read();
+
             int line_num = 0;
 
-            while ((line = reader.readLine()) != null) {
-                line_num++;
+            while (next_chr != -1) {
+                curr_chr = next_chr;
+                next_chr = reader.read();
 
-                boolean EOL = false;
-                for (int i=0; i < line.length()-1; i++) {
-                    int c = line.charAt(i);
-                    
-                    if (i+1 >= line.length()-1) EOL = true; // check if we have the last character in the line
+                if (curr_chr == '\n') line_num++;
 
-                    //#region DFA_LOGIC
+                //#region DFA_LOGIC
 
-                    // =
-                    if (c == '=') {
-                        if (!EOL && line.charAt(i+1) == '=') {
-                            tokens.add(new Token("==", filename, line_num, TokenType.REL_OP));
-                        } else {
-                            tokens.add(new Token("=", filename, line_num, TokenType.ASSIGN));
-                        }
-                        continue;
+                // =
+                if (curr_chr == '=') {
+                    if (next_chr == '=') { // ==
+                        next_chr = reader.read(); // consume next_chr
+                        tokens.add(new Token("==", filename, line_num, TokenType.REL_OP));
+                    } else {
+                        tokens.add(new Token("=", filename, line_num, TokenType.ASSIGN));
                     }
-
-                    // <>
-                    if (c == '<' || c == '>') {
-                        if (!EOL && line.charAt(i+1) == '=') {
-                            tokens.add(new Token(c + "=", filename, line_num, TokenType.REL_OP));
-                        } else {
-                            tokens.add(new Token(Character.toString(c), filename, line_num, TokenType.REL_OP));
-                        }
-                        continue;
-                    }
-
-                    // /+-*
-                    if (c == '/' || c == '+' || c == '-' || c == '*') {
-                        tokens.add(new Token(Character.toString(c), filename, line_num, TokenType.MATH_OP));
-                        continue;
-                    }
-
-                    // ;
-                    if (c == ';') {
-                        tokens.add(new Token(Character.toString(c), filename, line_num, TokenType.SEMICOLON));
-                        continue;
-                    }
-
-                    
-                    //#endregion
+                    continue;
                 }
+
+                // <>
+                if (curr_chr == '<' || curr_chr == '>') {
+                    if (next_chr == '=') { // <= or >=
+                        next_chr = reader.read(); // consume next_chr
+                        tokens.add(new Token(curr_chr + "=", filename, line_num, TokenType.REL_OP));
+                    } else {
+                        tokens.add(new Token(Character.toString(curr_chr), filename, line_num, TokenType.REL_OP));
+                    }
+                    continue;
+                }
+
+                // /+-*
+                if (curr_chr == '/' || curr_chr == '+' || curr_chr == '-' || curr_chr == '*') {
+                    tokens.add(new Token(Character.toString(curr_chr), filename, line_num, TokenType.MATH_OP));
+                }
+
+                // ;
+                if (curr_chr == ';') {
+                    tokens.add(new Token(Character.toString(curr_chr), filename, line_num, TokenType.SEMICOLON));
+                }
+
+                //#endregion
             }
         }
 
