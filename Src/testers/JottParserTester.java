@@ -1,8 +1,6 @@
 package testers;
 import provided.*;
 
-import provided.*;
-
 /*
   Jott parser tester. This will test the parsing phase of the Jott
   project.

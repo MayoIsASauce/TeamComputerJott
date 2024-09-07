@@ -30,7 +30,7 @@ public class JottTokenizer
             int curr_chr = 0;
             int next_chr = reader.read();
 
-            int line_num = 0;
+            int line_num = 1;
 
             while (next_chr != -1) {
                 curr_chr = next_chr;
@@ -39,6 +39,60 @@ public class JottTokenizer
                 if (curr_chr == '\n') line_num++;
 
                 //#region DFA_LOGIC
+
+                // Whitespace
+                if (Character.isWhitespace(curr_chr))
+                {
+                    continue;
+                }
+
+                // Comments
+                if (curr_chr == '#')
+                {
+                    while (curr_chr != '\n' && next_chr != -1)
+                    {
+                        curr_chr = next_chr;
+                        next_chr = reader.read();
+                    }
+
+                    continue;
+                }
+
+                // id, keyword
+                if (Character.isAlphabetic(curr_chr))
+                {
+                    String tokenStr = Character.toString(curr_chr);
+                    
+                    curr_chr = next_chr;
+                    next_chr = reader.read();
+
+                    // Keep adding to token while letter or digit
+                    while (Character.isAlphabetic(curr_chr) || Character.isDigit(curr_chr))
+                    {
+                        tokenStr += Character.toString(curr_chr);
+
+                        if (next_chr == -1)
+                        {
+                            break;
+                        }
+
+                        curr_chr = next_chr;
+                        next_chr = reader.read();
+                    }
+
+                    tokens.add(new Token(tokenStr, filename, line_num, TokenType.ID_KEYWORD));
+
+                    if (curr_chr == '\n') line_num++;
+
+                    continue;
+                }
+
+                // :
+                if (curr_chr == ':')
+                {
+                    tokens.add(new Token(Character.toString(curr_chr), filename, line_num, TokenType.COLON));
+                }
+
 
                 // =
                 if (curr_chr == '=') {
@@ -81,6 +135,6 @@ public class JottTokenizer
             e.printStackTrace();
         }
 
-        return null;
+        return tokens;
     }
 }
