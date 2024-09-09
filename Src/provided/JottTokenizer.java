@@ -58,6 +58,44 @@ public class JottTokenizer
                     continue;
                 }
 
+                // numbers
+                if (Character.isDigit(curr_chr) || curr_chr == '.')
+                {
+                    String token = "";
+                    // only one decimal allowed!
+                    boolean is_floating = curr_chr == '.';
+
+                    // pipe chars into token until nondigit or second decimal
+                    while (true)
+                    {
+                        token += Character.toString(curr_chr);
+                        // move to the next character and analyze it
+                        curr_chr = next_chr;
+                        next_chr = reader.read();
+
+                        // break on invalid state- may be bad number or end of number, we dont care here
+                        boolean is_decimal = curr_chr == '.';
+                        // report if floating for next loop iteration or error handling
+                        if (is_decimal)
+                            is_floating = true;
+                        if ((is_decimal && is_floating) || (!is_decimal && !Character.isDigit(curr_chr)))
+                            break;
+                    }
+
+                    // token loop exit- a non-digit character was met, handle potential err
+                    if (token.length() == 0 && is_floating)
+                    {
+                        String err_msg = "[Invalid number token \"" + token + "\" on line " + line_num + "] ";
+                        // TODO: custom parse exception?
+                        throw new ArithmeticException(err_msg + "contains only decimal and no digits.");
+                    }
+
+                    tokens.add(new Token(token, filename, line_num, TokenType.NUMBER));
+                    // have to do this because a character is read at the beginning of the loop always
+                    if (curr_chr == '\n') line_num++;
+                    continue;
+                }
+
                 // id, keyword
                 if (Character.isAlphabetic(curr_chr))
                 {
