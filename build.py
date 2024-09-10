@@ -16,8 +16,8 @@ format: phase# OR p# OR #""")
 from os import system
 
 
-testers: list[str] = []
-prefix: list[str] = []
+testers = []
+prefix = []
 
 if argv[1] in ['phase1', 'p1', '1']: 
     prefix.append("cd Src")
