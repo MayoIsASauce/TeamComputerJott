@@ -1,6 +1,6 @@
-## How to Run the Program
+## How to Run the Project
 
-To run the program `build.py`, use the following command:
+To run the project, use the following command:
 python3 build.py <project_phase>
 
 ### Usage:
