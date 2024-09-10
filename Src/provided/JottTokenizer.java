@@ -147,7 +147,7 @@ public class JottTokenizer
                 if (curr_chr == '<' || curr_chr == '>') {
                     if (next_chr == '=') { // <= or >=
                         next_chr = reader.read(); // consume next_chr
-                        tokens.add(new Token(curr_chr + "=", filename, line_num, TokenType.REL_OP));
+                        tokens.add(new Token(Character.toString(curr_chr) + "=", filename, line_num, TokenType.REL_OP));
                     } else {
                         tokens.add(new Token(Character.toString(curr_chr), filename, line_num, TokenType.REL_OP));
                     }
