@@ -3,9 +3,9 @@ import re
 
 size_test = len(argv) < 2
 
-long_regex = re.search("phase[0-9]{1}", argv[1]) == None
-mid_regex = re.search("p[0-9]{1}", argv[1]) == None
-small_regex = re.search("[0-9]{1}", argv[1]) == None
+long_regex = re.search(r'^phase[0-9]$', argv[1]) == None
+mid_regex = re.search(r'^p[0-9]$', argv[1]) == None
+small_regex = not argv[1].isdigit()
 regex_test = long_regex and mid_regex and small_regex
 
 if size_test or regex_test:
