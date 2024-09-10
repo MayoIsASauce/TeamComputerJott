@@ -46,6 +46,36 @@ public class JottTokenizer
                     continue;
                 }
 
+                // ,
+                if (curr_chr == ',')
+                {
+                    tokens.add(new Token(Character.toString(curr_chr), filename, line_num, TokenType.COMMA));
+                }
+
+                // ]
+                if (curr_chr == ']')
+                {
+                    tokens.add(new Token(Character.toString(curr_chr), filename, line_num, TokenType.R_BRACKET));
+                }
+
+                // [
+                if (curr_chr == '[')
+                {
+                    tokens.add(new Token(Character.toString(curr_chr), filename, line_num, TokenType.L_BRACKET));
+                }
+
+                // }
+                if (curr_chr == '}')
+                {
+                    tokens.add(new Token(Character.toString(curr_chr), filename, line_num, TokenType.R_BRACE));
+                }
+
+                // {
+                if (curr_chr == '{')
+                {
+                    tokens.add(new Token(Character.toString(curr_chr), filename, line_num, TokenType.L_BRACE));
+                }
+
                 // Comments
                 if (curr_chr == '#')
                 {
