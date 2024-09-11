@@ -50,30 +50,35 @@ public class JottTokenizer
                 if (curr_chr == ',')
                 {
                     tokens.add(new Token(Character.toString(curr_chr), filename, line_num, TokenType.COMMA));
+                    continue;
                 }
 
                 // ]
                 if (curr_chr == ']')
                 {
                     tokens.add(new Token(Character.toString(curr_chr), filename, line_num, TokenType.R_BRACKET));
+                    continue;
                 }
 
                 // [
                 if (curr_chr == '[')
                 {
                     tokens.add(new Token(Character.toString(curr_chr), filename, line_num, TokenType.L_BRACKET));
+                    continue;
                 }
 
                 // }
                 if (curr_chr == '}')
                 {
                     tokens.add(new Token(Character.toString(curr_chr), filename, line_num, TokenType.R_BRACE));
+                    continue;
                 }
 
                 // {
                 if (curr_chr == '{')
                 {
                     tokens.add(new Token(Character.toString(curr_chr), filename, line_num, TokenType.L_BRACE));
+                    continue;
                 }
 
                 // Comments
@@ -159,6 +164,7 @@ public class JottTokenizer
                 if (curr_chr == ':')
                 {
                     tokens.add(new Token(Character.toString(curr_chr), filename, line_num, TokenType.COLON));
+                    continue;
                 }
 
 
@@ -187,11 +193,13 @@ public class JottTokenizer
                 // /+-*
                 if (curr_chr == '/' || curr_chr == '+' || curr_chr == '-' || curr_chr == '*') {
                     tokens.add(new Token(Character.toString(curr_chr), filename, line_num, TokenType.MATH_OP));
+                    continue;
                 }
 
                 // ;
                 if (curr_chr == ';') {
                     tokens.add(new Token(Character.toString(curr_chr), filename, line_num, TokenType.SEMICOLON));
+                    continue;
                 }
 
                 //#endregion
