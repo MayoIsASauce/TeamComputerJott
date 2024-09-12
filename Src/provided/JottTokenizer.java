@@ -204,6 +204,18 @@ public class JottTokenizer
                     continue;
                 }
 
+                // !
+                if (curr_chr == '!') {
+                    if (next_chr == '=') { // !=
+                        next_chr = reader.read(); // consume next_chr
+                        tokens.add(new Token("!=", filename, line_num, TokenType.REL_OP));
+                    } else {
+                        throw new RuntimeException("Cannot use `!` without a following `=`");
+                    }
+                    continue;
+                }
+
+
                 //#endregion
             }
         }
