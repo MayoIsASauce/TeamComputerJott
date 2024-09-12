@@ -111,10 +111,12 @@ public class JottTokenizer
                         // break on invalid state- may be bad number or end of number, we dont care here
                         boolean is_decimal = curr_chr == '.';
                         // report if floating for next loop iteration or error handling
-                        if (is_decimal)
-                            is_floating = true;
+                        
                         if ((is_decimal && is_floating) || (!is_decimal && !Character.isDigit(curr_chr)))
                             break;
+                        
+                        if (is_decimal)
+                            is_floating = true;
                     }
 
                     // token loop exit- a non-digit character was met, handle potential err
