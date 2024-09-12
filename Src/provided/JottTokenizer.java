@@ -121,15 +121,15 @@ public class JottTokenizer
                     }
 
                     // token loop exit- a non-digit character was met, handle potential err
-                    String err_msg = "[Invalid number token \"" + token + "\" on line " + line_num + "] ";
+                    String err_msg = "Invalid number token \"" + token + "\" on line " + line_num + ". ";
                     if (token.length() == 0 && is_floating)
                     {
                         // TODO: custom parse exception?
-                        throw new SyntaxException(err_msg + "contains only decimal and no digits.");
+                        throw new SyntaxException(err_msg + "Contains only decimal and no digits.");
                     }
-                    else if (token == ".")
+                    else if (token.equals("."))
                     {
-                        throw new SyntaxException(err_msg + "incomplete floating point number token.");
+                        throw new SyntaxException(err_msg + "Incomplete floating point number token.");
                     }
 
                     tokens.add(new Token(token, filename, line_num, TokenType.NUMBER));
@@ -212,10 +212,10 @@ public class JottTokenizer
                 //#endregion
             }
         }
-
-        catch (IOException e)
+        catch (IOException | SyntaxException e)
         {
             e.printStackTrace();
+            return null;
         }
 
         return tokens;
