@@ -11,6 +11,7 @@ import java.util.stream.Collector.Characteristics;
 import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.IOException;
+import computer.SyntaxException;
 
 public class JottTokenizer
 {
@@ -120,11 +121,15 @@ public class JottTokenizer
                     }
 
                     // token loop exit- a non-digit character was met, handle potential err
+                    String err_msg = "[Invalid number token \"" + token + "\" on line " + line_num + "] ";
                     if (token.length() == 0 && is_floating)
                     {
-                        String err_msg = "[Invalid number token \"" + token + "\" on line " + line_num + "] ";
                         // TODO: custom parse exception?
-                        throw new ArithmeticException(err_msg + "contains only decimal and no digits.");
+                        throw new SyntaxException(err_msg + "contains only decimal and no digits.");
+                    }
+                    else if (token == ".")
+                    {
+                        throw new SyntaxException(err_msg + "incomplete floating point number token.");
                     }
 
                     tokens.add(new Token(token, filename, line_num, TokenType.NUMBER));
