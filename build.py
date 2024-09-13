@@ -10,19 +10,17 @@ def __test_improper() -> bool:
     
     * Returns True if the args are improper else False
     """
-    # test if we have all the args
-    under_sized = len(argv) < 2
 
-    # test if the args are properly formatted
-    tests: bool = under_sized
-    if not under_sized:
+    # did we receive an arg?
+    if not len(argv) < 2:
+        # test if the args are properly formatted
         not_full = re.search(r'^phase[0-9]$', argv[1]) == None 
         not_mini = not argv[1].isdigit()
         not_small = re.search(r'^p[0-9]$', argv[1]) == None
 
-        tests = tests or (not_full and not_small and not_mini)
+        return not_full and not_small and not_mini
 
-    return tests
+    return True
 
 if __test_improper():
     __usage()
