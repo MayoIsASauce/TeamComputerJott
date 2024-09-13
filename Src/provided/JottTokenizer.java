@@ -11,6 +11,7 @@ import java.util.stream.Collector.Characteristics;
 import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.IOException;
+import computer.SyntaxException;
 
 public class JottTokenizer
 {
@@ -120,11 +121,15 @@ public class JottTokenizer
                     }
 
                     // token loop exit- a non-digit character was met, handle potential err
+                    String err_msg = "Invalid number token \"" + token + "\" on line " + line_num + ". ";
                     if (token.length() == 0 && is_floating)
                     {
-                        String err_msg = "[Invalid number token \"" + token + "\" on line " + line_num + "] ";
                         // TODO: custom parse exception?
-                        throw new ArithmeticException(err_msg + "contains only decimal and no digits.");
+                        throw new SyntaxException(err_msg + "Contains only decimal and no digits.");
+                    }
+                    else if (token.equals("."))
+                    {
+                        throw new SyntaxException(err_msg + "Incomplete floating point number token.");
                     }
 
                     tokens.add(new Token(token, filename, line_num, TokenType.NUMBER));
@@ -210,7 +215,7 @@ public class JottTokenizer
                         next_chr = reader.read(); // consume next_chr
                         tokens.add(new Token("!=", filename, line_num, TokenType.REL_OP));
                     } else {
-                        throw new RuntimeException("Cannot use `!` without a following `=`");
+                        throw new SyntaxException("Cannot use `!` without a following `=`");
                     }
                     continue;
                 }
@@ -219,10 +224,10 @@ public class JottTokenizer
                 //#endregion
             }
         }
-
-        catch (IOException e)
+        catch (IOException | SyntaxException e)
         {
             e.printStackTrace();
+            return null;
         }
 
         return tokens;
