@@ -1,4 +1,4 @@
-package parseTreeNodes;
+package computer.parsernodes;
 
 import provided.JottTree;
 

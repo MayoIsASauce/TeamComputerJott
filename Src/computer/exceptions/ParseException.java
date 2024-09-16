@@ -1,4 +1,4 @@
-package computer;
+package computer.exceptions;
 
 public class ParseException extends Exception
 {
