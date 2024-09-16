@@ -93,6 +93,8 @@ public class JottTokenizer
                         next_chr = reader.read();
                     }
 
+                    line_num++;
+
                     continue;
                 }
 
@@ -108,8 +110,12 @@ public class JottTokenizer
                     {
                         token += Character.toString(curr_chr);
                         // move to the next character and analyze it
-                        curr_chr = next_chr;
-                        next_chr = reader.read();
+                        if (Character.isDigit(next_chr) || next_chr == '.'){
+                            curr_chr = next_chr;
+                            next_chr = reader.read();
+                        } else {
+                            break;
+                        }
 
                         // break on invalid state- may be bad number or end of number, we dont care here
                         boolean is_decimal = curr_chr == '.';
@@ -143,13 +149,10 @@ public class JottTokenizer
                 // id, keyword
                 if (Character.isAlphabetic(curr_chr))
                 {
-                    String tokenStr = Character.toString(curr_chr);
-                    
-                    curr_chr = next_chr;
-                    next_chr = reader.read();
+                    String tokenStr = "";
 
                     // Keep adding to token while letter or digit
-                    while (Character.isAlphabetic(curr_chr) || Character.isDigit(curr_chr))
+                    do
                     {
                         tokenStr += Character.toString(curr_chr);
 
@@ -158,9 +161,14 @@ public class JottTokenizer
                             break;
                         }
 
-                        curr_chr = next_chr;
-                        next_chr = reader.read();
+                        if (Character.isAlphabetic(next_chr) || Character.isDigit(next_chr)) {
+                            curr_chr = next_chr;
+                            next_chr = reader.read();
+                        } else {
+                            break;
+                        }
                     }
+                    while (Character.isAlphabetic(curr_chr) || Character.isDigit(curr_chr));
 
                     tokens.add(new Token(tokenStr, filename, line_num, TokenType.ID_KEYWORD));
 
@@ -168,11 +176,47 @@ public class JottTokenizer
 
                     continue;
                 }
+                
+                // "
+                if (curr_chr == '\"') {
+                    String tokenStr = Character.toString(curr_chr);
+                    
+                    curr_chr = next_chr;
+                    next_chr = reader.read();
+
+                    while (curr_chr != '\"')
+                    {
+                        tokenStr += Character.toString(curr_chr);
+
+                        if (curr_chr == -1)
+                        {
+                            throw new SyntaxException("Syntax Exception\nEOF detected before string closing at "+filename+":"+line_num+".");
+                        }
+                        else if (curr_chr == '\n'){
+                            throw new SyntaxException("Syntax Exception\nString is missing closing \" at "+filename+":"+line_num+".");
+                        }
+                        else if (!Character.isAlphabetic(curr_chr) & !Character.isDigit(curr_chr) & curr_chr != ' ') {
+                            throw new SyntaxException("Syntax Exception\nInvalid token `"+Character.toString(curr_chr)+"` at "+filename+":"+line_num+".");
+                        }
+
+                        curr_chr = next_chr;
+                        next_chr = reader.read();
+                    }
+                    tokenStr += '\"';
+
+                    tokens.add(new Token(tokenStr, filename, line_num, TokenType.STRING));
+                    continue;
+                }
 
                 // :
                 if (curr_chr == ':')
                 {
-                    tokens.add(new Token(Character.toString(curr_chr), filename, line_num, TokenType.COLON));
+                    if (next_chr == ':') {
+                        next_chr = reader.read();
+                        tokens.add(new Token("::", filename, line_num, TokenType.FC_HEADER));
+                    } else {
+                        tokens.add(new Token(Character.toString(curr_chr), filename, line_num, TokenType.COLON));
+                    }
                     continue;
                 }
 
