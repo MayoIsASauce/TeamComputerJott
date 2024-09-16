@@ -8,10 +8,12 @@ package provided;
 
 import java.util.ArrayList;
 import java.util.stream.Collector.Characteristics;
+
+import computer.exceptions.SyntaxException;
+
 import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.IOException;
-import computer.SyntaxException;
 
 public class JottTokenizer
 {

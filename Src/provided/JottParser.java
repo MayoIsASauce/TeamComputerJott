@@ -9,8 +9,8 @@ package provided;
 
 import java.util.ArrayList;
 
-import computer.ParseException;
-import parseTreeNodes.*;
+import computer.exceptions.ParseException;
+import computer.parsernodes.*;
 
 public class JottParser {
     /**
@@ -41,6 +41,6 @@ public class JottParser {
 		    return null;
       }
 
-      return parseTree;
+      // return parseTree;
     }
 }
