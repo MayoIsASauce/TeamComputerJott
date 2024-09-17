@@ -261,8 +261,7 @@ public class JottTokenizer
                         next_chr = reader.read(); // consume next_chr
                         tokens.add(new Token("!=", filename, line_num, TokenType.REL_OP));
                     } else {
-                        String err_msg = "Invalid ! token on line " + line_num + ". ";
-                        throw new SyntaxException(err_msg +"Cannot use `!` without a following `=`");
+                        throw new SyntaxException("Syntax Exception\n`!` used without a following `=` at "+filename+":"+line_num+".\n");
                     }
                     continue;
                 }
