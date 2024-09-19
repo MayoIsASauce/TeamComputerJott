@@ -1,6 +1,9 @@
 package computer.parsernodes;
 
+import java.util.ArrayList;
+
 import provided.JottTree;
+import provided.Token;
 
 
 public class Template implements JottTree {
@@ -11,14 +14,16 @@ public class Template implements JottTree {
     }
 
 
-    // phase 2 only ----
     @Override
     public String convertToJott() {
         // TODO Auto-generated method stub
         return null;
     }
-    // ------
 
+    public static Template parse(ArrayList<Token> tokens) {
+        
+        return new Template();
+    }
 
     @Override
     public void execute() {
