@@ -132,7 +132,6 @@ public class JottTokenizer
                     String err_msg = "Invalid number token \"" + token + "\" on line " + line_num + ". ";
                     if (token.length() == 0 && is_floating)
                     {
-                        // TODO: custom parse exception?
                         throw new SyntaxException(err_msg + "Contains only decimal and no digits.");
                     }
                     else if (token.equals("."))
