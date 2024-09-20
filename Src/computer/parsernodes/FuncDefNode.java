@@ -7,28 +7,23 @@ import provided.Token;
 
 import java.lang.Exception;
 
-public class FuncDefNode implements JottTree
-{
+public class FuncDefNode implements JottTree {
     IdNode funcName;
     ArrayList<FuncDefParam> params;
     TypeNode returnType;
     FuncBodyNode body;
 
-
     public FuncDefNode(IdNode name, ArrayList<FuncDefParam> params,
-                        TypeNode returnType, FuncBodyNode body)
-    {
+            TypeNode returnType, FuncBodyNode body) {
         this.funcName = name;
         this.params = params;
         this.returnType = returnType;
         this.body = body;
     }
 
-    public static FuncDefNode parse(ArrayList<Token> tokens) throws Exception
-    {
-        
-        if ( !tokens.get(0).getToken().equals("Def") )
-        {
+    public static FuncDefNode parse(ArrayList<Token> tokens) throws Exception {
+
+        if (!tokens.get(0).getToken().equals("Def")) {
             throw new Exception();
         }
 
@@ -36,8 +31,7 @@ public class FuncDefNode implements JottTree
 
         IdNode name = IdNode.parse(tokens);
 
-        if (!tokens.get(0).getToken().equals("["))
-        {
+        if (!tokens.get(0).getToken().equals("[")) {
             throw new Exception();
         }
 
@@ -48,26 +42,21 @@ public class FuncDefNode implements JottTree
         return new FuncDefNode(name, params, null, null);
     }
 
-
     @Override
-    public boolean validateTree()
-    {
+    public boolean validateTree() {
         // TODO Auto-generated method stub
         return false;
     }
 
-
     @Override
-    public String convertToJott()
-    {
+    public String convertToJott() {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public void execute()
-    {
+    public void execute() {
         // TODO Auto-generated method stub
-        
+
     }
 }
