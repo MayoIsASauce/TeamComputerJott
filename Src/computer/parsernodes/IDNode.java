@@ -4,8 +4,16 @@ import java.util.ArrayList;
 
 import provided.JottTree;
 import provided.Token;
+import provided.TokenType;
+import computer.exceptions.ParseException;
 
 public class IDNode implements JottTree {
+    String id;
+
+    public IDNode(String id) {
+        this.id = id;
+    }
+
     @Override
     public boolean validateTree() {
         // TODO Auto-generated method stub
@@ -19,8 +27,16 @@ public class IDNode implements JottTree {
     }
 
     public static IDNode parse(ArrayList<Token> tokens) {
+        Token token = tokens.get(0);
 
-        return new IDNode();
+        if (token.getTokenType() != TokenType.ID_KEYWORD)
+            throw new ParseException("Attempt to parse non-ID token as ID: " + token.getToken());
+
+        tokens.remove(0);
+        // NOTE: not checking if the token contains a reserved keyword here-
+        // I think this is fine in jott and just means the user can
+        // use reserved keywords as variable names. may need to change l8tr?
+        return new IDNode(token.getToken());
     }
 
     @Override

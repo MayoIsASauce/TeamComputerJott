@@ -18,9 +18,9 @@ public class FuncDefParamsNode implements JottTree {
         return null;
     }
 
-    public static FuncDefParamsNode parse(ArrayList<Token> tokens) {
+    public static ArrayList<FuncDefParamsNode> parse(ArrayList<Token> tokens) {
 
-        return new FuncDefParamsNode();
+        return new ArrayList<FuncDefParamsNode>();
     }
 
     @Override
