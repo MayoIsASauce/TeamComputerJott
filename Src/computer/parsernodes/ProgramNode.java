@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import provided.JottTree;
 import provided.Token;
 
-import computer.parsernodes.FuncDefNode;
-
 public class ProgramNode implements JottTree
 {
     ArrayList<FuncDefNode> fDefNodes;

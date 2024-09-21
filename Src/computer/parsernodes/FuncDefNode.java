@@ -8,12 +8,12 @@ import provided.Token;
 import java.lang.Exception;
 
 public class FuncDefNode implements JottTree {
-    IdNode funcName;
-    ArrayList<FuncDefParam> params;
+    IDNode funcName;
+    ArrayList<FuncDefParamsNode> params;
     TypeNode returnType;
     FuncBodyNode body;
 
-    public FuncDefNode(IdNode name, ArrayList<FuncDefParam> params,
+    public FuncDefNode(IDNode name, ArrayList<FuncDefParamsNode> params,
             TypeNode returnType, FuncBodyNode body) {
         this.funcName = name;
         this.params = params;
@@ -23,23 +23,53 @@ public class FuncDefNode implements JottTree {
 
     public static FuncDefNode parse(ArrayList<Token> tokens) throws Exception {
 
-        if (!tokens.get(0).getToken().equals("Def")) {
+        if (!tokens.get(0).getToken().equals("Def"))
+        {
             throw new Exception();
         }
 
         tokens.remove(0);
 
-        IdNode name = IdNode.parse(tokens);
+        IDNode name = IDNode.parse(tokens);
 
-        if (!tokens.get(0).getToken().equals("[")) {
+        if (!tokens.get(0).getToken().equals("["))
+        {
             throw new Exception();
         }
 
         tokens.remove(0);
 
-        ArrayList<FuncDefParam> params = FuncDefParam.parse(tokens);
+        ArrayList<FuncDefParamsNode> params = FuncDefParamsNode.parse(tokens);
 
-        return new FuncDefNode(name, params, null, null);
+        if (!tokens.get(0).getToken().equals("]"))
+        {
+            throw new Exception();
+        }
+
+        tokens.remove(0);
+
+        if (!tokens.get(0).getToken().equals(":"))
+        {
+            throw new Exception();
+        }
+
+        tokens.remove(0);
+
+        TypeNode returnType = TypeNode.parse(tokens);
+
+        if (!tokens.get(0).getToken().equals("{")) 
+        {
+            throw new Exception();
+        }
+
+        FuncBodyNode bodyNode = FuncBodyNode.parse(tokens);
+
+        if (!tokens.get(0).getToken().equals("}")) 
+        {
+            throw new Exception();
+        }
+
+        return new FuncDefNode(name, params, returnType, bodyNode);
     }
 
     @Override
