@@ -20,7 +20,7 @@ public interface OperandNode extends JottTree {
             // func call is invalid, because the thrown exception will be
             // related to an invalid func call node and nothing about this
             // operand
-            return new OperandNode(FuncCallNode.parse(tokens));
+            return FuncCallNode.parse(tokens);
         }
         else if (token.getTokenType() == TokenType.NUMBER) {
             return NumNode.parse(tokens);

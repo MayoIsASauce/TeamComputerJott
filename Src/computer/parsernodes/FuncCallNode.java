@@ -4,9 +4,10 @@ import java.util.ArrayList;
 
 import provided.JottTree;
 import provided.Token;
+import computer.OperandNode;
 import java.lang.Exception;
 
-public class FuncCallNode implements JottTree {
+public class FuncCallNode implements OperandNode {
 
     IDNode funcName;
     ParamsNode params;
