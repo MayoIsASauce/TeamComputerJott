@@ -57,18 +57,13 @@ public class OperandNode implements JottTree {
             return new OperandNode(NumNode.parse(tokens),  false);
         } else if (
                 token.getTokenType() == TokenType.MATH_OP
-                && token.getToken().equals("-"))
+                && token.getToken().equals("-")
+                && tokens.size() > 1
+                && tokens.get(1).getTokenType() == TokenType.NUMBER)
         {
-            tokens.remove(0); // remove negative sign
-            NumNode numNode;
-            try {
-                numNode = NumNode.parse(tokens);
-            } catch (ParseException e) {
-                // invalid number, our lookahead failed. restore negative sign
-                tokens.add(0, token);
-                throw e;
-            }
-            return new OperandNode(numNode, true);
+            // pop the negative sign, parse the number that comes after
+            tokens.remove(0);
+            return new OperandNode(NumNode.parse(tokens), true);
         }
 
         throw new ParseException("Attempt to parse token which cannot possible be operand as operand: " + token.getToken());
