@@ -5,9 +5,10 @@ import java.util.ArrayList;
 import provided.JottTree;
 import provided.Token;
 import provided.TokenType;
+import computer.OperandNode;
 import computer.exceptions.ParseException;
 
-public class IDNode implements JottTree {
+public class IDNode implements OperandNode {
     String id;
 
     public IDNode(String id) {
