@@ -9,15 +9,15 @@ import java.lang.Exception;
 
 public class FuncDefNode implements JottTree {
     IDNode funcName;
-    ArrayList<FuncDefParamsNode> params;
-    TypeNode returnType;
+    FuncDefParamsNode params;
+    FuncReturnNode returnNode;
     FuncBodyNode body;
 
-    public FuncDefNode(IDNode name, ArrayList<FuncDefParamsNode> params,
-            TypeNode returnType, FuncBodyNode body) {
+    public FuncDefNode(IDNode name, FuncDefParamsNode params,
+            FuncReturnNode returnNode, FuncBodyNode body) {
         this.funcName = name;
         this.params = params;
-        this.returnType = returnType;
+        this.returnNode = returnNode;
         this.body = body;
     }
 
@@ -39,7 +39,7 @@ public class FuncDefNode implements JottTree {
 
         tokens.remove(0);
 
-        ArrayList<FuncDefParamsNode> params = FuncDefParamsNode.parse(tokens);
+        FuncDefParamsNode params = FuncDefParamsNode.parse(tokens);
 
         if (!tokens.get(0).getToken().equals("]"))
         {
@@ -55,7 +55,7 @@ public class FuncDefNode implements JottTree {
 
         tokens.remove(0);
 
-        TypeNode returnType = TypeNode.parse(tokens);
+        FuncReturnNode returnNode = FuncReturnNode.parse(tokens);
 
         if (!tokens.get(0).getToken().equals("{")) 
         {
@@ -69,7 +69,7 @@ public class FuncDefNode implements JottTree {
             throw new Exception();
         }
 
-        return new FuncDefNode(name, params, returnType, bodyNode);
+        return new FuncDefNode(name, params, returnNode, bodyNode);
     }
 
     @Override
