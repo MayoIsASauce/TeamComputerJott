@@ -30,8 +30,9 @@ public class NumNode implements JottTree {
 
     @Override
     public String convertToJott() {
-        // TODO Auto-generated method stub
-        return null;
+        if (isFloating)
+            return Float.toString(floatRepresentation);
+        return Integer.toString(integerRepresentation);
     }
 
     public static NumNode parse(ArrayList<Token> tokens) {
