@@ -4,28 +4,25 @@ import java.util.ArrayList;
 
 import provided.JottTree;
 import provided.Token;
+import computer.parsernodes.ExprOperandOperatorOperandNode;
+import computer.parsernodes.StringLiteralNode;
+import computer.parsernodes.BoolNode;
 
-public class ExprNode implements JottTree {
-    @Override
-    public boolean validateTree() {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    @Override
-    public String convertToJott() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
+public interface ExprNode extends JottTree {
     public static ExprNode parse(ArrayList<Token> tokens) {
+        Token token = tokens.get(0);
 
-        return new ExprNode();
-    }
+        // first set for boolean
+        if (token.getTokenType() == TokenType.ID_KEYWORD && (token.getToken().equals("True") || token.getToken().equals("False"))) {
+            return BoolNode.parse(tokens);
+        }
 
-    @Override
-    public void execute() {
-        // TODO Auto-generated method stub
+        // first set for string literal
+        if (token.getTokenType() == TokenType.STRING) {
+            return StringLiteralNode.parse(tokens);
+        }
 
+        // handles first set for the remaining (all of them start with operand)
+        return ExprOperandOperatorOperandNode.parse(tokens);
     }
 }

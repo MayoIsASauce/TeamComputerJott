@@ -4,16 +4,18 @@ import java.util.ArrayList;
 
 import provided.JottTree;
 import provided.Token;
+import computer.parsernodes.IDNode;
+import computer.parsernodes.FuncDefParamsNode;
 
 import java.lang.Exception;
 
 public class FuncDefNode implements JottTree {
-    IdNode funcName;
-    ArrayList<FuncDefParam> params;
+    IDNode funcName;
+    ArrayList<FuncDefParamsNode> params;
     TypeNode returnType;
     FuncBodyNode body;
 
-    public FuncDefNode(IdNode name, ArrayList<FuncDefParam> params,
+    public FuncDefNode(IDNode name, ArrayList<FuncDefParamsNode> params,
             TypeNode returnType, FuncBodyNode body) {
         this.funcName = name;
         this.params = params;
@@ -29,7 +31,7 @@ public class FuncDefNode implements JottTree {
 
         tokens.remove(0);
 
-        IdNode name = IdNode.parse(tokens);
+        IDNode name = IDNode.parse(tokens);
 
         if (!tokens.get(0).getToken().equals("[")) {
             throw new Exception();
@@ -37,7 +39,7 @@ public class FuncDefNode implements JottTree {
 
         tokens.remove(0);
 
-        ArrayList<FuncDefParam> params = FuncDefParam.parse(tokens);
+        ArrayList<FuncDefParamsNode> params = FuncDefParamsNode.parse(tokens);
 
         return new FuncDefNode(name, params, null, null);
     }
