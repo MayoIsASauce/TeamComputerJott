@@ -24,8 +24,22 @@ public class RelOpNode implements JottTree {
 
     @Override
     public String convertToJott() {
-        // TODO Auto-generated method stub
-        return null;
+        switch (type) {
+            case RelOpType.LESS_THAN:
+                return "<";
+            case RelOpType.EQ:
+                return "=";
+            case RelOpType.GREATER_THAN:
+                return ">";
+            case RelOpType.LESS_THAN_EQ:
+                return "<=";
+            case RelOpType.GREATER_THAN_EQ:
+                return ">=";
+            case RelOpType.NOT_EQ:
+                return "!=";
+            default:
+                throw new Exception("RelOpType " + type + " convertToJott not implemented");
+        }
     }
 
     public static RelOpNode parse(ArrayList<Token> tokens) {

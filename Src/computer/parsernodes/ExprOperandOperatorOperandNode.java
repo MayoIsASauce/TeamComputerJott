@@ -10,20 +10,20 @@ import computer.parsernodes.MathOpNode;
 import computer.parsernodes.RelOpNode;
 import computer.parsernodes.OperandNode;
 
-class ExprOperandOperationOperandNode implements ExprNode {
+class ExprOperandOperatorOperandNode implements ExprNode {
     MathOpNode mathOp;
     RelOpNode relOp;
     OperandNode lhs;
     OperandNode rhs;
 
-    ExprOperandOperationOperandNode(OperandNode lhs, RelOpNode middle, OperandNode rhs)
+    ExprOperandOperatorOperandNode(OperandNode lhs, RelOpNode middle, OperandNode rhs)
     {
         this.lhs = lhs;
         this.relOp = middle;
         this.rhs = rhs;
     }
 
-    ExprOperandOperationOperandNode(OperandNode lhs, MathOpNode middle, OperandNode rhs)
+    ExprOperandOperatorOperandNode(OperandNode lhs, MathOpNode middle, OperandNode rhs)
     {
         this.lhs = lhs;
         this.mathOp = middle;
@@ -54,13 +54,13 @@ class ExprOperandOperationOperandNode implements ExprNode {
         {
             RelOpNode middle = RelOpNode.parse(tokens);
             OperandNode second = OperandNode.parse(tokens);
-            return new ExprOperandOperationOperandNode(first, middle, second);
+            return new ExprOperandOperatorOperandNode(first, middle, second);
         }
         else if (nextType == TokenType.MATH_OP)
         {
             MathOpNode middle = MathOpNode.parse(tokens);
             OperandNode second = OperandNode.parse(tokens);
-            return new ExprOperandOperationOperandNode(first, middle, second);
+            return new ExprOperandOperatorOperandNode(first, middle, second);
         }
 
         // no expression parse was possible, this is just a lone operand

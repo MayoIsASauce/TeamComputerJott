@@ -24,8 +24,18 @@ public class MathOpNode implements JottTree {
 
     @Override
     public String convertToJott() {
-        // TODO Auto-generated method stub
-        return null;
+        switch (type) {
+            case MathOpType.ADD:
+                return "+";
+            case MathOpType.SUBTRACT:
+                return "-";
+            case MathOpType.MULTIPLY:
+                return "*";
+            case MathOpType.DIVIDE:
+                return "/";
+            default:
+                throw new Exception("Unimplemented mathop " + type + " convertToJott method");
+        }
     }
 
     public static MathOpNode parse(ArrayList<Token> tokens) {
