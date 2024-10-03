@@ -4,8 +4,9 @@ import java.util.ArrayList;
 
 import provided.JottTree;
 import provided.Token;
+import computer.parsernodes.ExprNode
 
-public class BoolNode implements JottTree {
+public class BoolNode implements ExprNode {
     @Override
     public boolean validateTree() {
         // TODO Auto-generated method stub

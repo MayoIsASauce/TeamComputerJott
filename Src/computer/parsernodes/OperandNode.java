@@ -7,8 +7,9 @@ import provided.Token;
 import computer.parsernodes.IDNode;
 import computer.parsernodes.NumNode;
 import computer.parsernodes.FuncCallNode;
+import computer.parsernodes.ExprNode;
 
-public interface OperandNode extends JottTree {
+public interface OperandNode extends ExprNode {
     public static OperandNode parse(ArrayList<Token> tokens) {
         Token token = tokens.get(0);
 

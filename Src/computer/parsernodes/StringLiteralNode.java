@@ -5,9 +5,10 @@ import java.util.ArrayList;
 import provided.JottTree;
 import provided.Token;
 import provided.TokenType;
+import computer.ExprNode;
 import computer.exceptions.ParseException;
 
-public class StringLiteralNode implements JottTree {
+public class StringLiteralNode implements ExprNode {
     
     String contents;
 
@@ -23,8 +24,7 @@ public class StringLiteralNode implements JottTree {
 
     @Override
     public String convertToJott() {
-        // TODO Auto-generated method stub
-        return null;
+        return String.format("\"%s\"", contents);
     }
 
     public static StringLiteralNode parse(ArrayList<Token> tokens) {
