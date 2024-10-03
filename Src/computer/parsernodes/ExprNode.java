@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import provided.JottTree;
 import provided.Token;
-import computer.parsernodes.ExprOperandOperatorOperandNode;
+import computer.parsernodes.BinaryExprNode;
 import computer.parsernodes.StringLiteralNode;
 import computer.parsernodes.BoolNode;
 
@@ -23,6 +23,6 @@ public interface ExprNode extends JottTree {
         }
 
         // handles first set for the remaining (all of them start with operand)
-        return ExprOperandOperatorOperandNode.parse(tokens);
+        return BinaryExprNode.parse(tokens);
     }
 }
