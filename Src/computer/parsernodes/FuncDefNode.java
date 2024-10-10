@@ -14,14 +14,16 @@ public class FuncDefNode implements JottTree {
     FuncBodyNode body;
 
     public FuncDefNode(IDNode name, FuncDefParamsNode params,
-            FuncReturnNode returnNode, FuncBodyNode body) {
+            FuncReturnNode returnNode, FuncBodyNode body)
+    {
         this.funcName = name;
         this.params = params;
         this.returnNode = returnNode;
         this.body = body;
     }
 
-    public static FuncDefNode parse(ArrayList<Token> tokens) throws Exception {
+    public static FuncDefNode parse(ArrayList<Token> tokens) throws Exception
+    {
 
         if (!tokens.get(0).getToken().equals("Def"))
         {
@@ -73,19 +75,24 @@ public class FuncDefNode implements JottTree {
     }
 
     @Override
-    public boolean validateTree() {
+    public boolean validateTree()
+    {
         // TODO Auto-generated method stub
         return false;
     }
 
     @Override
-    public String convertToJott() {
-        // TODO Auto-generated method stub
-        return null;
+    public String convertToJott()
+    {
+        String result = "Def " + funcName + "[" + params + "]:" + returnNode + 
+            "{" + body + "}";
+
+        return result;
     }
 
     @Override
-    public void execute() {
+    public void execute()
+    {
         // TODO Auto-generated method stub
 
     }

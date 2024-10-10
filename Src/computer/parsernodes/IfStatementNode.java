@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import provided.JottTree;
 import provided.Token;
 
-public class IfStatementNode implements JottTree {
+public class IfStatementNode implements BodyStatementNode {
     @Override
     public boolean validateTree() {
         // TODO Auto-generated method stub

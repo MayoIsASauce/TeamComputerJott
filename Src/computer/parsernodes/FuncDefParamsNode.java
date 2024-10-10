@@ -12,7 +12,8 @@ public class FuncDefParamsNode implements JottTree {
     TypeNode paramType;
     ArrayList<FuncDefParamsTailNode> paramsTailArray;
 
-    public FuncDefParamsNode(IDNode paramName, TypeNode paramType, ArrayList<FuncDefParamsTailNode> paramsTailArray)
+    public FuncDefParamsNode(IDNode paramName, TypeNode paramType,
+        ArrayList<FuncDefParamsTailNode> paramsTailArray)
     {
         this.paramName = paramName;
         this.paramType = paramType;
@@ -28,15 +29,28 @@ public class FuncDefParamsNode implements JottTree {
 
 
     @Override
-    public boolean validateTree() {
+    public boolean validateTree()
+    {
         // TODO Auto-generated method stub
         return false;
     }
 
     @Override
-    public String convertToJott() {
-        // TODO Auto-generated method stub
-        return null;
+    public String convertToJott()
+    {
+        if (this.paramName == null)
+        {
+            return "";
+        }
+
+        String result = paramName + ":" + paramType;
+
+        for (FuncDefParamsTailNode tailNode : paramsTailArray)
+        {
+            result += tailNode;
+        }
+
+        return result;
     }
 
     public static FuncDefParamsNode parse(ArrayList<Token> tokens) throws Exception
@@ -71,7 +85,8 @@ public class FuncDefParamsNode implements JottTree {
     }
 
     @Override
-    public void execute() {
+    public void execute()
+    {
         // TODO Auto-generated method stub
 
     }
