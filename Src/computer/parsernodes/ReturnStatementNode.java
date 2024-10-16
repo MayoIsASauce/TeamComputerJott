@@ -6,6 +6,13 @@ import provided.JottTree;
 import provided.Token;
 
 public class ReturnStatementNode implements JottTree {
+
+    ExprNode expr;
+
+    public ReturnStatementNode(ExprNode expr) {
+        this.expr = expr;
+    }
+
     @Override
     public boolean validateTree() {
         // TODO Auto-generated method stub
@@ -19,8 +26,17 @@ public class ReturnStatementNode implements JottTree {
     }
 
     public static ReturnStatementNode parse(ArrayList<Token> tokens) {
+        
+        if(!tokens.get(0).getToken().equals("Return")) {
+            throw new Exception();
+        }
+        
+        tokens.remove(0);
 
-        return new ReturnStatementNode();
+        ExprNode expr = ExprNode.parse(tokens);
+        
+        return new ReturnStatementNode(expr);
+
     }
 
     @Override
