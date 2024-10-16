@@ -21,8 +21,9 @@ public class ReturnStatementNode implements JottTree {
 
     @Override
     public String convertToJott() {
-        // TODO Auto-generated method stub
-        return null;
+        String toReturn = "return ";
+        toReturn += expr.convertToJott();
+        return toReturn;
     }
 
     public static ReturnStatementNode parse(ArrayList<Token> tokens) {
