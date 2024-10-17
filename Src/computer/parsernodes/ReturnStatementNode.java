@@ -1,6 +1,5 @@
 package computer.parsernodes;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 
 import provided.JottTree;

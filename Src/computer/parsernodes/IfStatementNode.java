@@ -1,6 +1,6 @@
 package computer.parsernodes;
 
-import java.text.ParseException;
+import computer.exceptions.ParseException;
 import java.util.ArrayList;
 
 import provided.JottTree;
@@ -93,21 +93,8 @@ public class IfStatementNode implements JottTree {
         //     throw new ParseException();
         // }
 
-        
-
         return new IfStatementNode(expr, body, elseIfs, elseNode);
 
-        
-
-    
-
-
-
-
-
-        
-
-        return new IfStatementNode();
     }
 
     @Override

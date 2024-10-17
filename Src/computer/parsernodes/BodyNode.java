@@ -1,6 +1,6 @@
 package computer.parsernodes;
 
-import java.text.ParseException;
+import computer.exceptions.ParseException;
 import java.util.ArrayList;
 
 import provided.JottTree;
@@ -44,11 +44,12 @@ public class BodyNode implements JottTree {
         //Slight concern based on whether or not previous function pops out the opening brace
 
         ArrayList<BodyStatementNode> bodyStatements = new ArrayList<BodyStatementNode>();
+        ReturnStatement returnStatement = new ReturnStatementNode(null);
 
         while(!tokens.get(0).getToken().equals("rbrace")) {
 
             if(tokens.get(0).getToken().equals("Return")) {
-              ReturnStatement returnStatement = ReturnStatementNode.parse(tokens);
+              returnStatement = ReturnStatementNode.parse(tokens);
               tokens.remove(0);
             } 
             bodyStatements.add(BodyStatementNode.parse(tokens));
