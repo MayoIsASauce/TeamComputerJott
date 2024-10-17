@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import provided.JottTree;
 import provided.Token;
 
-public class FuncCallNode implements JottTree {
+public class FuncCallNode implements BodyStatementNode {
     @Override
     public boolean validateTree() {
         // TODO Auto-generated method stub
