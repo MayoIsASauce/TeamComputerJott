@@ -1,5 +1,6 @@
 package computer.parsernodes;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import provided.JottTree;
@@ -29,7 +30,7 @@ public class ReturnStatementNode implements JottTree {
     public static ReturnStatementNode parse(ArrayList<Token> tokens) {
         
         if(!tokens.get(0).getToken().equals("Return")) {
-            throw new Exception();
+            throw new ParseException();
         }
         
         tokens.remove(0);

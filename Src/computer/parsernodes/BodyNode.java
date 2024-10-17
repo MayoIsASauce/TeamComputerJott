@@ -1,5 +1,6 @@
 package computer.parsernodes;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import provided.JottTree;
@@ -55,7 +56,7 @@ public class BodyNode implements JottTree {
         }
 
         if(!tokens.get(0).getToken().equals("rbrace")) {
-            throw new Exception();
+            throw new ParseException();
         }
 
         if(tokens.get(0).getToken().equals("rbrace")) {
