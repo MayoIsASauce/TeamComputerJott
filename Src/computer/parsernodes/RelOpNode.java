@@ -42,7 +42,7 @@ public class RelOpNode implements JottTree {
         }
     }
 
-    public static RelOpNode parse(ArrayList<Token> tokens) {
+    public static RelOpNode parse(ArrayList<Token> tokens) throws ParseException {
         Token token = tokens.get(0);
 
         if (token.getTokenType() != TokenType.REL_OP)

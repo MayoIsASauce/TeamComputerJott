@@ -27,7 +27,7 @@ public class StringLiteralNode implements ExprNode {
         return String.format("\"%s\"", contents);
     }
 
-    public static StringLiteralNode parse(ArrayList<Token> tokens) {
+    public static StringLiteralNode parse(ArrayList<Token> tokens) throws ParseException {
         Token token = tokens.get(0);
 
         if (token.getTokenType() != TokenType.STRING)

@@ -36,11 +36,11 @@ public class NumNode implements OperandNode {
         return Integer.toString(integerRepresentation);
     }
 
-    public static NumNode parse(ArrayList<Token> tokens) {
+    public static NumNode parse(ArrayList<Token> tokens) throws ParseException {
         parse(tokens, false);
     }
 
-    public static NumNode parse(ArrayList<Token> tokens, boolean isNegative) {
+    public static NumNode parse(ArrayList<Token> tokens, boolean isNegative) throws ParseException {
         Token token = tokens.get(0);
 
         if (token.getTokenType() != TokenType.NUMBER)

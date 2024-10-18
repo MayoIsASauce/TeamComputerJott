@@ -10,7 +10,7 @@ import computer.parsernodes.FuncCallNode;
 import computer.parsernodes.ExprNode;
 
 public interface OperandNode extends ExprNode {
-    public static OperandNode parse(ArrayList<Token> tokens) {
+    public static OperandNode parse(ArrayList<Token> tokens) throws ParseException {
         Token token = tokens.get(0);
 
         // lookahead

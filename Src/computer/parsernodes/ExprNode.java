@@ -9,7 +9,7 @@ import computer.parsernodes.StringLiteralNode;
 import computer.parsernodes.BoolNode;
 
 public interface ExprNode extends JottTree {
-    public static ExprNode parse(ArrayList<Token> tokens) {
+    public static ExprNode parse(ArrayList<Token> tokens) throws ParseException {
         Token token = tokens.get(0);
 
         // first set for boolean

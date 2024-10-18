@@ -26,7 +26,7 @@ public class IDNode implements OperandNode {
         return id;
     }
 
-    public static IDNode parse(ArrayList<Token> tokens) {
+    public static IDNode parse(ArrayList<Token> tokens) throws ParseException {
         Token token = tokens.get(0);
 
         if (token.getTokenType() != TokenType.ID_KEYWORD)

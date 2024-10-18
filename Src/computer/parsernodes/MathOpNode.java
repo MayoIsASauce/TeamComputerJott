@@ -38,7 +38,7 @@ public class MathOpNode implements JottTree {
         }
     }
 
-    public static MathOpNode parse(ArrayList<Token> tokens) {
+    public static MathOpNode parse(ArrayList<Token> tokens) throws ParseException {
         Token token = tokens.get(0);
 
         if (token.getTokenType() != TokenType.MATH_OP)
