@@ -22,8 +22,18 @@ public class TypeNode implements JottTree {
 
     @Override
     public String convertToJott() {
-        // TODO Auto-generated method stub
-        return null;
+        switch (type) {
+            case Types.DOUBLE:
+                return "Double";
+            case Types.BOOLEAN:
+                return "Boolean";
+            case Types.STRING:
+                return "String";
+            case Types.INTEGER:
+                return "Integer";
+            default:
+                return null;
+        }
     }
 
     public static TypeNode parse(ArrayList<Token> tokens) throws ParseException {

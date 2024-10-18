@@ -4,5 +4,5 @@ public enum Types {
     DOUBLE,
     STRING,
     INTEGER,
-    BOOLEAN
+    BOOLEAN,
 }

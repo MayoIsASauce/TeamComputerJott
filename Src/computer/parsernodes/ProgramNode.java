@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import provided.JottTree;
 import provided.Token;
 
-import computer.parsernodes.FuncDefNode;
-
 public class ProgramNode implements JottTree
 {
     ArrayList<FuncDefNode> fDefNodes;
@@ -16,7 +14,7 @@ public class ProgramNode implements JottTree
         this.fDefNodes = nodes;
     }
 
-    public static ProgramNode parse(ArrayList<Token> tokens)
+    public static ProgramNode parse(ArrayList<Token> tokens) throws Exception
     {
         ArrayList<FuncDefNode> nodes = new ArrayList<>();
 
@@ -30,20 +28,29 @@ public class ProgramNode implements JottTree
 
 
     @Override
-    public boolean validateTree() {
+    public boolean validateTree()
+    {
         // TODO Auto-generated method stub
         return false;
     }
 
 
     @Override
-    public String convertToJott() {
-        // TODO Auto-generated method stub
-        return null;
+    public String convertToJott()
+    {
+        String result = "";
+
+        for (FuncDefNode funcDefNode : fDefNodes)
+        {
+            result += funcDefNode;
+        }
+
+        return result;
     }
 
     @Override
-    public void execute() {
+    public void execute()
+    {
         // TODO Auto-generated method stub
         
     }

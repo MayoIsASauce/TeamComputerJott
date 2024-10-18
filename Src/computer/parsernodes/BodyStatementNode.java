@@ -4,28 +4,48 @@ import java.util.ArrayList;
 
 import provided.JottTree;
 import provided.Token;
+import provided.TokenType;
 
-public class BodyStatementNode implements JottTree {
+public interface BodyStatementNode extends JottTree
+{
     @Override
-    public boolean validateTree() {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    @Override
-    public String convertToJott() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    public static BodyStatementNode parse(ArrayList<Token> tokens) {
-
-        return new BodyStatementNode();
-    }
+    public boolean validateTree();
 
     @Override
-    public void execute() {
-        // TODO Auto-generated method stub
+    public String convertToJott();
 
+
+    public static BodyStatementNode parse(ArrayList<Token> tokens) throws Exception
+    {
+        Token token = tokens.get(0);
+        if (token.getTokenType() == TokenType.FC_HEADER)
+        {
+            // Func_call
+            return FuncCallNode.parse(tokens);
+        }
+        else if (token.getTokenType() == TokenType.ID_KEYWORD &&
+                token.getToken().equals("If"))
+        {
+            // If statement
+            return IfStatementNode.parse(tokens);
+        }
+        else if (token.getTokenType() == TokenType.ID_KEYWORD &&
+                token.getToken().equals("While"))
+        {
+            // While loop
+            return WhileLoopNode.parse(tokens);
+        }
+        else if (token.getTokenType() == TokenType.ID_KEYWORD)
+        {
+            // Asmt
+            return AssignmentNode.parse(tokens);
+        }
+        else
+        {
+            throw new Exception("Invalid token for body statement");
+        }
     }
+
+    @Override
+    public void execute();
 }

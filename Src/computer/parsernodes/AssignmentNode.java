@@ -2,10 +2,19 @@ package computer.parsernodes;
 
 import java.util.ArrayList;
 
-import provided.JottTree;
+import computer.exceptions.ParseException;
 import provided.Token;
+import provided.TokenType;
 
-public class AssignmentNode implements JottTree {
+public class AssignmentNode implements BodyStatementNode {
+    IDNode id;
+    ExprNode expr;
+
+    public AssignmentNode(IDNode id, ExprNode expr) {
+        this.id = id;
+        this.expr = expr;
+    }
+
     @Override
     public boolean validateTree() {
         // TODO Auto-generated method stub
@@ -14,13 +23,29 @@ public class AssignmentNode implements JottTree {
 
     @Override
     public String convertToJott() {
-        // TODO Auto-generated method stub
-        return null;
+        return String.format("%s=%s;", id.convertToJott(), expr.convertToJott());
     }
 
-    public static AssignmentNode parse(ArrayList<Token> tokens) {
+    public static AssignmentNode parse(ArrayList<Token> tokens) throws ParseException{
+        IDNode nId;
+        ExprNode nExpr;
 
-        return new AssignmentNode();
+        nId = IDNode.parse(tokens);
+        tokens.remove(0);
+
+        if (tokens.get(0).getTokenType() != TokenType.ASSIGN) {
+            throw new ParseException("Missing '=' in AssignmentNode");
+        }
+        tokens.remove(0);
+
+        nExpr = ExprNode.parse(tokens);
+        tokens.remove(0);
+
+        if (tokens.get(0).getTokenType() == TokenType.SEMICOLON) {
+            return new AssignmentNode(nId, nExpr);
+        } else {
+            throw new ParseException("Missing semicolon at the end of assignment");
+        }
     }
 
     @Override
