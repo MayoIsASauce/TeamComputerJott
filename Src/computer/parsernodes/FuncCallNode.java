@@ -5,9 +5,10 @@ import java.util.ArrayList;
 import provided.JottTree;
 import provided.Token;
 import computer.OperandNode;
+import computer.BodyStatementNode;
 import java.lang.Exception;
 
-public class FuncCallNode implements OperandNode {
+public class FuncCallNode implements OperandNode, BodyStatementNode {
 
     IDNode funcName;
     ParamsNode params;
