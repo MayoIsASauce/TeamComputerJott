@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import provided.JottTree;
 import provided.Token;
 
-public class IfStatementNode implements JottTree {
 
+public class IfStatementNode implements BodyStatementNode {
 
     ExprNode expr;
     BodyNode body;
@@ -19,6 +19,8 @@ public class IfStatementNode implements JottTree {
         this.elseIfs = elseIfs;
         this.elseNode = elseNode;
     }
+
+
 
     @Override
     public boolean validateTree() {
