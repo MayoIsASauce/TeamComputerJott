@@ -2,7 +2,6 @@ package computer.parsernodes;
 
 import computer.exceptions.ParseException;
 import java.util.ArrayList;
-
 import provided.JottTree;
 import provided.Token;
 
@@ -30,16 +29,16 @@ public class ElseNode implements JottTree {
         return toReturn;
     }
 
-    public static ElseNode parse(ArrayList<Token> tokens) {
+    public static ElseNode parse(ArrayList<Token> tokens) throws ParseException{
 
         if(!tokens.get(0).getToken().equals("Else")) {
-            throw new ParseException();
+            throw new ParseException("expected Else");
         }
 
         tokens.remove(0);
 
         if(!tokens.get(0).getToken().equals("{")) {
-            throw new ParseException();
+            throw new ParseException("expected {");
         }
 
         tokens.remove(0);
@@ -47,7 +46,7 @@ public class ElseNode implements JottTree {
         BodyNode body = BodyNode.parse(tokens);
 
         if(!tokens.get(0).getToken().equals("}")) {
-            throw new ParseException();
+            throw new ParseException("Expected }");
         }
 
         tokens.remove(0);

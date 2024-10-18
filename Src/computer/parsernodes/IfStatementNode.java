@@ -2,7 +2,6 @@ package computer.parsernodes;
 
 import computer.exceptions.ParseException;
 import java.util.ArrayList;
-
 import provided.JottTree;
 import provided.Token;
 
@@ -14,7 +13,7 @@ public class IfStatementNode implements JottTree {
     ArrayList<ElseIfNode> elseIfs;
     ElseNode elseNode;
 
-    pubic IfStatementNode(ExprNode expr, BodyNode body, ArrayList<ElseIfNode> elseIfs, ElseNode elseNode) {
+    public IfStatementNode(ExprNode expr, BodyNode body, ArrayList<ElseIfNode> elseIfs, ElseNode elseNode) {
         this.expr = expr;
         this.body = body;
         this.elseIfs = elseIfs;
@@ -34,7 +33,7 @@ public class IfStatementNode implements JottTree {
         toReturn += "] {";
         toReturn += body.convertToJott();
         toReturn += "}";
-        while(elseIfs.size() > 0) {
+        while(elseIfs.isEmpty()) {
             toReturn += elseIfs.get(0).convertToJott();
             elseIfs.remove(0);
         }
@@ -42,16 +41,16 @@ public class IfStatementNode implements JottTree {
         return toReturn;
     }
 
-    public static IfStatementNode parse(ArrayList<Token> tokens) {
+    public static IfStatementNode parse(ArrayList<Token> tokens) throws ParseException{
 
         if(!tokens.get(0).getToken().equals("If")) {
-            throw new ParseException();
+            throw new ParseException("If expected");
         }
 
         tokens.remove(0);
 
         if(!tokens.get(0).getToken().equals("[")) {
-            throw new ParseException();
+            throw new ParseException("[ expected]");
         }
 
         tokens.remove(0);
@@ -59,13 +58,13 @@ public class IfStatementNode implements JottTree {
         ExprNode expr = ExprNode.parse(tokens);
 
         if(!tokens.get(0).getToken().equals("]")) {
-            throw new ParseException();
+            throw new ParseException("] expected");
         }
 
         tokens.remove(0);
 
         if(!tokens.get(0).getToken().equals("{")) {
-            throw new ParseException();
+            throw new ParseException("{ expected");
         }
 
         tokens.remove(0);
@@ -73,20 +72,22 @@ public class IfStatementNode implements JottTree {
         BodyNode body = BodyNode.parse(tokens);
 
         if(!tokens.get(0).getToken().equals("}")) {
-            throw new ParseException();
+            throw new ParseException("} expected");
         }
 
         tokens.remove(0);
 
-        ArrayList<ElseIfNode> elseIfs = new ArrayList<ElseIfNode>();
+        ArrayList<ElseIfNode> elseIfs = new ArrayList<>();
 
         while(tokens.get(0).getToken().equals("ElseIf")) {
             elseIfs.add(ElseIfNode.parse(tokens));
         }
 
+        ElseNode elseNode = null;
+
         if(tokens.get(0).getToken().equals("Else")) {
             //Do we want to throw an error if there is no else clause?
-            ElseNode elseNode = ElseNode.parse(tokens);
+            elseNode = ElseNode.parse(tokens);
         }
         
         // if(!tokens.get(0).getToken().equals("Else")) {

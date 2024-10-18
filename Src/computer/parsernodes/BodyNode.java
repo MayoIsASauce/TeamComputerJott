@@ -2,7 +2,6 @@ package computer.parsernodes;
 
 import computer.exceptions.ParseException;
 import java.util.ArrayList;
-
 import provided.JottTree;
 import provided.Token;
 
@@ -36,15 +35,15 @@ public class BodyNode implements JottTree {
             toReturn += returnStatement.convertToJott();
             toReturn += "}";
         }
-        return null;
+        return toReturn;
     }
 
-    public static BodyNode parse(ArrayList<Token> tokens) {
+    public static BodyNode parse(ArrayList<Token> tokens) throws ParseException{
 
         //Slight concern based on whether or not previous function pops out the opening brace
 
-        ArrayList<BodyStatementNode> bodyStatements = new ArrayList<BodyStatementNode>();
-        ReturnStatement returnStatement = new ReturnStatementNode(null);
+        ArrayList<BodyStatementNode> bodyStatements = new ArrayList<>();
+        ReturnStatementNode returnStatement = new ReturnStatementNode(null);
 
         while(!tokens.get(0).getToken().equals("rbrace")) {
 
@@ -57,7 +56,7 @@ public class BodyNode implements JottTree {
         }
 
         if(!tokens.get(0).getToken().equals("rbrace")) {
-            throw new ParseException();
+            throw new ParseException("No } found");
         }
 
         if(tokens.get(0).getToken().equals("rbrace")) {
