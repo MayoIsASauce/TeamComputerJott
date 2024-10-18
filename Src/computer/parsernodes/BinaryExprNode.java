@@ -10,20 +10,20 @@ import computer.parsernodes.MathOpNode;
 import computer.parsernodes.RelOpNode;
 import computer.parsernodes.OperandNode;
 
-class ExprOperandOperatorOperandNode implements ExprNode {
+class BinaryExprNode implements ExprNode {
     MathOpNode mathOp;
     RelOpNode relOp;
     OperandNode lhs;
     OperandNode rhs;
 
-    ExprOperandOperatorOperandNode(OperandNode lhs, RelOpNode middle, OperandNode rhs)
+    BinaryExprNode(OperandNode lhs, RelOpNode middle, OperandNode rhs)
     {
         this.lhs = lhs;
         this.relOp = middle;
         this.rhs = rhs;
     }
 
-    ExprOperandOperatorOperandNode(OperandNode lhs, MathOpNode middle, OperandNode rhs)
+    BinaryExprNode(OperandNode lhs, MathOpNode middle, OperandNode rhs)
     {
         this.lhs = lhs;
         this.mathOp = middle;
@@ -42,9 +42,9 @@ class ExprOperandOperatorOperandNode implements ExprNode {
         return lhs.convertToJott() + middle + rhs.convertToJott();
     }
 
-    /// Returns either a ExprOperandOperationOperandNode or an OperandNode. The
+    /// Returns either a BinaryExprNode or an OperandNode. The
     /// latter only happens if the former is not possible.
-    public static ExprNode parse(ArrayList<Token> tokens) {
+    public static ExprNode parse(ArrayList<Token> tokens) throws ParseException {
         // in all cases, we have an operand first
         OperandNode first = OperandNode.parse(tokens);
 
@@ -54,13 +54,13 @@ class ExprOperandOperatorOperandNode implements ExprNode {
         {
             RelOpNode middle = RelOpNode.parse(tokens);
             OperandNode second = OperandNode.parse(tokens);
-            return new ExprOperandOperatorOperandNode(first, middle, second);
+            return new BinaryExprNode(first, middle, second);
         }
         else if (nextType == TokenType.MATH_OP)
         {
             MathOpNode middle = MathOpNode.parse(tokens);
             OperandNode second = OperandNode.parse(tokens);
-            return new ExprOperandOperatorOperandNode(first, middle, second);
+            return new BinaryExprNode(first, middle, second);
         }
 
         // no expression parse was possible, this is just a lone operand
