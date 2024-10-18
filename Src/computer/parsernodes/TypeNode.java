@@ -2,10 +2,18 @@ package computer.parsernodes;
 
 import java.util.ArrayList;
 
+import computer.exceptions.ParseException;
 import provided.JottTree;
 import provided.Token;
+import provided.TokenType;
 
 public class TypeNode implements JottTree {
+    Types type;
+
+    public TypeNode(Types type) {
+        this.type = type;
+    }
+
     @Override
     public boolean validateTree() {
         // TODO Auto-generated method stub
@@ -14,14 +22,40 @@ public class TypeNode implements JottTree {
 
     @Override
     public String convertToJott() {
-        // TODO Auto-generated method stub
-        return null;
+        switch (type) {
+            case Types.DOUBLE:
+                return "Double";
+            case Types.BOOLEAN:
+                return "Boolean";
+            case Types.STRING:
+                return "String";
+            case Types.INTEGER:
+                return "Integer";
+            default:
+                return null;
+        }
     }
 
-    public static TypeNode parse(ArrayList<Token> tokens) {
+    public static TypeNode parse(ArrayList<Token> tokens) throws ParseException {
+        Token curr_token = tokens.get(0);
+        if (curr_token.getTokenType() == TokenType.ID_KEYWORD) {
+            switch (curr_token.getToken()) {
+                case "Double":
+                    return new TypeNode(Types.DOUBLE);
+                case "Integer":
+                    return new TypeNode(Types.INTEGER);
+                case "String":
+                    return new TypeNode(Types.STRING);
+                case "Boolean":
+                    return new TypeNode(Types.BOOLEAN);
+                default:
+                    throw new ParseException("Parser Exception\nTypeNode received invalid type \""+curr_token.getToken()+"\", expected one of type: (Double, Integer, String, Boolean)");
+            }
+        } 
+        throw new ParseException("Parser Exception\nTypeNode receieved invalid tokenType: "+curr_token.getTokenType()+", only accepts ID_KEYWORD");
 
-        return new TypeNode();
     }
+    
 
     @Override
     public void execute() {
