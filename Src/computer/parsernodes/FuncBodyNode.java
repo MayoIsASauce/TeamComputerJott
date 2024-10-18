@@ -35,7 +35,7 @@ public class FuncBodyNode implements JottTree {
 
     }
 
-    public static FuncBodyNode parse(ArrayList<Token> tokens) throws ParseException{
+    public static FuncBodyNode parse(ArrayList<Token> tokens) throws ParseException {
 
         ArrayList<JottTree> varDecList = new ArrayList<>();
 

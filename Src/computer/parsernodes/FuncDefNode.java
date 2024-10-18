@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import provided.JottTree;
 import provided.Token;
+import computer.parsernodes.IDNode;
+import computer.parsernodes.FuncDefParamsNode;
 
 import java.lang.Exception;
 
