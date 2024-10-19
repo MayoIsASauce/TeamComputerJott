@@ -18,7 +18,7 @@ public interface OperandNode extends ExprNode {
         // lookahead
         if (token.getTokenType() == TokenType.ID_KEYWORD) {
             return IDNode.parse(tokens);
-        } else if (token.getTokenType() == TokenType.COLON) {
+        } else if (token.getTokenType() == TokenType.FC_HEADER) {
             // NOTE: assuming func call based on colon could be odd for user if
             // func call is invalid, because the thrown exception will be
             // related to an invalid func call node and nothing about this
