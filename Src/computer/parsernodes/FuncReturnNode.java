@@ -25,11 +25,11 @@ public class FuncReturnNode implements JottTree {
     @Override
     public String convertToJott() {
         if (returnType != null) {
-            returnType.convertToJott();
+            return returnType.convertToJott();
         } else {
             return "Void";
         }
-        return null;
+        
     }
 
     public static FuncReturnNode parse(ArrayList<Token> tokens) throws ParseException {
