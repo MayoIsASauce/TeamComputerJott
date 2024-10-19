@@ -40,12 +40,9 @@ public class FuncBodyNode implements JottTree {
         ArrayList<JottTree> varDecList = new ArrayList<>();
 
         while(tokens.get(0).getToken().equals("Double") || tokens.get(0).getToken().equals("Integer") || tokens.get(0).getToken().equals("String") || tokens.get(0).getToken().equals("Boolean")) {
-
             varDecList.add(VarDeclarationNode.parse(tokens));
-            tokens.remove(0);
-            
         }
-        
+
         BodyNode body = BodyNode.parse(tokens);
 
         return new FuncBodyNode(varDecList, body);

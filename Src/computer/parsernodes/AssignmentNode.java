@@ -42,6 +42,7 @@ public class AssignmentNode implements BodyStatementNode {
         tokens.remove(0);
 
         if (tokens.get(0).getTokenType() == TokenType.SEMICOLON) {
+            tokens.remove(0);
             return new AssignmentNode(nId, nExpr);
         } else {
             throw new ParseException("Missing semicolon at the end of assignment");

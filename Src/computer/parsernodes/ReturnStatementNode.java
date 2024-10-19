@@ -56,6 +56,7 @@ public class ReturnStatementNode implements JottTree {
         {
             throw new ParseException("Missing ';' in return statement");
         }
+        tokens.remove(0);
         
         return new ReturnStatementNode(expr);
 
