@@ -25,13 +25,13 @@ public class MathOpNode implements JottTree {
     @Override
     public String convertToJott() {
         switch (type) {
-            case MathOpType.ADD:
+            case ADD:
                 return "+";
-            case MathOpType.SUBTRACT:
+            case SUBTRACT:
                 return "-";
-            case MathOpType.MULTIPLY:
+            case MULTIPLY:
                 return "*";
-            // case MathOpType.DIVIDE:
+            // case DIVIDE:
             default:
                 return "/";
             // default:

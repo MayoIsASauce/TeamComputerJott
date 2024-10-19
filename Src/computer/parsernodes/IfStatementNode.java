@@ -35,7 +35,7 @@ public class IfStatementNode implements BodyStatementNode {
         toReturn += "] {";
         toReturn += body.convertToJott();
         toReturn += "}";
-        while(elseIfs.isEmpty()) {
+        while(!elseIfs.isEmpty()) {
             toReturn += elseIfs.get(0).convertToJott();
             elseIfs.remove(0);
         }
