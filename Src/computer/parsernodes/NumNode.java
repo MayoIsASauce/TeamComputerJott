@@ -37,7 +37,7 @@ public class NumNode implements OperandNode {
     }
 
     public static NumNode parse(ArrayList<Token> tokens) throws ParseException {
-        parse(tokens, false);
+        return parse(tokens, false);
     }
 
     public static NumNode parse(ArrayList<Token> tokens, boolean isNegative) throws ParseException {
