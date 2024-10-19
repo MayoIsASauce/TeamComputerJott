@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import provided.JottTree;
 import provided.Token;
+import provided.TokenType;
 import computer.parsernodes.BinaryExprNode;
 import computer.parsernodes.StringLiteralNode;
 import computer.parsernodes.BoolNode;
