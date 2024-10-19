@@ -38,6 +38,6 @@ public interface OperandNode extends ExprNode {
             return NumNode.parse(tokens, true);
         }
 
-        throw new ParseException("Attempt to parse token which cannot possible be operand as operand: " + token.getToken());
+        throw new ParseException("Attempt to parse token which cannot possibly be operand as operand: " + token.getToken());
     }
 }
