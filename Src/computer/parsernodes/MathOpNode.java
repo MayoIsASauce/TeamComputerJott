@@ -31,11 +31,8 @@ public class MathOpNode implements JottTree {
                 return "-";
             case MULTIPLY:
                 return "*";
-            // case DIVIDE:
             default:
                 return "/";
-            // default:
-            //     throw new Exception("Unimplemented mathop " + type + " convertToJott method");
         }
     }
 

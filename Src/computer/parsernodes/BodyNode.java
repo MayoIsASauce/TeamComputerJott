@@ -30,9 +30,7 @@ public class BodyNode implements JottTree {
         String toReturn = "";
         
         for (int ii = 0; ii < bodyStatements.size(); ii++) {
-            //Once again depends on the handling of the open brace whether its held in function definition or not
             toReturn += bodyStatements.get(ii).convertToJott();
-            // bodyStatements.remove(0);
         }
 
         toReturn += returnStatement.convertToJott();
@@ -41,14 +39,11 @@ public class BodyNode implements JottTree {
         return toReturn;
     }
 
-    public static BodyNode parse(ArrayList<Token> tokens) throws ParseException{
-
-        //Slight concern based on whether or not previous function pops out the opening brace
+    public static BodyNode parse(ArrayList<Token> tokens) throws ParseException
+    {
 
         ArrayList<BodyStatementNode> bodyStatements = new ArrayList<>();
         ReturnStatementNode returnStatement = new ReturnStatementNode(null);
-
-        // while(!tokens.get(0).getToken().equals("rbrace")) {
 
         while (!tokens.get(0).getToken().equals("Return")
                 && tokens.get(0).getTokenType() != TokenType.R_BRACE )
@@ -57,16 +52,6 @@ public class BodyNode implements JottTree {
         } 
 
         returnStatement = ReturnStatementNode.parse(tokens);
-            
-        // }
-
-        // if(!tokens.get(0).getToken().equals("rbrace")) {
-        //     throw new ParseException("No } found");
-        // }
-
-        // if(tokens.get(0).getToken().equals("rbrace")) {
-        //     tokens.remove(0);
-        // }
 
         return new BodyNode(bodyStatements, returnStatement);
 

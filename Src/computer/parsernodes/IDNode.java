@@ -33,9 +33,7 @@ public class IDNode implements OperandNode {
             throw new ParseException("Attempt to parse non-ID token as ID: " + token.getToken());
 
         tokens.remove(0);
-        // NOTE: not checking if the token contains a reserved keyword here-
-        // I think this is fine in jott and just means the user can
-        // use reserved keywords as variable names. may need to change l8tr?
+
         return new IDNode(token.getToken());
     }
 

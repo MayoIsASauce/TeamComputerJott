@@ -45,7 +45,8 @@ public class FuncReturnNode implements JottTree {
 
             return new FuncReturnNode(TypeNode.parse(tokens));
         }
-        String msg = "Parser Exception\nFuncReturnNode received invalid type \""+currToken.getTokenType()+"\", expected: ID_KEYWORD";
+        String msg = "Parser Exception\nFuncReturnNode received invalid type \""
+                        +currToken.getTokenType()+"\", expected: ID_KEYWORD";
         throw new ParseException(msg);
     }
 

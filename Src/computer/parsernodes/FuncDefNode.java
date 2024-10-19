@@ -11,7 +11,6 @@ import computer.parsernodes.FuncReturnNode;
 import computer.parsernodes.FuncDefParamsNode;
 import computer.exceptions.ParseException;
 
-import java.lang.Exception;
 
 public class FuncDefNode implements JottTree {
     IDNode funcName;

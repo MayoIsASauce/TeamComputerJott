@@ -17,7 +17,9 @@ public interface ExprNode extends JottTree {
         Token token = tokens.get(0);
 
         // first set for boolean
-        if (token.getTokenType() == TokenType.ID_KEYWORD && (token.getToken().equals("True") || token.getToken().equals("False"))) {
+        if (token.getTokenType() == TokenType.ID_KEYWORD
+            && (token.getToken().equals("True")
+            || token.getToken().equals("False"))) {
             return BoolNode.parse(tokens);
         }
 

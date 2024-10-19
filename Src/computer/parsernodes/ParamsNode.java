@@ -46,14 +46,6 @@ public class ParamsNode implements JottTree {
             return new ParamsNode(params);
         }
 
-        // NOTE: this shouldnt be here, if you look at the grammer the [ is part of func call
-        // so it should be removed there before this parsing begins
-        // Check if the first token is the opening bracket "["
-        // if (!tokens.get(0).getToken().equals("[")) {
-        //     throw new ParseException("Expected '[' at the beginning of parameters");
-        // }
-        // tokens.remove(0); // Consume "["
-
         // Loop to collect parameters, separated by commas
         while (!tokens.get(0).getToken().equals("]")) {
             // Parse each parameter (an expression)
@@ -75,7 +67,6 @@ public class ParamsNode implements JottTree {
         if (!tokens.get(0).getToken().equals("]")) {
             throw new ParseException("Expected ']' at the end of parameters");
         }
-        // tokens.remove(0); // Consume "]"
 
         // Return the ParamsNode with the parsed parameters
         return new ParamsNode(params);

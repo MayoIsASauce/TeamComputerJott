@@ -88,13 +88,8 @@ public class IfStatementNode implements BodyStatementNode {
         ElseNode elseNode = null;
 
         if(tokens.get(0).getToken().equals("Else")) {
-            //Do we want to throw an error if there is no else clause?
             elseNode = ElseNode.parse(tokens);
         }
-        
-        // if(!tokens.get(0).getToken().equals("Else")) {
-        //     throw new ParseException();
-        // }
 
         return new IfStatementNode(expr, body, elseIfs, elseNode);
 
