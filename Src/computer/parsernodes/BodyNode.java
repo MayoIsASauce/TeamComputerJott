@@ -29,11 +29,11 @@ public class BodyNode implements JottTree {
         String toReturn = "";
         while(!bodyStatements.isEmpty()) {
             //Once again depends on the handling of the open brace whether its held in function definition or not
-            toReturn = "{";
+            toReturn = "";
             toReturn += bodyStatements.get(0).convertToJott();
             bodyStatements.remove(0);
             toReturn += returnStatement.convertToJott();
-            toReturn += "}";
+            toReturn += "";
         }
         return toReturn;
     }
@@ -55,13 +55,13 @@ public class BodyNode implements JottTree {
             tokens.remove(0);
         }
 
-        if(!tokens.get(0).getToken().equals("rbrace")) {
-            throw new ParseException("No } found");
-        }
+        // if(!tokens.get(0).getToken().equals("rbrace")) {
+        //     throw new ParseException("No } found");
+        // }
 
-        if(tokens.get(0).getToken().equals("rbrace")) {
-            tokens.remove(0);
-        }
+        // if(tokens.get(0).getToken().equals("rbrace")) {
+        //     tokens.remove(0);
+        // }
 
         return new BodyNode(bodyStatements, returnStatement);
 

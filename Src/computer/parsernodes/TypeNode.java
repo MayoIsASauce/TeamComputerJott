@@ -23,13 +23,13 @@ public class TypeNode implements JottTree {
     @Override
     public String convertToJott() {
         switch (type) {
-            case Types.DOUBLE:
+            case DOUBLE:
                 return "Double";
-            case Types.BOOLEAN:
+            case BOOLEAN:
                 return "Boolean";
-            case Types.STRING:
+            case STRING:
                 return "String";
-            case Types.INTEGER:
+            case INTEGER:
                 return "Integer";
             default:
                 return null;
@@ -41,12 +41,16 @@ public class TypeNode implements JottTree {
         if (curr_token.getTokenType() == TokenType.ID_KEYWORD) {
             switch (curr_token.getToken()) {
                 case "Double":
+                    tokens.remove(0);
                     return new TypeNode(Types.DOUBLE);
                 case "Integer":
+                    tokens.remove(0);
                     return new TypeNode(Types.INTEGER);
                 case "String":
+                    tokens.remove(0);
                     return new TypeNode(Types.STRING);
                 case "Boolean":
+                    tokens.remove(0);
                     return new TypeNode(Types.BOOLEAN);
                 default:
                     throw new ParseException("Parser Exception\nTypeNode received invalid type \""+curr_token.getToken()+"\", expected one of type: (Double, Integer, String, Boolean)");

@@ -25,7 +25,10 @@ public class JottParser {
         return ProgramNode.parse(tokens); 
       } 
       catch (ParseException e) {
-        System.out.println(e.getMessage());
+        e.printStackTrace(System.out);
+
+        Token t = tokens.get(0);
+        System.out.println("Failed on line " + t.getLineNum() + ", token was \"" + t.getToken() + "\" of type " + t.getTokenType().toString());
 		    return null;
       }
     }
