@@ -26,9 +26,9 @@ public class FuncReturnNode implements JottTree {
     public String convertToJott() {
         if (returnType != null) {
             return returnType.convertToJott();
+        } else {
+            return "Void";
         }
-        
-        return "Void";
         
     }
 
