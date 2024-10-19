@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import provided.JottTree;
 import provided.Token;
 import provided.TokenType;
-import computer.ExprNode;
+import computer.parsernodes.ExprNode;
 import computer.exceptions.ParseException;
 
 public class StringLiteralNode implements ExprNode {

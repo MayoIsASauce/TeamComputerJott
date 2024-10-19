@@ -4,8 +4,18 @@ import java.util.ArrayList;
 
 import provided.JottTree;
 import provided.Token;
+import provided.TokenType;
+import computer.exceptions.ParseException;
+import computer.parsernodes.BodyNode;
+
 
 public class FuncReturnNode implements JottTree {
+
+    TypeNode returnType;
+    public FuncReturnNode(TypeNode returnType) {
+        this.returnType = returnType;
+    }
+
     @Override
     public boolean validateTree() {
         // TODO Auto-generated method stub
@@ -14,13 +24,23 @@ public class FuncReturnNode implements JottTree {
 
     @Override
     public String convertToJott() {
-        // TODO Auto-generated method stub
+        if (returnType != null) {
+            returnType.convertToJott();
+        } else {
+            return "Void";
+        }
         return null;
     }
 
-    public static FuncReturnNode parse(ArrayList<Token> tokens) {
+    public static FuncReturnNode parse(ArrayList<Token> tokens) throws ParseException {
+        Token currToken = tokens.get(0);
 
-        return new FuncReturnNode();
+        if (currToken.getTokenType() == TokenType.ID_KEYWORD) {
+            if (currToken.getToken() == "Void") return new FuncReturnNode(null);
+            return new FuncReturnNode(TypeNode.parse(tokens));
+        }
+        String msg = "Parser Exception\nFuncReturnNode received invalid type \""+currToken.getTokenType()+"\", expected: ID_KEYWORD";
+        throw new ParseException(msg);
     }
 
     @Override

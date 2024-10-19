@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import provided.JottTree;
 import provided.Token;
 import provided.TokenType;
-import computer.OperandNode;
+import computer.parsernodes.OperandNode;
 import computer.exceptions.ParseException;
 
 public class NumNode implements OperandNode {
