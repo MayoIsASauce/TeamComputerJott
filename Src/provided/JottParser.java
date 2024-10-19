@@ -23,7 +23,6 @@ public class JottParser {
 
       try {
         ProgramNode node = ProgramNode.parse(tokens); 
-        System.out.println("DBG: " + node.convertToJott());
 
         return node;
       } 

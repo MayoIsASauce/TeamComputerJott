@@ -1,1 +1,1 @@
-Def foo[]:Void{while=5.0;::print[while];}
+Def foo[]:Void{while=5;::print[while];}

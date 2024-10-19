@@ -49,17 +49,21 @@ public class NumNode implements OperandNode {
         int multiplier = isNegative ? -1 : 1;
         // try to parse as float, if not then parse as int, if neither then parseexception
         try {
-            float floatrep = Float.parseFloat(token.getToken());
+            int intrep = Integer.parseInt(token.getToken());
             tokens.remove(0);
-            return new NumNode(floatrep * multiplier);
+            return new NumNode(intrep * multiplier);
         } catch (NumberFormatException e) {
-            try {
-                int intrep = Integer.parseInt(token.getToken());
+            try
+            {
+                float floatrep = Float.parseFloat(token.getToken());
                 tokens.remove(0);
-                return new NumNode(intrep * multiplier);
-            } catch (NumberFormatException eInner) {
+                return new NumNode(floatrep * multiplier);
+            }
+            catch (NumberFormatException eInner)
+            {
                 throw new ParseException("Invalid number token: " + token.getToken());
             }
+
         }
         // unreachable
     }
