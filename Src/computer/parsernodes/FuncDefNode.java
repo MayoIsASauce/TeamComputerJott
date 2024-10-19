@@ -79,6 +79,8 @@ public class FuncDefNode implements JottTree {
             throw new ParseException("'}' missing after function body in function definition");
         }
 
+        tokens.remove(0);
+
         return new FuncDefNode(name, params, returnNode, bodyNode);
     }
 
