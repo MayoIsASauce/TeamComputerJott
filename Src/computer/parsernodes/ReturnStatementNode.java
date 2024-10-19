@@ -40,7 +40,7 @@ public class ReturnStatementNode implements JottTree {
     public static ReturnStatementNode parse(ArrayList<Token> tokens) throws ParseException{
         
         if(!tokens.get(0).getToken().equals("Return")
-            || tokens.get(0).getTokenType() != TokenType.R_BRACE) {
+            && tokens.get(0).getTokenType() != TokenType.R_BRACE) {
             throw new ParseException("Return or '}' expected");
         }
         

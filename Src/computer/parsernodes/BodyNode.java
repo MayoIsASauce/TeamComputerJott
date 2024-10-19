@@ -48,8 +48,8 @@ public class BodyNode implements JottTree {
 
         // while(!tokens.get(0).getToken().equals("rbrace")) {
 
-            while (! (tokens.get(0).getToken().equals("Return")
-                    || tokens.get(0).getTokenType() != TokenType.R_BRACE ))
+            while (!tokens.get(0).getToken().equals("Return")
+                    && tokens.get(0).getTokenType() != TokenType.R_BRACE )
             {
                 bodyStatements.add(BodyStatementNode.parse(tokens));
             } 
