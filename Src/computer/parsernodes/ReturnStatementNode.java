@@ -14,6 +14,11 @@ public class ReturnStatementNode implements JottTree {
         this.expr = expr;
     }
 
+    public ReturnStatementNode()
+    {
+        this.expr = null;
+    }
+
     @Override
     public boolean validateTree() {
         // TODO Auto-generated method stub
@@ -22,17 +27,27 @@ public class ReturnStatementNode implements JottTree {
 
     @Override
     public String convertToJott() {
-        String toReturn = "return ";
+        if (this.expr == null)
+        {
+            return "";
+        }
+
+        String toReturn = "Return ";
         toReturn += expr.convertToJott();
         return toReturn;
     }
 
     public static ReturnStatementNode parse(ArrayList<Token> tokens) throws ParseException{
         
-        if(!tokens.get(0).getToken().equals("Return")) {
-            throw new ParseException("Return expected");
+        if(!tokens.get(0).getToken().equals("Return")
+            || tokens.get(0).getTokenType() != TokenType.R_BRACE) {
+            throw new ParseException("Return or '}' expected");
         }
         
+        if (tokens.get(0).getTokenType() == TokenType.R_BRACE)
+        {
+            return new ReturnStatementNode();
+        }
         tokens.remove(0);
 
         ExprNode expr = ExprNode.parse(tokens);
