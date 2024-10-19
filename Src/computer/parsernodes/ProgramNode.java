@@ -43,7 +43,7 @@ public class ProgramNode implements JottTree
 
         for (FuncDefNode funcDefNode : fDefNodes)
         {
-            result += funcDefNode;
+            result += funcDefNode.convertToJott();
         }
 
         return result;

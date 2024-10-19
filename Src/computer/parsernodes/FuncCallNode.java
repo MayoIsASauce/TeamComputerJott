@@ -11,10 +11,13 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
     IDNode funcName;
     ParamsNode params;
 
-    public FuncCallNode(IDNode funcName, ParamsNode params)
+    boolean isInBody;
+
+    public FuncCallNode(IDNode funcName, ParamsNode params, boolean isInBody)
     {
         this.funcName = funcName;
         this.params = params;
+        this.isInBody = isInBody;
     }
 
     @Override
@@ -27,7 +30,12 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
     @Override
     public String convertToJott()
     {
-        String result = "::" + funcName.toString() + "[" + params.toString() + "]";
+        String result = "::" + funcName.convertToJott() + "[" + params.convertToJott() + "]";
+
+        if (isInBody)
+        {
+            result += ";";
+        }
 
         return result;
     }
@@ -61,7 +69,16 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
 
         tokens.remove(0);
 
-        return new FuncCallNode(funcName, params);
+        if (tokens.get(0).getTokenType() == TokenType.SEMICOLON)
+        {
+            return new FuncCallNode(funcName, params, true);
+        }
+        else
+        {
+            return new FuncCallNode(funcName, params, false);
+        }
+
+        
     }
 
     @Override

@@ -22,7 +22,10 @@ public class JottParser {
     public static JottTree parse(ArrayList<Token> tokens) {
 
       try {
-        return ProgramNode.parse(tokens); 
+        ProgramNode node = ProgramNode.parse(tokens); 
+        System.out.println("DBG: " + node.convertToJott());
+
+        return node;
       } 
       catch (ParseException e) {
         e.printStackTrace(System.out);

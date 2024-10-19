@@ -44,11 +44,11 @@ public class FuncDefParamsNode implements JottTree {
             return "";
         }
 
-        String result = paramName + ":" + paramType;
+        String result = paramName.convertToJott() + ":" + paramType.convertToJott();
 
         for (FuncDefParamsTailNode tailNode : paramsTailArray)
         {
-            result += tailNode;
+            result += tailNode.convertToJott();
         }
 
         return result;

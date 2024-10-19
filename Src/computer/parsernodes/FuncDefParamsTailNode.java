@@ -26,7 +26,7 @@ public class FuncDefParamsTailNode implements JottTree {
     @Override
     public String convertToJott()
     {
-        String result = "," + id +  ":" + type;
+        String result = "," + id.convertToJott() +  ":" + type.convertToJott();
         return result;
     }
 
