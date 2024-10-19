@@ -10,7 +10,7 @@ import computer.parsernodes.MathOpNode;
 import computer.parsernodes.RelOpNode;
 import computer.parsernodes.OperandNode;
 
-class BinaryExprNode implements ExprNode {
+public class BinaryExprNode implements ExprNode {
     MathOpNode mathOp;
     RelOpNode relOp;
     OperandNode lhs;
