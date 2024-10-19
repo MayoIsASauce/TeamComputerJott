@@ -22,7 +22,16 @@ public interface BodyStatementNode extends JottTree
         if (token.getTokenType() == TokenType.FC_HEADER)
         {
             // Func_call
-            return FuncCallNode.parse(tokens);
+            FuncCallNode node = FuncCallNode.parse(tokens);
+
+            if (tokens.get(0).getTokenType() != TokenType.SEMICOLON)
+            {
+                throw new ParseException("Function call must end with ';'");
+            }
+
+            tokens.remove(0);
+
+            return node;
         }
         else if (token.getTokenType() == TokenType.ID_KEYWORD &&
                 token.getToken().equals("If"))

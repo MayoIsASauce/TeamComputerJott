@@ -42,10 +42,10 @@ public class ParamsNode implements JottTree {
         List<JottTree> params = new ArrayList<>();
 
         // Check if the first token is the opening bracket "["
-        if (!tokens.get(0).getToken().equals("[")) {
-            throw new ParseException("Expected '[' at the beginning of parameters");
-        }
-        tokens.remove(0); // Consume "["
+        // if (!tokens.get(0).getToken().equals("[")) {
+        //     throw new ParseException("Expected '[' at the beginning of parameters");
+        // }
+        // tokens.remove(0); // Consume "["
 
         // Loop to collect parameters, separated by commas
         while (!tokens.get(0).getToken().equals("]")) {
@@ -68,7 +68,7 @@ public class ParamsNode implements JottTree {
         if (!tokens.get(0).getToken().equals("]")) {
             throw new ParseException("Expected ']' at the end of parameters");
         }
-        tokens.remove(0); // Consume "]"
+        // tokens.remove(0); // Consume "]"
 
         // Return the ParamsNode with the parsed parameters
         return new ParamsNode(params);

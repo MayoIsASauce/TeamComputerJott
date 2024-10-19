@@ -45,15 +45,16 @@ public class BodyNode implements JottTree {
         ArrayList<BodyStatementNode> bodyStatements = new ArrayList<>();
         ReturnStatementNode returnStatement = new ReturnStatementNode(null);
 
-        while(!tokens.get(0).getToken().equals("rbrace")) {
+        // while(!tokens.get(0).getToken().equals("rbrace")) {
 
-            if(tokens.get(0).getToken().equals("Return")) {
-              returnStatement = ReturnStatementNode.parse(tokens);
-              tokens.remove(0);
+            while (!tokens.get(0).getToken().equals("Return"))
+            {
+                bodyStatements.add(BodyStatementNode.parse(tokens));
             } 
-            bodyStatements.add(BodyStatementNode.parse(tokens));
-            tokens.remove(0);
-        }
+
+            returnStatement = ReturnStatementNode.parse(tokens);
+            
+        // }
 
         // if(!tokens.get(0).getToken().equals("rbrace")) {
         //     throw new ParseException("No } found");

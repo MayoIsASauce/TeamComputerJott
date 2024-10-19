@@ -3,6 +3,7 @@ package computer.parsernodes;
 import java.util.ArrayList;
 
 import provided.Token;
+import provided.TokenType;
 import computer.exceptions.ParseException;
 
 public class FuncCallNode implements OperandNode, BodyStatementNode {
@@ -33,18 +34,17 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
 
     public static FuncCallNode parse(ArrayList<Token> tokens) throws ParseException
     {
-        if (!tokens.get(0).getToken().equals(":") || !tokens.get(1).getToken().equals(":"))
+        if (tokens.get(0).getTokenType() != TokenType.FC_HEADER)
         {
             throw new ParseException("Function call node must start with \"::\"");
         }
 
         tokens.remove(0);
-        tokens.remove(0);
 
         IDNode funcName = IDNode.parse(tokens);
 
         // "["
-        if (!tokens.get(0).getToken().equals("["))
+        if (tokens.get(0).getTokenType() != TokenType.L_BRACKET)
         {
             throw new ParseException("'[' missing after function name in function call");
         }
@@ -54,7 +54,7 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
         ParamsNode params = ParamsNode.parse(tokens);
 
         // "]"
-        if (!tokens.get(0).getToken().equals("]"))
+        if (tokens.get(0).getTokenType() != TokenType.R_BRACKET)
         {
             throw new ParseException("']' missing after parameters in function call");
         }

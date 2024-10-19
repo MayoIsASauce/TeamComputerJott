@@ -4,6 +4,7 @@ import computer.exceptions.ParseException;
 import java.util.ArrayList;
 import provided.JottTree;
 import provided.Token;
+import provided.TokenType;
 
 public class ReturnStatementNode implements JottTree {
 
@@ -35,6 +36,11 @@ public class ReturnStatementNode implements JottTree {
         tokens.remove(0);
 
         ExprNode expr = ExprNode.parse(tokens);
+
+        if (tokens.get(0).getTokenType() != TokenType.SEMICOLON)
+        {
+            throw new ParseException("Missing ';' in return statement");
+        }
         
         return new ReturnStatementNode(expr);
 
