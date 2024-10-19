@@ -2,11 +2,8 @@ package computer.parsernodes;
 
 import java.util.ArrayList;
 
-import provided.JottTree;
 import provided.Token;
-import computer.OperandNode;
-import computer.BodyStatementNode;
-import java.lang.Exception;
+import computer.exceptions.ParseException;
 
 public class FuncCallNode implements OperandNode, BodyStatementNode {
 
@@ -34,11 +31,11 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
         return result;
     }
 
-    public static FuncCallNode parse(ArrayList<Token> tokens) throws Exception
+    public static FuncCallNode parse(ArrayList<Token> tokens) throws ParseException
     {
         if (!tokens.get(0).getToken().equals(":") || !tokens.get(1).getToken().equals(":"))
         {
-            throw new Exception("Function call node must start with \"::\"");
+            throw new ParseException("Function call node must start with \"::\"");
         }
 
         tokens.remove(0);
@@ -49,7 +46,7 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
         // "["
         if (!tokens.get(0).getToken().equals("["))
         {
-            throw new Exception();
+            throw new ParseException("'[' missing after function name in function call");
         }
 
         tokens.remove(0);
@@ -59,7 +56,7 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
         // "]"
         if (!tokens.get(0).getToken().equals("]"))
         {
-            throw new Exception();
+            throw new ParseException("']' missing after parameters in function call");
         }
 
         tokens.remove(0);

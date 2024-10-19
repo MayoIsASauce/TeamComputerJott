@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import provided.JottTree;
 import provided.Token;
 import computer.parsernodes.IDNode;
+import computer.exceptions.ParseException;
 import computer.parsernodes.FuncDefParamsNode;
 
 import java.lang.Exception;
@@ -24,12 +25,12 @@ public class FuncDefNode implements JottTree {
         this.body = body;
     }
 
-    public static FuncDefNode parse(ArrayList<Token> tokens) throws Exception
+    public static FuncDefNode parse(ArrayList<Token> tokens) throws ParseException
     {
 
         if (!tokens.get(0).getToken().equals("Def"))
         {
-            throw new Exception();
+            throw new ParseException("Function Definition must start with the 'Def' keyword");
         }
 
         tokens.remove(0);
@@ -38,7 +39,7 @@ public class FuncDefNode implements JottTree {
 
         if (!tokens.get(0).getToken().equals("["))
         {
-            throw new Exception();
+            throw new ParseException("'[' missing after function name in function definition");
         }
 
         tokens.remove(0);
@@ -47,14 +48,14 @@ public class FuncDefNode implements JottTree {
 
         if (!tokens.get(0).getToken().equals("]"))
         {
-            throw new Exception();
+            throw new ParseException("']' missing after parameters in function definition");
         }
 
         tokens.remove(0);
 
         if (!tokens.get(0).getToken().equals(":"))
         {
-            throw new Exception();
+            throw new ParseException("':' missing after parameters in function definition");
         }
 
         tokens.remove(0);
@@ -63,14 +64,14 @@ public class FuncDefNode implements JottTree {
 
         if (!tokens.get(0).getToken().equals("{")) 
         {
-            throw new Exception();
+            throw new ParseException("'{' missing after function return in function definition");
         }
 
         FuncBodyNode bodyNode = FuncBodyNode.parse(tokens);
 
         if (!tokens.get(0).getToken().equals("}")) 
         {
-            throw new Exception();
+            throw new ParseException("'}' missing after function body in function definition");
         }
 
         return new FuncDefNode(name, params, returnNode, bodyNode);

@@ -2,6 +2,7 @@ package computer.parsernodes;
 
 import java.util.ArrayList;
 
+import computer.exceptions.ParseException;
 import provided.JottTree;
 import provided.Token;
 
@@ -53,7 +54,7 @@ public class FuncDefParamsNode implements JottTree {
         return result;
     }
 
-    public static FuncDefParamsNode parse(ArrayList<Token> tokens) throws Exception
+    public static FuncDefParamsNode parse(ArrayList<Token> tokens) throws ParseException
     {
         // Check follow set ("]"), if found, return Epsilon
         // "]"
@@ -66,7 +67,7 @@ public class FuncDefParamsNode implements JottTree {
         
         if (!tokens.get(0).getToken().equals(":"))
         {
-            throw new Exception();
+            throw new ParseException("':' missing after parameter name");
         }
 
         tokens.remove(0);

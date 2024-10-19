@@ -2,6 +2,7 @@ package computer.parsernodes;
 
 import java.util.ArrayList;
 
+import computer.exceptions.ParseException;
 import provided.JottTree;
 import provided.Token;
 import provided.TokenType;
@@ -15,7 +16,7 @@ public interface BodyStatementNode extends JottTree
     public String convertToJott();
 
 
-    public static BodyStatementNode parse(ArrayList<Token> tokens) throws Exception
+    public static BodyStatementNode parse(ArrayList<Token> tokens) throws ParseException
     {
         Token token = tokens.get(0);
         if (token.getTokenType() == TokenType.FC_HEADER)
@@ -42,7 +43,7 @@ public interface BodyStatementNode extends JottTree
         }
         else
         {
-            throw new Exception("Invalid token for body statement");
+            throw new ParseException("Invalid token for body statement");
         }
     }
 
