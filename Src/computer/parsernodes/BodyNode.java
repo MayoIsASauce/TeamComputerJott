@@ -28,14 +28,16 @@ public class BodyNode implements JottTree {
     public String convertToJott() {
         
         String toReturn = "";
-        while(!bodyStatements.isEmpty()) {
+        
+        for (int ii = 0; ii < bodyStatements.size(); ii++) {
             //Once again depends on the handling of the open brace whether its held in function definition or not
-            toReturn = "";
-            toReturn += bodyStatements.get(0).convertToJott();
-            bodyStatements.remove(0);
-            toReturn += returnStatement.convertToJott();
-            toReturn += "";
+            toReturn += bodyStatements.get(ii).convertToJott();
+            // bodyStatements.remove(0);
         }
+
+        toReturn += returnStatement.convertToJott();
+        toReturn += "";
+
         return toReturn;
     }
 

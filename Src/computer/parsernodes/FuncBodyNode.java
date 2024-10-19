@@ -25,7 +25,7 @@ public class FuncBodyNode implements JottTree {
     public String convertToJott() {
 
         String toReturn = "";
-        while(varDecList.isEmpty()) {
+        while(!varDecList.isEmpty()) {
             toReturn += varDecList.get(0).convertToJott();
             varDecList.remove(0);
         }
@@ -39,7 +39,10 @@ public class FuncBodyNode implements JottTree {
 
         ArrayList<JottTree> varDecList = new ArrayList<>();
 
-        while(tokens.get(0).getToken().equals("Double") || tokens.get(0).getToken().equals("Integer") || tokens.get(0).getToken().equals("String") || tokens.get(0).getToken().equals("Boolean")) {
+        while(tokens.get(0).getTokenType().equals("Double")
+        || tokens.get(0).getToken().equals("Integer")
+        || tokens.get(0).getToken().equals("String")
+        || tokens.get(0).getToken().equals("Boolean")) {
             varDecList.add(VarDeclarationNode.parse(tokens));
         }
 

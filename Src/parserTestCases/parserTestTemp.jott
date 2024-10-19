@@ -1,1 +1,1 @@
-Def computer.parsernodes.IDNode@7205765b[computer.parsernodes.FuncDefParamsNode@47987356]:computer.parsernodes.FuncReturnNode@22ef9844{computer.parsernodes.FuncBodyNode@6283d8b8}Def computer.parsernodes.IDNode@3b6ddd1d[computer.parsernodes.FuncDefParamsNode@3f6b0be5]:computer.parsernodes.FuncReturnNode@611889f4{computer.parsernodes.FuncBodyNode@1da2cb77}
+Def foo[]:Void{while=5.0;::print[while];}

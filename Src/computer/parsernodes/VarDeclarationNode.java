@@ -36,15 +36,11 @@ public class VarDeclarationNode implements JottTree {
             throw new ParseException("Cannot parse type from " + tokens.get(0).getTokenType() + " token.");
         }
 
-        tokens.remove(0);
-
         if (tokens.get(0).getTokenType() == TokenType.ID_KEYWORD) {
             id = IDNode.parse(tokens);
         } else {
             throw new ParseException("Cannot parse id from " + tokens.get(0).getTokenType() + " token.");
         }
-
-        tokens.remove(0);
 
         if (tokens.get(0).getTokenType() != TokenType.SEMICOLON) {
             throw new ParseException("Missing semicolon");
