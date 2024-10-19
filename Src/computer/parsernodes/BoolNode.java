@@ -28,9 +28,11 @@ public class BoolNode implements ExprNode {
         
         if (currToken.getTokenType() == TokenType.ID_KEYWORD) {
             if (currToken.getToken().equals("True")) {
+                tokens.remove(0);
                 return new BoolNode(true);
             } 
             else if (currToken.getToken().equals("False")) {
+                tokens.remove(0);
                 return new BoolNode(false);
             } else {
                 throw new ParseException("Invalid keyword for boolNode: " + currToken.getToken() + ", must be one of (True or False)");

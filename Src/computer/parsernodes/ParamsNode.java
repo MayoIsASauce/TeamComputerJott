@@ -41,6 +41,13 @@ public class ParamsNode implements JottTree {
     public static ParamsNode parse(ArrayList<Token> tokens) throws ParseException {
         List<JottTree> params = new ArrayList<>();
 
+        if (tokens.get(0).getTokenType() == TokenType.R_BRACE) {
+            // empty params
+            return new ParamsNode(params);
+        }
+
+        // NOTE: this shouldnt be here, if you look at the grammer the [ is part of func call
+        // so it should be removed there before this parsing begins
         // Check if the first token is the opening bracket "["
         // if (!tokens.get(0).getToken().equals("[")) {
         //     throw new ParseException("Expected '[' at the beginning of parameters");
