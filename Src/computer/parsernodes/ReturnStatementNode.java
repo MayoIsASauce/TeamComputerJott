@@ -34,6 +34,7 @@ public class ReturnStatementNode implements JottTree {
 
         String toReturn = "Return ";
         toReturn += expr.convertToJott();
+        toReturn += ";";
         return toReturn;
     }
 
