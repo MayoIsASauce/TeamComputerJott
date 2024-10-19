@@ -25,11 +25,11 @@ public class FuncReturnNode implements JottTree {
     @Override
     public String convertToJott() {
         if (returnType != null) {
-            returnType.convertToJott();
-        } else {
-            return "Void";
+            return returnType.convertToJott();
         }
-        return null;
+        
+        return "Void";
+        
     }
 
     public static FuncReturnNode parse(ArrayList<Token> tokens) throws ParseException {
@@ -42,7 +42,7 @@ public class FuncReturnNode implements JottTree {
                 tokens.remove(0);
                 return new FuncReturnNode(null);
             }
-            
+
             return new FuncReturnNode(TypeNode.parse(tokens));
         }
         String msg = "Parser Exception\nFuncReturnNode received invalid type \""+currToken.getTokenType()+"\", expected: ID_KEYWORD";
