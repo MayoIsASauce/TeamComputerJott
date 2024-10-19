@@ -25,17 +25,17 @@ public class RelOpNode implements JottTree {
     @Override
     public String convertToJott() {
         switch (type) {
-            case RelOpType.LESS_THAN:
+            case LESS_THAN:
                 return "<";
-            case RelOpType.EQ:
+            case EQ:
                 return "=";
-            case RelOpType.GREATER_THAN:
+            case GREATER_THAN:
                 return ">";
-            case RelOpType.LESS_THAN_EQ:
+            case LESS_THAN_EQ:
                 return "<=";
-            case RelOpType.GREATER_THAN_EQ:
+            case GREATER_THAN_EQ:
                 return ">=";
-            // case RelOpType.NOT_EQ:
+            // case NOT_EQ:
             default:
                 return "!=";
             // default:
