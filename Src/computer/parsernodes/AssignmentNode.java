@@ -31,15 +31,13 @@ public class AssignmentNode implements BodyStatementNode {
         ExprNode nExpr;
 
         nId = IDNode.parse(tokens);
-        tokens.remove(0);
 
         if (tokens.get(0).getTokenType() != TokenType.ASSIGN) {
             throw new ParseException("Missing '=' in AssignmentNode");
         }
-        tokens.remove(0);
+        tokens.remove(0); // eat assignment = sign
 
         nExpr = ExprNode.parse(tokens);
-        tokens.remove(0);
 
         if (tokens.get(0).getTokenType() == TokenType.SEMICOLON) {
             tokens.remove(0);
