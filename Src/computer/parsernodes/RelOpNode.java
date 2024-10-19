@@ -35,10 +35,11 @@ public class RelOpNode implements JottTree {
                 return "<=";
             case RelOpType.GREATER_THAN_EQ:
                 return ">=";
-            case RelOpType.NOT_EQ:
-                return "!=";
+            // case RelOpType.NOT_EQ:
             default:
-                throw new Exception("RelOpType " + type + " convertToJott not implemented");
+                return "!=";
+            // default:
+            //     throw new Exception("RelOpType " + type + " convertToJott not implemented");
         }
     }
 

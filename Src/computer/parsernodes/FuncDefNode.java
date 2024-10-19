@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import provided.JottTree;
 import provided.Token;
+import provided.TokenType;
 import computer.parsernodes.IDNode;
 import computer.parsernodes.FuncBodyNode;
 import computer.parsernodes.FuncReturnNode;
@@ -39,7 +40,7 @@ public class FuncDefNode implements JottTree {
 
         IDNode name = IDNode.parse(tokens);
 
-        if (!tokens.get(0).getToken().equals("["))
+        if (tokens.get(0).getTokenType() != TokenType.L_BRACKET)
         {
             throw new ParseException("'[' missing after function name in function definition");
         }
@@ -48,14 +49,14 @@ public class FuncDefNode implements JottTree {
 
         FuncDefParamsNode params = FuncDefParamsNode.parse(tokens);
 
-        if (!tokens.get(0).getToken().equals("]"))
+        if (tokens.get(0).getTokenType() != TokenType.R_BRACKET)
         {
             throw new ParseException("']' missing after parameters in function definition");
         }
 
         tokens.remove(0);
 
-        if (!tokens.get(0).getToken().equals(":"))
+        if (tokens.get(0).getTokenType() != TokenType.COLON)
         {
             throw new ParseException("':' missing after parameters in function definition");
         }
@@ -64,10 +65,12 @@ public class FuncDefNode implements JottTree {
 
         FuncReturnNode returnNode = FuncReturnNode.parse(tokens);
 
-        if (!tokens.get(0).getToken().equals("{")) 
+        if (tokens.get(0).getTokenType() != TokenType.L_BRACE) 
         {
             throw new ParseException("'{' missing after function return in function definition");
         }
+
+        tokens.remove(0);
 
         FuncBodyNode bodyNode = FuncBodyNode.parse(tokens);
 
