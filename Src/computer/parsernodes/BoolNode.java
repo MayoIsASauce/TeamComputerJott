@@ -20,18 +20,17 @@ public class BoolNode implements ExprNode {
 
     @Override
     public String convertToJott() {
-        // TODO Auto-generated method stub
-        return null;
+        return value ? "True" : "False";
     }
 
     public static BoolNode parse(ArrayList<Token> tokens) throws ParseException {
         Token currToken = tokens.get(0);
         
         if (currToken.getTokenType() == TokenType.ID_KEYWORD) {
-            if (currToken.getToken() == "True") {
+            if (currToken.getToken().equals("True")) {
                 return new BoolNode(true);
             } 
-            else if (currToken.getToken() == "False") {
+            else if (currToken.getToken().equals("False")) {
                 return new BoolNode(false);
             } else {
                 throw new ParseException("Invalid keyword for boolNode: " + currToken.getToken() + ", must be one of (True or False)");
