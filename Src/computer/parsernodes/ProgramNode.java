@@ -2,6 +2,7 @@ package computer.parsernodes;
 
 import java.util.ArrayList;
 
+import computer.exceptions.ParseException;
 import provided.JottTree;
 import provided.Token;
 
@@ -14,7 +15,7 @@ public class ProgramNode implements JottTree
         this.fDefNodes = nodes;
     }
 
-    public static ProgramNode parse(ArrayList<Token> tokens) throws Exception
+    public static ProgramNode parse(ArrayList<Token> tokens) throws ParseException
     {
         ArrayList<FuncDefNode> nodes = new ArrayList<>();
 
