@@ -39,7 +39,9 @@ public class IfStatementNode implements BodyStatementNode {
             toReturn += elseIfs.get(0).convertToJott();
             elseIfs.remove(0);
         }
-        toReturn += elseNode.convertToJott();
+        if (elseNode != null) {
+            toReturn += elseNode.convertToJott();
+        }
         return toReturn;
     }
 
