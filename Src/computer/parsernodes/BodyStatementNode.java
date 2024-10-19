@@ -23,6 +23,7 @@ public interface BodyStatementNode extends JottTree
         {
             // Func_call
             FuncCallNode node = FuncCallNode.parse(tokens);
+            node.setInBody();
 
             if (tokens.get(0).getTokenType() != TokenType.SEMICOLON)
             {

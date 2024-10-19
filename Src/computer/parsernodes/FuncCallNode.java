@@ -13,11 +13,16 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
 
     boolean isInBody;
 
-    public FuncCallNode(IDNode funcName, ParamsNode params, boolean isInBody)
+    public FuncCallNode(IDNode funcName, ParamsNode params)
     {
         this.funcName = funcName;
         this.params = params;
-        this.isInBody = isInBody;
+        this.isInBody = false;
+    }
+
+    public void setInBody()
+    {
+        isInBody = true;
     }
 
     @Override
@@ -69,15 +74,7 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
 
         tokens.remove(0);
 
-        if (tokens.get(0).getTokenType() == TokenType.SEMICOLON)
-        {
-            return new FuncCallNode(funcName, params, true);
-        }
-        else
-        {
-            return new FuncCallNode(funcName, params, false);
-        }
-
+        return new FuncCallNode(funcName, params);
         
     }
 
