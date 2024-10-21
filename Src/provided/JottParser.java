@@ -10,7 +10,7 @@ package provided;
 import java.util.ArrayList;
 
 import computer.exceptions.ParseException;
-import computer.parsernodes.*;
+import computer.parsernodes.ProgramNode;
 
 public class JottParser {
     /**
@@ -20,27 +20,24 @@ public class JottParser {
      *         or null upon an error in parsing.
      */
     public static JottTree parse(ArrayList<Token> tokens) {
-      // This template will change into root node?
-      JottTree parseTree = new Template(); 
 
       try {
-        throw new ParseException("Stubbed"); // delete me ;)
+        ProgramNode node = ProgramNode.parse(tokens); 
 
-        /*
-         * I'm guessing that we just throw a 
-         * loop here and kinda do a BFS? (shoutout APX)
-         * 
-         * I created the parse exception because I 
-         * figured we could just do a custom exception
-         * kind of like we did for phase 1 to handle
-         * everything.
-         * 
-         */
+        return node;
       } 
-      catch (ParseException e) {
+      catch (ParseException | IndexOutOfBoundsException e) {
+        if (e instanceof IndexOutOfBoundsException) {
+            System.out.println("Early EOF while parsing. incomplete program");
+            return null;
+        }
+        e.printStackTrace(System.out);
+
+        if (!tokens.isEmpty()) {
+          Token t = tokens.get(0);
+          System.out.println("Failed on line " + t.getLineNum() + ", token was \"" + t.getToken() + "\" of type " + t.getTokenType().toString());
+        }
 		    return null;
       }
-
-      // return parseTree;
     }
 }

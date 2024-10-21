@@ -95,9 +95,9 @@ public class JottParserTester {
                 return false;
             }
 
-            System.out.println("Orginal Jott Code:\n");
-            System.out.println(orginalJottCode);
-            System.out.println();
+            // System.out.println("Orginal Jott Code:\n");
+            // System.out.println(orginalJottCode);
+            // System.out.println();
 
             String jottCode = root.convertToJott();
             System.out.println("Resulting Jott Code:\n");
