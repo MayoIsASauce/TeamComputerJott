@@ -9,10 +9,14 @@ import computer.parsernodes.BinaryExprNode;
 import computer.parsernodes.StringLiteralNode;
 import computer.parsernodes.BoolNode;
 import computer.parsernodes.ExprNode;
+import computer.parsernodes.Types;
 
 import computer.exceptions.ParseException;
 
 public interface ExprNode extends JottTree {
+
+    public Types getDataType();
+
     public static ExprNode parse(ArrayList<Token> tokens) throws ParseException {
         Token token = tokens.get(0);
 
