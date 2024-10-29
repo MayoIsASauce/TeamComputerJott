@@ -46,6 +46,7 @@ public class VarDeclarationNode implements JottTree {
             throw new ParseException("Missing semicolon");
         } else {
             tokens.remove(0);
+            SymbolTable.instance().addVariableToCurrentScope(id.id(), nType.type());
             return new VarDeclarationNode(nType, id);
         }
     }

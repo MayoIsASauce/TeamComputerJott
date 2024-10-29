@@ -3,6 +3,7 @@ package computer.parsernodes;
 import java.util.ArrayList;
 
 import computer.exceptions.ParseException;
+import computer.parsernodes.Types;
 import provided.JottTree;
 import provided.Token;
 
@@ -14,6 +15,10 @@ public class FuncDefParamsTailNode implements JottTree {
     {
         this.id = id;
         this.type = type;
+    }
+
+    public Types type() {
+        return type.type(); // convert TypeNode to its inner Types value
     }
 
     @Override

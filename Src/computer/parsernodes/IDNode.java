@@ -15,6 +15,10 @@ public class IDNode implements OperandNode {
         this.id = id;
     }
 
+    public String id() {
+        return id;
+    }
+
     @Override
     public boolean validateTree() {
         // TODO Auto-generated method stub

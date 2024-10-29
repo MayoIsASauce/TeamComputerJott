@@ -10,6 +10,7 @@ import computer.parsernodes.FuncBodyNode;
 import computer.parsernodes.FuncReturnNode;
 import computer.parsernodes.FuncDefParamsNode;
 import computer.exceptions.ParseException;
+import computer.SymbolTable;
 
 
 public class FuncDefNode implements JottTree {
@@ -71,7 +72,13 @@ public class FuncDefNode implements JottTree {
 
         tokens.remove(0);
 
+        SymbolTable.instance().beginBuildingNewScope(name.id(), returnNode.type(), params.typesRepresentation());
+
+        // FuncBodyNode's parse should call variable declaration node's parse,
+        // which will insert variables into the symbol table
         FuncBodyNode bodyNode = FuncBodyNode.parse(tokens);
+
+        SymbolTable.instance().finishBuildingCurrentScope();
 
         if (!tokens.get(0).getToken().equals("}")) 
         {

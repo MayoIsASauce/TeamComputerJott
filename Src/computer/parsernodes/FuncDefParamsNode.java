@@ -3,6 +3,7 @@ package computer.parsernodes;
 import java.util.ArrayList;
 
 import computer.exceptions.ParseException;
+import computer.parsernodes.Types;
 import provided.JottTree;
 import provided.Token;
 
@@ -19,6 +20,20 @@ public class FuncDefParamsNode implements JottTree {
         this.paramName = paramName;
         this.paramType = paramType;
         this.paramsTailArray = paramsTailArray;
+    }
+
+    /// Convert the nodes of the tree into an easy array of the Types enum for
+    /// comparison, for example when checking if a function was called with the
+    /// correct arguments.
+    public ArrayList<Types> typesRepresentation() {
+        ArrayList<Types> types = new ArrayList<Types>();
+        if (this.paramType != null) {
+            types.add(paramType.type());
+            for (FuncDefParamsTailNode otherParam : paramsTailArray) {
+                types.add(otherParam.type());
+            }
+        }
+        return types;
     }
 
     public FuncDefParamsNode()

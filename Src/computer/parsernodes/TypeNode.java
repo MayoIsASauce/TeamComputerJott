@@ -3,6 +3,7 @@ package computer.parsernodes;
 import java.util.ArrayList;
 
 import computer.exceptions.ParseException;
+import computer.parsernodes.Types;
 import provided.JottTree;
 import provided.Token;
 import provided.TokenType;
@@ -12,6 +13,10 @@ public class TypeNode implements JottTree {
 
     public TypeNode(Types type) {
         this.type = type;
+    }
+
+    public Types type() {
+        return type;
     }
 
     @Override
