@@ -89,7 +89,7 @@ public class SymbolTable {
     public void finishBuildingCurrentScope() {
         assert !completed;
         assert currentScope != null;
-        exitScope();
+        currentScope = null;
     }
 
     /// Only valid to call while building symbol table, before execution
