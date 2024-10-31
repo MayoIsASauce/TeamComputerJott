@@ -2,6 +2,7 @@ package computer.parsernodes;
 
 import java.util.ArrayList;
 
+import computer.SymbolTable;
 import computer.exceptions.ParseException;
 import provided.JottTree;
 import provided.Token;

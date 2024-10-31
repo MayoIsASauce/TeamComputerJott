@@ -9,6 +9,7 @@ package provided;
 
 import java.util.ArrayList;
 
+import computer.SymbolTable;
 import computer.exceptions.ParseException;
 import computer.parsernodes.ProgramNode;
 
@@ -21,8 +22,11 @@ public class JottParser {
      */
     public static JottTree parse(ArrayList<Token> tokens) {
 
+      new SymbolTable(); // instantiate SymbolTable singleton
+
       try {
         ProgramNode node = ProgramNode.parse(tokens); 
+        SymbolTable.instance().finalize();
 
         return node;
       } 

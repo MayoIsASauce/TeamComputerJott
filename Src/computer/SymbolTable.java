@@ -2,8 +2,7 @@ package computer;
 
 import java.util.HashMap;
 import java.util.ArrayList;
-import computer.FunctionInfo;
-import computer.VariableInfo;
+import computer.parsernodes.Types;
 
 public class SymbolTable {
 
