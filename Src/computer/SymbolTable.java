@@ -104,7 +104,7 @@ public class SymbolTable {
     /// After calling this, it is only valid to call enterScope and exitScope.
     /// Unmentioned functions like getters (currentScope, functionInfo) are
     /// always valid to call regardless of finalization.
-    public void finalize() {
+    public void finalizeTable() {
         assert !completed;
         assert currentScope == null;
         completed = true;

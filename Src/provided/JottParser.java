@@ -32,7 +32,7 @@ public class JottParser {
           filename = tokens.get(tokens.size() - 1).getFilename();
         }
         ProgramNode node = ProgramNode.parse(tokens); 
-        SymbolTable.instance().finalize();
+        SymbolTable.instance().finalizeTable();
 
         return node;
       } 
