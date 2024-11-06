@@ -23,25 +23,34 @@ public class JottParser {
     public static JottTree parse(ArrayList<Token> tokens) {
 
       new SymbolTable(); // instantiate SymbolTable singleton
+      int lastLine = 0;
+      String filename = "NOFILE";
 
       try {
+        if (tokens.size() > 0) {
+          lastLine = tokens.get(tokens.size() - 1).getLineNum();
+          filename = tokens.get(tokens.size() - 1).getFilename();
+        }
         ProgramNode node = ProgramNode.parse(tokens); 
         SymbolTable.instance().finalize();
 
         return node;
       } 
       catch (ParseException | IndexOutOfBoundsException e) {
+        System.err.println("Syntax Error");
         if (e instanceof IndexOutOfBoundsException) {
-            System.err.println("Early EOF while parsing. incomplete program");
-            return null;
+          System.err.println("Early EOF");
+          System.err.println(filename + ":" + Integer.toString(lastLine));
+          return null;
         }
         e.printStackTrace(System.out);
 
         if (!tokens.isEmpty()) {
           Token t = tokens.get(0);
-          System.err.println("Failed on line " + t.getLineNum() + ", token was \"" + t.getToken() + "\" of type " + t.getTokenType().toString());
+          System.err.println(e.getMessage());
+          System.err.println(filename + ":" + Integer.toString(t.getLineNum()));
         }
-		    return null;
+		return null;
       }
     }
 }
