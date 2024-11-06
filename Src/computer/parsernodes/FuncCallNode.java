@@ -33,6 +33,11 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
     }
 
     @Override
+    public Types getDataType() {
+        return SymbolTable.instance().functionInfo(funcName.id()).returnType();
+    }
+
+    @Override
     public String convertToJott()
     {
         String result = "::" + funcName.convertToJott() + "[" + params.convertToJott() + "]";

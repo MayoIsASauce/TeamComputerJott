@@ -17,7 +17,9 @@ public class AssignmentNode implements BodyStatementNode {
 
     @Override
     public boolean validateTree() {
-        // TODO Auto-generated method stub
+        if (id.validateTree() && expr.validateTree())
+            // only get data types if everything is valid
+            return id.getDataType() == expr.getDataType();
         return false;
     }
 

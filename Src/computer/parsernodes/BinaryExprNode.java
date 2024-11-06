@@ -32,8 +32,21 @@ public class BinaryExprNode implements ExprNode {
 
     @Override
     public boolean validateTree() {
-        // TODO Auto-generated method stub
+        // ops should both just return true for validate, but just in case
+        boolean validOp = mathOp != null ? mathOp.validateTree() : relOp.validateTree();
+        if (validOp && lhs.validateTree() && rhs.validateTree())
+            // only if everything is valid, try to get and compare data types
+            return lhs.getDataType() == rhs.getDataType();
         return false;
+    }
+
+    @Override
+    public Types getDataType() {
+        // it doesnt really make sense to call this function if the types are
+        // invalid. tbh this could even be an "assert validateTree()" but i dont
+        // want to make debug builds too slow - Ian
+        assert lhs.getDataType() == rhs.getDataType();
+        return lhs.getDataType();
     }
 
     @Override
