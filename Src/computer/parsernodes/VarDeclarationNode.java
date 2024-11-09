@@ -2,6 +2,7 @@ package computer.parsernodes;
 
 import java.util.ArrayList;
 
+import computer.SymbolTable;
 import computer.exceptions.ParseException;
 import provided.JottTree;
 import provided.Token;
@@ -46,6 +47,7 @@ public class VarDeclarationNode implements JottTree {
             throw new ParseException("Missing semicolon");
         } else {
             tokens.remove(0);
+            SymbolTable.instance().addVariableToCurrentScope(id.id(), nType.type());
             return new VarDeclarationNode(nType, id);
         }
     }

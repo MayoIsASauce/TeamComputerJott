@@ -14,6 +14,10 @@ public class TypeNode implements JottTree {
         this.type = type;
     }
 
+    public Types type() {
+        return type;
+    }
+
     @Override
     public boolean validateTree() {
         // TODO Auto-generated method stub

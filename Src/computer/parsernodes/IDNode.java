@@ -2,10 +2,8 @@ package computer.parsernodes;
 
 import java.util.ArrayList;
 
-import provided.JottTree;
 import provided.Token;
 import provided.TokenType;
-import computer.parsernodes.OperandNode;
 import computer.exceptions.ParseException;
 
 public class IDNode implements OperandNode {
@@ -13,6 +11,10 @@ public class IDNode implements OperandNode {
 
     public IDNode(String id) {
         this.id = id;
+    }
+
+    public String id() {
+        return id;
     }
 
     @Override

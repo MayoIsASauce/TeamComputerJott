@@ -7,6 +7,7 @@ import provided.Token;
 import provided.TokenType;
 import computer.exceptions.ParseException;
 import computer.parsernodes.BodyNode;
+import computer.parsernodes.Types;
 
 
 public class FuncReturnNode implements JottTree {
@@ -14,6 +15,10 @@ public class FuncReturnNode implements JottTree {
     TypeNode returnType;
     public FuncReturnNode(TypeNode returnType) {
         this.returnType = returnType;
+    }
+
+    public Types type() {
+        return returnType.type();
     }
 
     @Override
