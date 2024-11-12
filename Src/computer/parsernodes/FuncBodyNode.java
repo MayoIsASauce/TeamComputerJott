@@ -17,9 +17,20 @@ public class FuncBodyNode implements JottTree {
 
     @Override
     public boolean validateTree() {
-        // TODO Auto-generated method stub
-        return false;
+        for (JottTree jottTree : varDecList) {
+            if(!jottTree.validateTree()) {
+                return false;
+            }
+        }
+
+        if(!body.validateTree()) {
+            return false;
+        }
+
+        return true;
     }
+
+    
 
     @Override
     public String convertToJott() {

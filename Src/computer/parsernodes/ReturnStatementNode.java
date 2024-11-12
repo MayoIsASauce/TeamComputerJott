@@ -10,6 +10,11 @@ public class ReturnStatementNode implements JottTree {
 
     ExprNode expr;
 
+
+    public Types getDataType() {
+        return this.expr.getDataType();
+    }
+
     public ReturnStatementNode(ExprNode expr) {
         this.expr = expr;
     }
@@ -21,7 +26,10 @@ public class ReturnStatementNode implements JottTree {
 
     @Override
     public boolean validateTree() {
-        // TODO Auto-generated method stub
+        if(expr.validateTree()){
+            return true;
+        }
+
         return false;
     }
 
