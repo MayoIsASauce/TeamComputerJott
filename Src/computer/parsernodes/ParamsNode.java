@@ -11,12 +11,14 @@ import computer.exceptions.ParseException;
 public class ParamsNode implements JottTree {
 
     // List to hold the parsed parameters
-    private List<JottTree> parameters;
+    private List<ExprNode> parameters;
 
     // Constructor to initialize the parameters list
-    public ParamsNode(List<JottTree> parameters) {
+    public ParamsNode(List<ExprNode> parameters) {
         this.parameters = parameters;
     }
+
+    public List<ExprNode> parameters() { return parameters; }
 
     @Override
     public boolean validateTree() {
@@ -39,7 +41,7 @@ public class ParamsNode implements JottTree {
 
     // Static method to parse a ParamsNode from tokens
     public static ParamsNode parse(ArrayList<Token> tokens) throws ParseException {
-        List<JottTree> params = new ArrayList<>();
+        List<ExprNode> params = new ArrayList<>();
 
         if (tokens.get(0).getTokenType() == TokenType.R_BRACE) {
             // empty params
@@ -49,7 +51,7 @@ public class ParamsNode implements JottTree {
         // Loop to collect parameters, separated by commas
         while (!tokens.get(0).getToken().equals("]")) {
             // Parse each parameter (an expression)
-            JottTree param = ExprNode.parse(tokens);
+            ExprNode param = ExprNode.parse(tokens);
             if (param == null) {
                 throw new ParseException("Invalid parameter expression");
             }
