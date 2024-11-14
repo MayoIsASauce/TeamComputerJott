@@ -14,11 +14,9 @@ public class ElseNode implements JottTree {
         this.body = body;
     }
 
-
     @Override
     public boolean validateTree() {
-        // TODO Auto-generated method stub
-        return false;
+        return body != null && body.validateTree();
     }
 
     @Override

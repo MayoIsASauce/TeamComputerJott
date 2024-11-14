@@ -19,8 +19,10 @@ public class WhileLoopNode implements BodyStatementNode {
 
     @Override
     public boolean validateTree() {
-        // TODO: Implement validation logic in Phase 3
-        return false;
+        boolean cond_valid = condition != null && condition.validateTree();
+        boolean body_valid = body != null && body.validateTree();
+
+        return cond_valid && body_valid;
     }
 
     @Override

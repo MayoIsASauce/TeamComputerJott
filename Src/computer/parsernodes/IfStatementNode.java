@@ -20,12 +20,22 @@ public class IfStatementNode implements BodyStatementNode {
         this.elseNode = elseNode;
     }
 
-
-
     @Override
     public boolean validateTree() {
-        // TODO Auto-generated method stub
-        return false;
+        boolean expr_valid = !(expr != null && expr.validateTree());
+        boolean body_valid = !(body != null && body.validateTree());
+
+        if (elseIfs != null) {
+            for (ElseIfNode node : elseIfs) {
+                if (!node.validateTree()) return false;
+            }
+        }
+
+        if (elseNode != null && !elseNode.validateTree()) {
+            return false;
+        }
+
+        return expr_valid && body_valid;
     }
 
     @Override

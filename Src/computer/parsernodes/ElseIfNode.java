@@ -17,8 +17,10 @@ public class ElseIfNode implements JottTree {
 
     @Override
     public boolean validateTree() {
-        // Implement in Phase 3
-        return false;
+        boolean cond_valid = condition != null && condition.validateTree();
+        boolean body_valid = body != null && body.validateTree();
+
+        return cond_valid && body_valid;
     }
 
     @Override
