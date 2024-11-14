@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import provided.JottTree;
 import provided.Token;
 import provided.TokenType;
+import computer.SymbolTable;
+import computer.FunctionInfo;
 
 public class ReturnStatementNode implements JottTree {
 
@@ -26,11 +28,18 @@ public class ReturnStatementNode implements JottTree {
 
     @Override
     public boolean validateTree() {
-        if(expr.validateTree()){
-            return true;
+        if(!expr.validateTree()){
+            return false;
         }
 
-        return false;
+        FunctionInfo scopeInformation = SymbolTable.instance().currentScopeInfo();
+
+        if(scopeInformation.returnType() != expr.getDataType()) {
+            return false;
+        }
+
+
+        return true;
     }
 
     @Override
