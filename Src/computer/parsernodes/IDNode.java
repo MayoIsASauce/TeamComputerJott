@@ -1,8 +1,11 @@
 package computer.parsernodes;
 
+import java.util.ArrayList;
+
 import provided.Token;
 import provided.TokenType;
 import computer.exceptions.ParseException;
+import computer.SymbolTable;
 
 public class IDNode implements OperandNode {
     String id;
