@@ -78,8 +78,6 @@ public class ParamsNode implements JottTree {
             throw new ParseException("Expected ']' at the end of parameters");
         }
 
-        tokens.remove(0); // Consume the closing bracket
-
         // Return the ParamsNode with the parsed parameters
         return new ParamsNode(params);
     }
