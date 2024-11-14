@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "JottParserTester",
+            "request": "launch",
+            "mainClass": "testers.JottParserTester",
+            "projectName": "TeamComputerJott_4046b284"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"
