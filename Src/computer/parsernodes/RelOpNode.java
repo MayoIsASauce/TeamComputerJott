@@ -17,10 +17,7 @@ public class RelOpNode implements JottTree {
     }
 
     @Override
-    public boolean validateTree() {
-        // TODO Auto-generated method stub
-        return false;
-    }
+    public boolean validateTree() { return true; }
 
     @Override
     public String convertToJott() {

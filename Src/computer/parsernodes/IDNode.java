@@ -24,6 +24,15 @@ public class IDNode implements OperandNode {
     }
 
     @Override
+    public Types getDataType() {
+        // TODO figure out how to get symboltable info here. maybe
+        // SymbolTable.instance().currentScopeVar(id) is the move? - Ian
+        assert false;
+        return Types.BOOLEAN;
+    }
+
+
+    @Override
     public String convertToJott() {
         return id;
     }

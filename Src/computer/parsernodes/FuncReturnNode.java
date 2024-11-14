@@ -18,7 +18,10 @@ public class FuncReturnNode implements JottTree {
     }
 
     public Types type() {
-        return returnType.type();
+        if (returnType != null)
+            return returnType.type();
+        else
+            return Types.VOID;
     }
 
     @Override

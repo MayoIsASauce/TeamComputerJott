@@ -43,7 +43,6 @@ public class JottParser {
           System.err.println(filename + ":" + Integer.toString(lastLine));
           return null;
         }
-        e.printStackTrace(System.out);
 
         if (!tokens.isEmpty()) {
           Token t = tokens.get(0);

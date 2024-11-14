@@ -26,6 +26,8 @@ public class TypeNode implements JottTree {
 
     @Override
     public String convertToJott() {
+        // NOTE: switches in TypeNode do not handle "Void" because that is only allowed
+        // in a function return type, so that is parsed and handled in FuncReturnNode
         switch (type) {
             case DOUBLE:
                 return "Double";

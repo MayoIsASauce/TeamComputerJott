@@ -13,10 +13,10 @@ public class BoolNode implements ExprNode {
     }
 
     @Override
-    public boolean validateTree() {
-        // TODO Auto-generated method stub
-        return false;
-    }
+    public boolean validateTree() { return true; }
+
+    @Override
+    public Types getDataType() { return Types.BOOLEAN; }
 
     @Override
     public String convertToJott() {

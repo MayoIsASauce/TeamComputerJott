@@ -1,6 +1,7 @@
 package computer.parsernodes;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import provided.Token;
 import provided.TokenType;
@@ -28,8 +29,30 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
     @Override
     public boolean validateTree()
     {
-        // TODO Auto-generated method stub
-        return false;
+        if (!funcName.validateTree() || !params.validateTree())
+            return false;
+
+        // child nodes are valid, now make sure that arguments match parameters
+        FunctionInfo calledFunction = SymbolTable.instance().functionInfo(funcName.id());
+        List<ExprNode> exprs = params.parameters();
+        List<Types> calledFunctionTypes = calledFunction.parameterTypes();
+
+        if (exprs.size() != calledFunctionTypes.size())
+            // wrong number of function arguments
+            return false;
+
+        for (int i = 0; i < exprs.size(); ++i)
+        {
+            if (exprs.get(i).getDataType() != calledFunctionTypes.get(i))
+                // argument of incorrect type provided for arg `i`
+                return false;
+        }
+        return true;
+    }
+
+    @Override
+    public Types getDataType() {
+        return SymbolTable.instance().functionInfo(funcName.id()).returnType();
     }
 
     @Override

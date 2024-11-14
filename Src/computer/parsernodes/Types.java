@@ -5,4 +5,5 @@ public enum Types {
     STRING,
     INTEGER,
     BOOLEAN,
+    VOID,
 }

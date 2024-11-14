@@ -15,10 +15,10 @@ public class StringLiteralNode implements ExprNode {
     }
 
     @Override
-    public boolean validateTree() {
-        // TODO Auto-generated method stub
-        return false;
-    }
+    public boolean validateTree() { return true; }
+
+    @Override
+    public Types getDataType() { return Types.STRING; }
 
     @Override
     public String convertToJott() {

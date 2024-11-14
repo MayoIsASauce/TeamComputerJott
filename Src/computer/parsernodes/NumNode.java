@@ -24,10 +24,10 @@ public class NumNode implements OperandNode {
     }
 
     @Override
-    public boolean validateTree() {
-        // TODO Auto-generated method stub
-        return false;
-    }
+    public boolean validateTree() { return true; }
+
+    @Override
+    public Types getDataType() { return isFloating ? Types.DOUBLE : Types.INTEGER; }
 
     @Override
     public String convertToJott() {
