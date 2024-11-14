@@ -22,20 +22,20 @@ public class IfStatementNode implements BodyStatementNode {
 
     @Override
     public boolean validateTree() {
-        boolean expr_valid = !(expr != null && expr.validateTree());
-        boolean body_valid = !(body != null && body.validateTree());
+        boolean expr_valid = expr != null && expr.validateTree();
+        boolean body_valid = body != null && body.validateTree();
 
-        if (elseIfs != null) {
+        if (elseIfs != null) { // if we have elseIf nodes
             for (ElseIfNode node : elseIfs) {
-                if (!node.validateTree()) return false;
+                if (node == null || !node.validateTree()) return false; // check the validity of each
             }
         }
 
-        if (elseNode != null && !elseNode.validateTree()) {
+        if (elseNode != null && !elseNode.validateTree()) { // check if we have an elseNode and if it is valid
             return false;
         }
 
-        return expr_valid && body_valid;
+        return expr_valid && body_valid; // return last possible check
     }
 
     @Override
