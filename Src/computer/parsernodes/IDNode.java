@@ -1,7 +1,5 @@
 package computer.parsernodes;
 
-import java.util.ArrayList;
-
 import provided.Token;
 import provided.TokenType;
 import computer.exceptions.ParseException;
@@ -19,18 +17,23 @@ public class IDNode implements OperandNode {
 
     @Override
     public boolean validateTree() {
-        // TODO Auto-generated method stub
-        return false;
+        // Ensure the identifier exists in the symbol table
+        if (!SymbolTable.instance().isVariableDeclared(id)) {
+            System.err.println("Semantic Error: Variable '" + id + "' is not declared.");
+            return false;
+        }
+        return true;
     }
 
     @Override
     public Types getDataType() {
-        // TODO figure out how to get symboltable info here. maybe
-        // SymbolTable.instance().currentScopeVar(id) is the move? - Ian
-        assert false;
-        return Types.BOOLEAN;
+        // Retrieve the variable's type from the symbol table
+        if (!SymbolTable.instance().isVariableDeclared(id)) {
+            System.err.println("Semantic Error: Variable '" + id + "' is not declared.");
+            return null;
+        }
+        return SymbolTable.instance().getVariableType(id);
     }
-
 
     @Override
     public String convertToJott() {
@@ -50,7 +53,6 @@ public class IDNode implements OperandNode {
 
     @Override
     public void execute() {
-        // TODO Auto-generated method stub
-
+        // To be implemented in Phase 4
     }
-}   
+}

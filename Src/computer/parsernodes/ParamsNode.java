@@ -18,12 +18,20 @@ public class ParamsNode implements JottTree {
         this.parameters = parameters;
     }
 
-    public List<ExprNode> parameters() { return parameters; }
+    public List<ExprNode> parameters() {
+        return parameters;
+    }
 
     @Override
     public boolean validateTree() {
-        // TODO: Implement in Phase 3
-        return false;
+        // Validate all parameters in the list
+        for (ExprNode param : parameters) {
+            if (!param.validateTree()) {
+                System.err.println("Semantic Error: Invalid parameter in ParamsNode.");
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
@@ -44,7 +52,7 @@ public class ParamsNode implements JottTree {
         List<ExprNode> params = new ArrayList<>();
 
         if (tokens.get(0).getTokenType() == TokenType.R_BRACE) {
-            // empty params
+            // Empty params
             return new ParamsNode(params);
         }
 
@@ -69,6 +77,8 @@ public class ParamsNode implements JottTree {
         if (!tokens.get(0).getToken().equals("]")) {
             throw new ParseException("Expected ']' at the end of parameters");
         }
+
+        tokens.remove(0); // Consume the closing bracket
 
         // Return the ParamsNode with the parsed parameters
         return new ParamsNode(params);
