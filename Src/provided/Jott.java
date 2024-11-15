@@ -22,6 +22,8 @@ public class Jott {
         ArrayList<Token> tokens = JottTokenizer.tokenize(filename);
 
         JottTree parse_tree = JottParser.parse(tokens);
-        parse_tree.validateTree();
+        if (parse_tree.validateTree()) {
+            // TODO: execute
+        }
     }
 }

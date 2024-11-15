@@ -3,6 +3,7 @@ package computer.parsernodes;
 import java.util.ArrayList;
 
 import computer.exceptions.ParseException;
+import computer.exceptions.SemanticException;
 import provided.JottTree;
 import provided.Token;
 
@@ -31,8 +32,16 @@ public class ProgramNode implements JottTree
     @Override
     public boolean validateTree()
     {
-        // TODO Auto-generated method stub
-        return false;
+        try {
+            for (FuncDefNode fd : fDefNodes) {
+                fd.validateTree();
+            }
+            return true;
+        } catch (SemanticException e) {
+            System.err.println("Semantic Error"); // TODO: what is the first line supposed to be here? read writeup
+            System.err.println(e.getMessage());
+            return false;
+        }
     }
 
 

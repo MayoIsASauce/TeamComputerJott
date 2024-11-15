@@ -10,6 +10,7 @@ import computer.parsernodes.FuncBodyNode;
 import computer.parsernodes.FuncReturnNode;
 import computer.parsernodes.FuncDefParamsNode;
 import computer.exceptions.ParseException;
+import computer.exceptions.SemanticException;
 import computer.SymbolTable;
 
 
@@ -91,7 +92,7 @@ public class FuncDefNode implements JottTree {
     }
 
     @Override
-    public boolean validateTree()
+    public boolean validateTree() throws SemanticException
     {
         // TODO Auto-generated method stub
         return false;
