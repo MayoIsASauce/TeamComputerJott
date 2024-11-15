@@ -3,6 +3,7 @@ package computer.parsernodes;
 import java.util.ArrayList;
 
 import computer.exceptions.ParseException;
+import computer.exceptions.SemanticException;
 import provided.JottTree;
 import provided.Token;
 import provided.TokenType;
@@ -10,7 +11,7 @@ import provided.TokenType;
 public interface BodyStatementNode extends JottTree
 {
     @Override
-    public boolean validateTree();
+    public boolean validateTree() throws SemanticException;
 
     @Override
     public String convertToJott();
