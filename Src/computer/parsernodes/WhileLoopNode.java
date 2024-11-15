@@ -5,6 +5,7 @@ import provided.JottTree;
 import provided.Token;
 import provided.TokenType;
 import computer.exceptions.ParseException;
+import computer.exceptions.SemanticException;
 
 public class WhileLoopNode implements BodyStatementNode {
 
@@ -18,11 +19,16 @@ public class WhileLoopNode implements BodyStatementNode {
     }
 
     @Override
-    public boolean validateTree() {
+    public boolean validateTree() throws SemanticException {
         boolean cond_valid = condition != null && condition.validateTree();
         boolean body_valid = body != null && body.validateTree();
 
-        return cond_valid && body_valid;
+        if (!cond_valid || !body_valid) {
+            throw new SemanticException("Semantic Error\nProvided "
+                            + (!cond_valid ? "condition" : "body") + " is null in WhileLoopNode.java");
+        }
+
+        return true;
     }
 
     @Override

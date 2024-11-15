@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import provided.JottTree;
 import provided.Token;
 import computer.exceptions.ParseException;
+import computer.exceptions.SemanticException;
 
 public class ElseIfNode implements JottTree {
 
@@ -16,9 +17,14 @@ public class ElseIfNode implements JottTree {
     }
 
     @Override
-    public boolean validateTree() {
+    public boolean validateTree() throws SemanticException {
         boolean cond_valid = condition != null && condition.validateTree();
         boolean body_valid = body != null && body.validateTree();
+
+        if (!cond_valid || !body_valid) {
+            throw new SemanticException("Semantic Error\nProvided "
+                            + (!cond_valid ? "condition" : "body") + " is null in ElseIfNode");
+        }
 
         return cond_valid && body_valid;
     }

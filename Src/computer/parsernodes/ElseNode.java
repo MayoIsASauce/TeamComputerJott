@@ -1,6 +1,8 @@
 package computer.parsernodes;
 
 import computer.exceptions.ParseException;
+import computer.exceptions.SemanticException;
+
 import java.util.ArrayList;
 import provided.JottTree;
 import provided.Token;
@@ -15,8 +17,14 @@ public class ElseNode implements JottTree {
     }
 
     @Override
-    public boolean validateTree() {
-        return body != null && body.validateTree();
+    public boolean validateTree() throws SemanticException {
+        if (body == null) {
+            throw new SemanticException("Semantic Error\nProvided body is null in ElseNode");
+        } else {
+            body.validateTree();
+        }
+
+        return true;
     }
 
     @Override

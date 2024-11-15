@@ -1,6 +1,8 @@
 package computer.parsernodes;
 
 import computer.exceptions.ParseException;
+import computer.exceptions.SemanticException;
+
 import java.util.ArrayList;
 import provided.JottTree;
 import provided.Token;
@@ -21,21 +23,29 @@ public class IfStatementNode implements BodyStatementNode {
     }
 
     @Override
-    public boolean validateTree() {
+    public boolean validateTree() throws SemanticException {
         boolean expr_valid = expr != null && expr.validateTree();
         boolean body_valid = body != null && body.validateTree();
 
         if (elseIfs != null) { // if we have elseIf nodes
             for (ElseIfNode node : elseIfs) {
-                if (node == null || !node.validateTree()) return false; // check the validity of each
+                if (node == null) { // check the validity of each
+                    throw new SemanticException("Semantic Error\nProvided ElseIf is null in IfStatementNode");
+                } 
+                node.validateTree();
             }
         }
 
-        if (elseNode != null && !elseNode.validateTree()) { // check if we have an elseNode and if it is valid
-            return false;
+        if (elseNode != null) { // check if we have an elseNode and if it is valid
+            elseNode.validateTree();
         }
-
-        return expr_valid && body_valid; // return last possible check
+        
+        if (!expr_valid || !body_valid) {
+            throw new SemanticException("Semantic Error\nProvided "
+                            + (!expr_valid ? "expression" : "body") + " is null in IfStatementNode");
+        }
+        
+        return true;
     }
 
     @Override
@@ -110,6 +120,5 @@ public class IfStatementNode implements BodyStatementNode {
     @Override
     public void execute() {
         // TODO Auto-generated method stub
-
     }
 }
