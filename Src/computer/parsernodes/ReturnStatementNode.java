@@ -12,6 +12,7 @@ import provided.TokenType;
 public class ReturnStatementNode implements JottTree {
 
     ExprNode expr;
+    Token lineSave;
 
 
     public Types getDataType() {
@@ -27,6 +28,11 @@ public class ReturnStatementNode implements JottTree {
         this.expr = null;
     }
 
+    public ReturnStatementNode(ExprNode expr, Token lineSave) {
+        this.expr = expr;
+        this.lineSave = lineSave;
+    }
+
     @Override
     public boolean validateTree() throws SemanticException {
 
@@ -36,7 +42,7 @@ public class ReturnStatementNode implements JottTree {
 
         if(scopeInformation.returnType() != expr.getDataType()) {
             String msg = "Function " + SymbolTable.instance().currentScope() + " returns " + scopeInformation.returnType() + " but found " + expr.getDataType();
-            SemanticException ex = new SemanticException(msg);
+            SemanticException ex = new SemanticException(msg, lineSave);
             throw ex;
         }
 
@@ -68,7 +74,7 @@ public class ReturnStatementNode implements JottTree {
         {
             return new ReturnStatementNode();
         }
-        tokens.remove(0);
+        Token lineSave = tokens.remove(0);
 
         ExprNode expr = ExprNode.parse(tokens);
 
@@ -78,7 +84,7 @@ public class ReturnStatementNode implements JottTree {
         }
         tokens.remove(0);
         
-        return new ReturnStatementNode(expr);
+        return new ReturnStatementNode(expr, lineSave);
 
     }
 

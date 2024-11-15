@@ -1,6 +1,7 @@
 package computer.parsernodes;
 
 import computer.exceptions.ParseException;
+import computer.exceptions.SemanticException;
 import java.util.ArrayList;
 import provided.JottTree;
 import provided.Token;
@@ -16,16 +17,13 @@ public class FuncBodyNode implements JottTree {
     }
 
     @Override
-    public boolean validateTree() {
+    public boolean validateTree() throws SemanticException {
         for (JottTree jottTree : varDecList) {
-            if(!jottTree.validateTree()) {
-                return false;
-            }
+            jottTree.validateTree();
         }
 
-        if(!body.validateTree()) {
-            return false;
-        }
+        body.validateTree();
+        
 
         return true;
     }
