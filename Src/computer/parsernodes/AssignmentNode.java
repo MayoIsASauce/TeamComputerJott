@@ -3,6 +3,7 @@ package computer.parsernodes;
 import java.util.ArrayList;
 
 import computer.exceptions.ParseException;
+import computer.exceptions.SemanticException;
 import provided.Token;
 import provided.TokenType;
 
@@ -17,9 +18,14 @@ public class AssignmentNode implements BodyStatementNode {
 
     @Override
     public boolean validateTree() {
-        if (id.validateTree() && expr.validateTree())
-            // only get data types if everything is valid
-            return id.getDataType() == expr.getDataType();
+        id.validateTree();
+        expr.validateTree();
+        if (id.getDataType() != expr.getDataType()) {
+            throw new SemanticException("Attempt to assign expression of type "
+                    + expr.getDataType() + " to variable of type "
+                    + id.getDataType(), id.getToken());
+        }
+        // unreachable due to exceptions
         return false;
     }
 
