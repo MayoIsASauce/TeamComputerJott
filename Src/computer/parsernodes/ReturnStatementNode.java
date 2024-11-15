@@ -1,6 +1,9 @@
 package computer.parsernodes;
 
+import computer.FunctionInfo;
+import computer.SymbolTable;
 import computer.exceptions.ParseException;
+import computer.exceptions.SemanticException;
 import java.util.ArrayList;
 import provided.JottTree;
 import provided.Token;
@@ -9,6 +12,11 @@ import provided.TokenType;
 public class ReturnStatementNode implements JottTree {
 
     ExprNode expr;
+
+
+    public Types getDataType() {
+        return this.expr.getDataType();
+    }
 
     public ReturnStatementNode(ExprNode expr) {
         this.expr = expr;
@@ -20,9 +28,20 @@ public class ReturnStatementNode implements JottTree {
     }
 
     @Override
-    public boolean validateTree() {
-        // TODO Auto-generated method stub
-        return false;
+    public boolean validateTree() throws SemanticException {
+
+        expr.validateTree();
+
+        FunctionInfo scopeInformation = SymbolTable.instance().currentScopeInfo();
+
+        if(scopeInformation.returnType() != expr.getDataType()) {
+            String msg = "Function " + SymbolTable.instance().currentScope() + " returns " + scopeInformation.returnType() + " but found " + expr.getDataType();
+            SemanticException ex = new SemanticException(msg);
+            throw ex;
+        }
+
+
+        return true;
     }
 
     @Override

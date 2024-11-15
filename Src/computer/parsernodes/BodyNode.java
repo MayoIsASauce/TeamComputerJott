@@ -18,10 +18,20 @@ public class BodyNode implements JottTree {
         this.returnStatement = returnStatement;
     }
 
+    public Types getReturnType() {
+        return returnStatement.getDataType();
+    }
+
     @Override
     public boolean validateTree() {
-        // TODO Auto-generated method stub
-        return false;
+        for (BodyStatementNode bodyStatementNode : bodyStatements) {
+            if(!bodyStatementNode.validateTree()) {
+                return false;
+            }
+        }
+
+        return returnStatement.validateTree();
+
     }
 
     @Override
