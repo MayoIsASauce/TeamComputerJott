@@ -11,10 +11,14 @@ import computer.exceptions.ParseException;
 public class RelOpNode implements JottTree {
 
     RelOpType type;
+    Token tokenRepresentation;
 
-    public RelOpNode(RelOpType type) {
+    public RelOpNode(RelOpType type, Token token) {
         this.type = type;
+        this.tokenRepresentation = token;
     }
+
+    Token getToken() { return tokenRepresentation; }
 
     @Override
     public boolean validateTree() { return true; }
@@ -70,7 +74,7 @@ public class RelOpNode implements JottTree {
 
         tokens.remove(0);
 
-        return new RelOpNode(type);
+        return new RelOpNode(type, token);
     }
 
     @Override
