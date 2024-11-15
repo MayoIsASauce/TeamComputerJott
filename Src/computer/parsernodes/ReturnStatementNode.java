@@ -1,12 +1,13 @@
 package computer.parsernodes;
 
+import computer.FunctionInfo;
+import computer.SymbolTable;
 import computer.exceptions.ParseException;
+import computer.exceptions.SemanticException;
 import java.util.ArrayList;
 import provided.JottTree;
 import provided.Token;
 import provided.TokenType;
-import computer.SymbolTable;
-import computer.FunctionInfo;
 
 public class ReturnStatementNode implements JottTree {
 
@@ -27,15 +28,16 @@ public class ReturnStatementNode implements JottTree {
     }
 
     @Override
-    public boolean validateTree() {
-        if(!expr.validateTree()){
-            return false;
-        }
+    public boolean validateTree() throws SemanticException {
+
+        expr.validateTree();
 
         FunctionInfo scopeInformation = SymbolTable.instance().currentScopeInfo();
 
         if(scopeInformation.returnType() != expr.getDataType()) {
-            return false;
+            String msg = "Function " + SymbolTable.instance().currentScope() + " returns " + scopeInformation.returnType() + " but found " + expr.getDataType();
+            SemanticException ex = new SemanticException(msg);
+            throw ex;
         }
 
 
