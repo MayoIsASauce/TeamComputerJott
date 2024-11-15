@@ -53,6 +53,10 @@ public class SymbolTable {
     public FunctionInfo currentScopeInfo() {
         return functionInfo(currentScope());
     }
+    public boolean isVariableInCurrentScope(String variableName) {
+        HashMap<String, VariableInfo> variableInfoByName = variableInfoByNameByFuncName.get(currentScope());
+        return variableInfoByName.containsKey(variableName);
+    }
 
     /// For use after symbol table has been built
     public void enterScope(String functionName) {
