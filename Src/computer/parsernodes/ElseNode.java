@@ -18,11 +18,8 @@ public class ElseNode implements JottTree {
 
     @Override
     public boolean validateTree() throws SemanticException {
-        if (body == null) {
-            throw new SemanticException("Semantic Error\nProvided body is null in ElseNode");
-        } else {
-            body.validateTree();
-        }
+        assert body != null;
+        body.validateTree();
 
         return true;
     }

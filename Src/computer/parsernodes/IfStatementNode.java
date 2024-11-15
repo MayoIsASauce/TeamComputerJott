@@ -24,25 +24,18 @@ public class IfStatementNode implements BodyStatementNode {
 
     @Override
     public boolean validateTree() throws SemanticException {
-        boolean expr_valid = expr != null && expr.validateTree();
-        boolean body_valid = body != null && body.validateTree();
+        assert expr != null && body != null;
+        expr.validateTree(); body.validateTree();
 
         if (elseIfs != null) { // if we have elseIf nodes
             for (ElseIfNode node : elseIfs) {
-                if (node == null) { // check the validity of each
-                    throw new SemanticException("Semantic Error\nProvided ElseIf is null in IfStatementNode");
-                } 
+                assert node != null; // this shouldnt be null
                 node.validateTree();
             }
         }
 
         if (elseNode != null) { // check if we have an elseNode and if it is valid
             elseNode.validateTree();
-        }
-        
-        if (!expr_valid || !body_valid) {
-            throw new SemanticException("Semantic Error\nProvided "
-                            + (!expr_valid ? "expression" : "body") + " is null in IfStatementNode");
         }
         
         return true;

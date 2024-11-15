@@ -18,15 +18,10 @@ public class ElseIfNode implements JottTree {
 
     @Override
     public boolean validateTree() throws SemanticException {
-        boolean cond_valid = condition != null && condition.validateTree();
-        boolean body_valid = body != null && body.validateTree();
+        assert condition != null && body != null;
+        condition.validateTree(); body.validateTree();
 
-        if (!cond_valid || !body_valid) {
-            throw new SemanticException("Semantic Error\nProvided "
-                            + (!cond_valid ? "condition" : "body") + " is null in ElseIfNode");
-        }
-
-        return cond_valid && body_valid;
+        return true;
     }
 
     @Override

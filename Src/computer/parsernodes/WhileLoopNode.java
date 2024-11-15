@@ -20,13 +20,8 @@ public class WhileLoopNode implements BodyStatementNode {
 
     @Override
     public boolean validateTree() throws SemanticException {
-        boolean cond_valid = condition != null && condition.validateTree();
-        boolean body_valid = body != null && body.validateTree();
-
-        if (!cond_valid || !body_valid) {
-            throw new SemanticException("Semantic Error\nProvided "
-                            + (!cond_valid ? "condition" : "body") + " is null in WhileLoopNode.java");
-        }
+        assert condition != null && body != null; // these shouldnt be null
+        condition.validateTree(); body.validateTree();
 
         return true;
     }
