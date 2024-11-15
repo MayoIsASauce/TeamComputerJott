@@ -6,6 +6,7 @@ import java.util.List;
 import provided.Token;
 import provided.TokenType;
 import computer.FunctionInfo;
+import computer.SymbolTable;
 import computer.exceptions.ParseException;
 import computer.exceptions.SemanticException;
 
@@ -29,7 +30,7 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
     }
 
     @Override
-    public boolean validateTree()
+    public boolean validateTree() throws SemanticException
     {
         funcName.validateTree();
         params.validateTree();

@@ -7,6 +7,7 @@ import provided.JottTree;
 import provided.Token;
 import provided.TokenType;
 import computer.exceptions.ParseException;
+import computer.exceptions.SemanticException;
 
 public class ParamsNode implements JottTree {
 
@@ -23,7 +24,7 @@ public class ParamsNode implements JottTree {
     }
 
     @Override
-    public boolean validateTree() {
+    public boolean validateTree() throws SemanticException {
         // Validate all parameters in the list
         for (ExprNode param : parameters) {
             if (!param.validateTree()) {

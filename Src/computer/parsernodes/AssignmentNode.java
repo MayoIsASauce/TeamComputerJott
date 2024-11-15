@@ -17,7 +17,7 @@ public class AssignmentNode implements BodyStatementNode {
     }
 
     @Override
-    public boolean validateTree() {
+    public boolean validateTree() throws SemanticException {
         id.validateTree();
         expr.validateTree();
         if (id.getDataType() != expr.getDataType()) {

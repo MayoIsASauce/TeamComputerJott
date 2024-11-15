@@ -8,21 +8,25 @@ import computer.exceptions.ParseException;
 import java.util.ArrayList;
 
 public class IDNode implements OperandNode {
-    String id;
+    Token token;
 
-    public IDNode(String id) {
-        this.id = id;
+    public IDNode(Token token) {
+        this.token = token;
     }
 
     public String id() {
-        return id;
+        return token.getToken();
+    }
+
+    public Token getToken() {
+        return token;
     }
 
     @Override
     public boolean validateTree() {
         // Ensure the identifier exists in the current scope
-        if (!SymbolTable.instance().isVariableInCurrentScope(id)) {
-            System.err.println("Semantic Error: Variable '" + id + "' is not declared in the current scope.");
+        if (!SymbolTable.instance().isVariableInCurrentScope(id())) {
+            System.err.println("Semantic Error: Variable '" + id() + "' is not declared in the current scope.");
             return false;
         }
         return true;
@@ -31,16 +35,16 @@ public class IDNode implements OperandNode {
     @Override
     public Types getDataType() {
         // Retrieve the variable's type from the current scope
-        if (!SymbolTable.instance().isVariableInCurrentScope(id)) {
-            System.err.println("Semantic Error: Variable '" + id + "' is not declared in the current scope.");
+        if (!SymbolTable.instance().isVariableInCurrentScope(id())) {
+            System.err.println("Semantic Error: Variable '" + id() + "' is not declared in the current scope.");
             return null;
         }
-        return SymbolTable.instance().currentScopeVar(id).type();
+        return SymbolTable.instance().currentScopeVar(id()).type();
     }
 
     @Override
     public String convertToJott() {
-        return id;
+        return id();
     }
 
     public static IDNode parse(ArrayList<Token> tokens) throws ParseException {
@@ -51,7 +55,7 @@ public class IDNode implements OperandNode {
 
         tokens.remove(0);
 
-        return new IDNode(token.getToken());
+        return new IDNode(token);
     }
 
     @Override

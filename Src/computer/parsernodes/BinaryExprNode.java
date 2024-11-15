@@ -32,7 +32,7 @@ public class BinaryExprNode implements ExprNode {
     }
 
     @Override
-    public boolean validateTree() {
+    public boolean validateTree() throws SemanticException {
         // ops should both just return true for validate, but just in case
         if (mathOp != null)
             mathOp.validateTree();
