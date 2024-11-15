@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import provided.Token;
 import provided.TokenType;
 import computer.exceptions.ParseException;
+import computer.exceptions.SemanticException;
 import computer.parsernodes.ExprNode;
 import computer.parsernodes.MathOpNode;
 import computer.parsernodes.RelOpNode;
@@ -33,10 +34,21 @@ public class BinaryExprNode implements ExprNode {
     @Override
     public boolean validateTree() {
         // ops should both just return true for validate, but just in case
-        boolean validOp = mathOp != null ? mathOp.validateTree() : relOp.validateTree();
-        if (validOp && lhs.validateTree() && rhs.validateTree())
-            // only if everything is valid, try to get and compare data types
-            return lhs.getDataType() == rhs.getDataType();
+        if (mathOp != null)
+            mathOp.validateTree();
+        else
+            relOp.validateTree();
+
+        lhs.validateTree();
+        rhs.validateTree();
+
+        // only if everything is valid, try to get and compare data types
+        if (lhs.getDataType() != rhs.getDataType()) {
+            Token token = relOp.getToken();
+            throw new SemanticException("Mismatched data types on either side of operator " + token.getToken(), token);
+        }
+
+        // unreachable due to exceptions being thrown by validates
         return false;
     }
 
