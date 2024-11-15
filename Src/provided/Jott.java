@@ -14,6 +14,7 @@ public class Jott {
     public static void main(String[] args) throws SemanticException {
         if (args.length != 1) {
             System.out.println(helpMessage());
+            return;
         }
 
         String filename = args[0];
