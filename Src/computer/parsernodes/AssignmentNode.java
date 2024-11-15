@@ -25,8 +25,7 @@ public class AssignmentNode implements BodyStatementNode {
                     + expr.getDataType() + " to variable of type "
                     + id.getDataType(), id.getToken());
         }
-        // unreachable due to exceptions
-        return false;
+        return true;
     }
 
     @Override
