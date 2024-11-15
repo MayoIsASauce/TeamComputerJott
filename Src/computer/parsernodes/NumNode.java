@@ -12,16 +12,21 @@ public class NumNode implements OperandNode {
     float floatRepresentation;
     int integerRepresentation;
     boolean isFloating;
+    Token tokenRepresentation;
 
-    public NumNode(float number) {
+    public NumNode(float number, Token token) {
+        this.tokenRepresentation = token;
         this.floatRepresentation = number;
         this.isFloating = true;
     }
 
-    public NumNode(int number) {
+    public NumNode(int number, Token token) {
+        this.tokenRepresentation = token;
         this.integerRepresentation = number;
         this.isFloating = false;
     }
+
+    public Token getToken() { return tokenRepresentation; }
 
     @Override
     public boolean validateTree() { return true; }
@@ -51,13 +56,13 @@ public class NumNode implements OperandNode {
         try {
             int intrep = Integer.parseInt(token.getToken());
             tokens.remove(0);
-            return new NumNode(intrep * multiplier);
+            return new NumNode(intrep * multiplier, token);
         } catch (NumberFormatException e) {
             try
             {
                 float floatrep = Float.parseFloat(token.getToken());
                 tokens.remove(0);
-                return new NumNode(floatrep * multiplier);
+                return new NumNode(floatrep * multiplier, token);
             }
             catch (NumberFormatException eInner)
             {

@@ -8,14 +8,16 @@ import computer.exceptions.ParseException;
 import computer.SymbolTable;
 
 public class IDNode implements OperandNode {
-    String id;
+    Token id;
 
-    public IDNode(String id) {
+    public IDNode(Token id) {
         this.id = id;
     }
 
+    public Token getToken() { return id; }
+
     public String id() {
-        return id;
+        return id.getToken();
     }
 
     @Override
@@ -40,7 +42,7 @@ public class IDNode implements OperandNode {
 
     @Override
     public String convertToJott() {
-        return id;
+        return id();
     }
 
     public static IDNode parse(ArrayList<Token> tokens) throws ParseException {
@@ -51,7 +53,7 @@ public class IDNode implements OperandNode {
 
         tokens.remove(0);
 
-        return new IDNode(token.getToken());
+        return new IDNode(token);
     }
 
     @Override

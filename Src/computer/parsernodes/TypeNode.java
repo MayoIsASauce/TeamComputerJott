@@ -9,14 +9,18 @@ import provided.TokenType;
 
 public class TypeNode implements JottTree {
     Types type;
+    Token tokenRepresentation;
 
-    public TypeNode(Types type) {
+    public TypeNode(Types type, Token token) {
         this.type = type;
+        this.tokenRepresentation = token;
     }
 
     public Types type() {
         return type;
     }
+
+    Token getToken() { return tokenRepresentation; }
 
     @Override
     public boolean validateTree() {
@@ -48,16 +52,16 @@ public class TypeNode implements JottTree {
             switch (curr_token.getToken()) {
                 case "Double":
                     tokens.remove(0);
-                    return new TypeNode(Types.DOUBLE);
+                    return new TypeNode(Types.DOUBLE, curr_token);
                 case "Integer":
                     tokens.remove(0);
-                    return new TypeNode(Types.INTEGER);
+                    return new TypeNode(Types.INTEGER, curr_token);
                 case "String":
                     tokens.remove(0);
-                    return new TypeNode(Types.STRING);
+                    return new TypeNode(Types.STRING, curr_token);
                 case "Boolean":
                     tokens.remove(0);
-                    return new TypeNode(Types.BOOLEAN);
+                    return new TypeNode(Types.BOOLEAN, curr_token);
                 default:
                     throw new ParseException("Parser Exception\nTypeNode received invalid type \""+curr_token.getToken()+"\", expected one of type: (Double, Integer, String, Boolean)");
             }

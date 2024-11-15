@@ -8,11 +8,13 @@ import computer.exceptions.ParseException;
 
 public class StringLiteralNode implements ExprNode {
     
-    String contents;
+    Token contents;
 
-    public StringLiteralNode(String string) {
+    public StringLiteralNode(Token string) {
         this.contents = string;
     }
+
+    public Token getToken() { return contents; }
 
     @Override
     public boolean validateTree() { return true; }
@@ -32,13 +34,14 @@ public class StringLiteralNode implements ExprNode {
             throw new ParseException("Attempted to parse string literal from non-string: " + token.getToken());
 
         String string = token.getToken();
+        Token tokenRepresentation = token;
 
         // chop off quotes on either end
         assert string.length() >= 2;
         string = string.substring(1, string.length() - 1);
         tokens.remove(0);
 
-        return new StringLiteralNode(string);
+        return new StringLiteralNode(tokenRepresentation);
     }
 
     @Override

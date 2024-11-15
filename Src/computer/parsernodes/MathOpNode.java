@@ -11,10 +11,14 @@ import computer.exceptions.ParseException;
 public class MathOpNode implements JottTree {
 
     MathOpType type;
+    Token tokenRepresentation;
 
-    public MathOpNode(MathOpType type) {
+    public MathOpNode(MathOpType type, Token token) {
+        this.tokenRepresentation = token;
         this.type = type;
     }
+
+    Token getToken() { return tokenRepresentation; }
 
     @Override
     public boolean validateTree() { return true; }
@@ -59,7 +63,7 @@ public class MathOpNode implements JottTree {
 
         tokens.remove(0);
 
-        return new MathOpNode(type);
+        return new MathOpNode(type, token);
     }
 
     @Override

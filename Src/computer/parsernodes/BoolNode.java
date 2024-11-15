@@ -8,9 +8,14 @@ import computer.exceptions.ParseException;
 
 public class BoolNode implements ExprNode {
     boolean value;
-    public BoolNode(boolean value) {
+    Token tokenRepresentation;
+
+    public BoolNode(boolean value, Token token) {
+        this.tokenRepresentation = token;
         this.value = value;
     }
+
+    public Token getToken() { return tokenRepresentation; }
 
     @Override
     public boolean validateTree() { return true; }
@@ -29,11 +34,11 @@ public class BoolNode implements ExprNode {
         if (currToken.getTokenType() == TokenType.ID_KEYWORD) {
             if (currToken.getToken().equals("True")) {
                 tokens.remove(0);
-                return new BoolNode(true);
+                return new BoolNode(true, currToken);
             } 
             else if (currToken.getToken().equals("False")) {
                 tokens.remove(0);
-                return new BoolNode(false);
+                return new BoolNode(false, currToken);
             } else {
                 throw new ParseException("Invalid keyword for boolNode: " + currToken.getToken() + ", must be one of (True or False)");
             }
