@@ -35,7 +35,7 @@ public class IDNode implements OperandNode {
             System.err.println("Semantic Error: Variable '" + id + "' is not declared in the current scope.");
             return null;
         }
-        return SymbolTable.instance().currentScopeVar(id).type;
+        return SymbolTable.instance().currentScopeVar(id).type();
     }
 
     @Override
