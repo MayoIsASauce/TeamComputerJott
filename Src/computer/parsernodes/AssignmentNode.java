@@ -3,6 +3,7 @@ package computer.parsernodes;
 import java.util.ArrayList;
 
 import computer.exceptions.ParseException;
+import computer.exceptions.SemanticException;
 import provided.Token;
 import provided.TokenType;
 
@@ -16,7 +17,7 @@ public class AssignmentNode implements BodyStatementNode {
     }
 
     @Override
-    public boolean validateTree() {
+    public boolean validateTree() throws SemanticException {
         if (id.validateTree() && expr.validateTree())
             // only get data types if everything is valid
             return id.getDataType() == expr.getDataType();
