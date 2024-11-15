@@ -5,6 +5,7 @@ import java.util.List;
 
 import provided.Token;
 import provided.TokenType;
+import computer.FunctionInfo;
 import computer.exceptions.ParseException;
 import computer.exceptions.SemanticException;
 
