@@ -1,30 +1,28 @@
 package computer.parsernodes;
 
-import java.util.ArrayList;
-
 import provided.Token;
 import provided.TokenType;
-import computer.exceptions.ParseException;
 import computer.SymbolTable;
+import computer.exceptions.ParseException;
+
+import java.util.ArrayList;
 
 public class IDNode implements OperandNode {
-    Token id;
+    String id;
 
-    public IDNode(Token id) {
+    public IDNode(String id) {
         this.id = id;
     }
 
-    public Token getToken() { return id; }
-
     public String id() {
-        return id.getToken();
+        return id;
     }
 
     @Override
     public boolean validateTree() {
-        // Ensure the identifier exists in the symbol table
-        if (!SymbolTable.instance().isVariableDeclared(id)) {
-            System.err.println("Semantic Error: Variable '" + id + "' is not declared.");
+        // Ensure the identifier exists in the current scope
+        if (!SymbolTable.instance().isVariableInCurrentScope(id)) {
+            System.err.println("Semantic Error: Variable '" + id + "' is not declared in the current scope.");
             return false;
         }
         return true;
@@ -32,17 +30,17 @@ public class IDNode implements OperandNode {
 
     @Override
     public Types getDataType() {
-        // Retrieve the variable's type from the symbol table
-        if (!SymbolTable.instance().isVariableDeclared(id)) {
-            System.err.println("Semantic Error: Variable '" + id + "' is not declared.");
+        // Retrieve the variable's type from the current scope
+        if (!SymbolTable.instance().isVariableInCurrentScope(id)) {
+            System.err.println("Semantic Error: Variable '" + id + "' is not declared in the current scope.");
             return null;
         }
-        return SymbolTable.instance().getVariableType(id);
+        return SymbolTable.instance().currentScopeVar(id).type;
     }
 
     @Override
     public String convertToJott() {
-        return id();
+        return id;
     }
 
     public static IDNode parse(ArrayList<Token> tokens) throws ParseException {
@@ -53,7 +51,7 @@ public class IDNode implements OperandNode {
 
         tokens.remove(0);
 
-        return new IDNode(token);
+        return new IDNode(token.getToken());
     }
 
     @Override

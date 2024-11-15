@@ -17,10 +17,15 @@ public class AssignmentNode implements BodyStatementNode {
     }
 
     @Override
-    public boolean validateTree() throws SemanticException {
-        if (id.validateTree() && expr.validateTree())
-            // only get data types if everything is valid
-            return id.getDataType() == expr.getDataType();
+    public boolean validateTree() {
+        id.validateTree();
+        expr.validateTree();
+        if (id.getDataType() != expr.getDataType()) {
+            throw new SemanticException("Attempt to assign expression of type "
+                    + expr.getDataType() + " to variable of type "
+                    + id.getDataType(), id.getToken());
+        }
+        // unreachable due to exceptions
         return false;
     }
 
