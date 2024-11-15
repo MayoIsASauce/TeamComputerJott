@@ -6,6 +6,7 @@ import java.util.List;
 import provided.Token;
 import provided.TokenType;
 import computer.exceptions.ParseException;
+import computer.exceptions.SemanticException;
 
 public class FuncCallNode implements OperandNode, BodyStatementNode {
 
@@ -29,23 +30,29 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
     @Override
     public boolean validateTree()
     {
-        if (!funcName.validateTree() || !params.validateTree())
-            return false;
+        funcName.validateTree();
+        params.validateTree();
 
         // child nodes are valid, now make sure that arguments match parameters
         FunctionInfo calledFunction = SymbolTable.instance().functionInfo(funcName.id());
         List<ExprNode> exprs = params.parameters();
         List<Types> calledFunctionTypes = calledFunction.parameterTypes();
 
-        if (exprs.size() != calledFunctionTypes.size())
-            // wrong number of function arguments
-            return false;
+        if (exprs.size() != calledFunctionTypes.size()) {
+            throw new SemanticException("Expected " + calledFunctionTypes.size()
+                    + " arguments to function " + funcName.id() + " but got "
+                    + exprs.size() + " arguments.", funcName.getToken());
+        }
 
         for (int i = 0; i < exprs.size(); ++i)
         {
-            if (exprs.get(i).getDataType() != calledFunctionTypes.get(i))
-                // argument of incorrect type provided for arg `i`
-                return false;
+            if (exprs.get(i).getDataType() != calledFunctionTypes.get(i)) {
+                Token token = funcName.getToken();
+                throw new SemanticException("Expected argument of type "
+                        + calledFunctionTypes.get(i) + " for argument at index "
+                        + i + " to function " + funcName.id() + " but got "
+                        + exprs.get(i).getDataType(), token);
+            }
         }
         return true;
     }
