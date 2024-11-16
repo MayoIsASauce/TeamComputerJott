@@ -36,12 +36,17 @@ public class ReturnStatementNode implements JottTree {
     @Override
     public boolean validateTree() throws SemanticException {
 
-        expr.validateTree();
+        if (expr != null)
+        {
+            expr.validateTree();
+        }
 
         FunctionInfo scopeInformation = SymbolTable.instance().currentScopeInfo();
 
-        if(scopeInformation.returnType() != expr.getDataType()) {
-            String msg = "Function " + SymbolTable.instance().currentScope() + " returns " + scopeInformation.returnType() + " but found " + expr.getDataType();
+        Types exprDataType = expr == null ? Types.VOID : expr.getDataType();
+
+        if(scopeInformation.returnType() != exprDataType) {
+            String msg = "Function " + SymbolTable.instance().currentScope() + " returns " + scopeInformation.returnType() + " but found " + exprDataType;
             SemanticException ex = new SemanticException(msg, lineSave);
             throw ex;
         }

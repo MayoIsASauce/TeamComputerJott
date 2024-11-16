@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import provided.JottTree;
 import provided.Token;
 import provided.TokenType;
+import computer.SymbolTable;
 import computer.exceptions.ParseException;
+import computer.exceptions.SemanticException;
 import computer.parsernodes.BodyNode;
 import computer.parsernodes.Types;
 
@@ -18,21 +20,24 @@ public class FuncReturnNode implements JottTree {
     }
 
     public Types type() {
-        if (returnType != null)
-            return returnType.type();
-        else
-            return Types.VOID;
+        return returnType.type();
     }
 
     @Override
-    public boolean validateTree() {
-        // TODO Auto-generated method stub
-        return false;
+    public boolean validateTree() throws SemanticException
+    {
+        if (SymbolTable.instance().currentScopeInfo().returnType() != returnType.type())
+        {
+            throw new SemanticException("Function return type and actual "
+            + "type returned do not match.", returnType.getToken());
+        }
+
+        return true;
     }
 
     @Override
     public String convertToJott() {
-        if (returnType != null) {
+        if (returnType.type() != Types.VOID) {
             return returnType.convertToJott();
         } else {
             return "Void";
@@ -48,7 +53,8 @@ public class FuncReturnNode implements JottTree {
             if (currToken.getToken().equals("Void"))
             {
                 tokens.remove(0);
-                return new FuncReturnNode(null);
+                TypeNode typeNode = new TypeNode(Types.VOID, currToken);
+                return new FuncReturnNode(typeNode);
             }
 
             return new FuncReturnNode(TypeNode.parse(tokens));

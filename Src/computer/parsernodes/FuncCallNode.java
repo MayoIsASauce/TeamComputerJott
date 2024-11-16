@@ -35,6 +35,45 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
         funcName.validateTree();
         params.validateTree();
 
+        if (SymbolTable.instance().isReservedFunction(funcName.id()))
+        {
+            if (funcName.id() == "print")
+            {
+                if (params.parameters().size() != 1)
+                {
+                    throw new SemanticException("'print' takes in 1 argument.",
+                    funcName.getToken());
+                }
+                
+                return true;
+            }
+
+            else if (funcName.id() == "concat")
+            {
+                if (params.parameters().size() != 2 ||
+                    params.parameters().get(0).getDataType() != Types.STRING ||
+                    params.parameters().get(1).getDataType() != Types.STRING)
+                {
+                    throw new SemanticException("'concat' takes in 2 Strings.",
+                    funcName.getToken());
+                }
+
+                return true;
+            }
+
+            else
+            {
+                if (params.parameters().size() != 1 ||
+                    params.parameters().get(0).getDataType() != Types.STRING)
+                {
+                    throw new SemanticException("'length' takes in 1 String.",
+                    funcName.getToken());
+                }
+
+                return true;
+            }
+        }
+
         // child nodes are valid, now make sure that arguments match parameters
         FunctionInfo calledFunction = SymbolTable.instance().functionInfo(funcName.id());
         List<ExprNode> exprs = params.parameters();
