@@ -29,6 +29,11 @@ public class FuncDefNode implements JottTree {
         this.body = body;
     }
 
+    public String getFuncName()
+    {
+        return funcName.id();
+    }
+
     public static FuncDefNode parse(ArrayList<Token> tokens) throws ParseException
     {
 
@@ -96,6 +101,25 @@ public class FuncDefNode implements JottTree {
     @Override
     public boolean validateTree() throws SemanticException
     {
+        // Handle reserved function "main"
+        if (funcName.id().equals("main"))
+        {
+            if (SymbolTable.instance().functionInfo(funcName.id()).returnType() != Types.VOID)
+            {
+                throw new SemanticException("Return type of Main must be Void",
+                                                funcName.getToken());
+            }
+
+            return true;
+        }
+
+        // Check if identifier for function is valid
+        if (!Character.isLowerCase(funcName.id().charAt(0)))
+        {
+            throw new SemanticException( "'" + funcName.id() + "' must start with "
+            + "a lowercase letter.", funcName.getToken());
+        }
+
         SymbolTable.instance().enterScope(funcName.id());
 
         if (SymbolTable.instance().isReservedFunction(funcName.id()))

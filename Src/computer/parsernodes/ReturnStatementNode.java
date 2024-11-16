@@ -19,17 +19,20 @@ public class ReturnStatementNode implements JottTree {
         return this.expr.getDataType();
     }
 
-    public ReturnStatementNode(ExprNode expr) {
-        this.expr = expr;
-    }
-
     public ReturnStatementNode()
     {
         this.expr = null;
+        this.lineSave = null;
     }
 
     public ReturnStatementNode(ExprNode expr, Token lineSave) {
         this.expr = expr;
+        this.lineSave = lineSave;
+    }
+
+    public ReturnStatementNode(Token lineSave)
+    {
+        this.expr = null;
         this.lineSave = lineSave;
     }
 
@@ -77,7 +80,7 @@ public class ReturnStatementNode implements JottTree {
         
         if (tokens.get(0).getTokenType() == TokenType.R_BRACE)
         {
-            return new ReturnStatementNode();
+            return new ReturnStatementNode(tokens.get(0));
         }
         Token lineSave = tokens.remove(0);
 

@@ -52,7 +52,6 @@ public class BodyNode implements JottTree {
     {
 
         ArrayList<BodyStatementNode> bodyStatements = new ArrayList<>();
-        ReturnStatementNode returnStatement = new ReturnStatementNode(null);
 
         while (!tokens.get(0).getToken().equals("Return")
                 && tokens.get(0).getTokenType() != TokenType.R_BRACE )
@@ -60,7 +59,7 @@ public class BodyNode implements JottTree {
             bodyStatements.add(BodyStatementNode.parse(tokens));
         } 
 
-        returnStatement = ReturnStatementNode.parse(tokens);
+        ReturnStatementNode returnStatement = ReturnStatementNode.parse(tokens);
 
         return new BodyNode(bodyStatements, returnStatement);
 
