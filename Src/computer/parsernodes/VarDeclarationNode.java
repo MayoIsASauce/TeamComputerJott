@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import computer.SymbolTable;
 import computer.exceptions.ParseException;
+import computer.exceptions.SemanticException;
 import provided.JottTree;
 import provided.Token;
 import provided.TokenType;
@@ -17,9 +18,12 @@ public class VarDeclarationNode implements JottTree {
     }
 
     @Override
-    public boolean validateTree() {
-        // TODO Auto-generated method stub
-        return false;
+    public boolean validateTree() throws SemanticException
+    {
+        type.validateTree();
+        id.validateTree();
+        
+        return true;
     }
 
     @Override
