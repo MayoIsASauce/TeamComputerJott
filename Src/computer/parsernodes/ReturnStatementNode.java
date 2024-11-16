@@ -16,7 +16,10 @@ public class ReturnStatementNode implements JottTree {
 
 
     public Types getDataType() {
-        return this.expr.getDataType();
+        if (expr != null)
+            return this.expr.getDataType();
+        else
+            return Types.VOID;
     }
 
     public ReturnStatementNode()
@@ -45,10 +48,12 @@ public class ReturnStatementNode implements JottTree {
         }
 
         FunctionInfo scopeInformation = SymbolTable.instance().currentScopeInfo();
+        Types exprDataType = getDataType();
 
-        Types exprDataType = expr == null ? Types.VOID : expr.getDataType();
-
-        if(scopeInformation.returnType() != exprDataType) {
+        // NOTE: R_BRACE check is so that, if this return was created by just having
+        // no return statement (so the block "returns" void), we don't throw an error
+        // about a void-returning block in a nonvoid function
+        if(lineSave.getTokenType() != TokenType.R_BRACE && scopeInformation.returnType() != exprDataType) {
             String msg = "Function " + SymbolTable.instance().currentScope() + " returns " + scopeInformation.returnType() + " but found " + exprDataType;
             SemanticException ex = new SemanticException(msg, lineSave);
             throw ex;

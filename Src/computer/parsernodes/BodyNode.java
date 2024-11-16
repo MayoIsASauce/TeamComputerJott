@@ -2,6 +2,7 @@ package computer.parsernodes;
 
 import computer.exceptions.ParseException;
 import computer.exceptions.SemanticException;
+import computer.parsernodes.Types;
 import java.util.ArrayList;
 import provided.JottTree;
 import provided.Token;
@@ -19,8 +20,16 @@ public class BodyNode implements JottTree {
         this.returnStatement = returnStatement;
     }
 
-    public Types getReturnType() {
-        return returnStatement.getDataType();
+    public boolean isReturnable(Types returnType) {
+        System.out.println("checking that body with return type " + returnStatement.getDataType() + " is returnable");
+        for (int i = 0; i < bodyStatements.size(); ++i) {
+            if (bodyStatements.get(i).isReturnable(returnType)) {
+                System.out.println("found returnable block at index " + i + " not checking if future blocks are returnable");
+                return true;
+            }
+        }
+        System.out.println("completed body statement check loop for body with return type " + returnStatement.getDataType());
+        return returnStatement.getDataType() == returnType;
     }
 
     @Override

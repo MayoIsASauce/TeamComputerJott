@@ -132,6 +132,12 @@ public class FuncDefNode implements JottTree {
         returnNode.validateTree();
         body.validateTree();
 
+        Types returnType = returnNode.type();
+        if (returnType != Types.VOID && !body.isReturnable(returnType)) {
+            throw new SemanticException("Not all paths return a value in function `"
+                    + funcName.id() + "`", funcName.getToken());
+        }
+
         SymbolTable.instance().exitScope();
 
         return true;

@@ -16,6 +16,10 @@ public class ElseNode implements JottTree {
         this.body = body;
     }
 
+    public boolean isReturnable(Types returnType) {
+        return body.isReturnable(returnType);
+    }
+
     @Override
     public boolean validateTree() throws SemanticException {
         assert body != null;

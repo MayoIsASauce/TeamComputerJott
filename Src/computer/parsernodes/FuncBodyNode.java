@@ -2,6 +2,7 @@ package computer.parsernodes;
 
 import computer.exceptions.ParseException;
 import computer.exceptions.SemanticException;
+import computer.parsernodes.Types;
 import java.util.ArrayList;
 import provided.JottTree;
 import provided.Token;
@@ -16,6 +17,10 @@ public class FuncBodyNode implements JottTree {
         this.body = body;
     }
 
+    public boolean isReturnable(Types returnType) {
+        return body.isReturnable(returnType);
+    }
+
     @Override
     public boolean validateTree() throws SemanticException {
         for (JottTree jottTree : varDecList) {
@@ -23,12 +28,9 @@ public class FuncBodyNode implements JottTree {
         }
 
         body.validateTree();
-        
 
         return true;
     }
-
-    
 
     @Override
     public String convertToJott() {

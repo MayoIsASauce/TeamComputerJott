@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import computer.exceptions.ParseException;
 import computer.exceptions.SemanticException;
 import computer.parsernodes.FuncCallNode;
+import computer.parsernodes.Types;
 import provided.JottTree;
 import provided.Token;
 import provided.TokenType;
@@ -17,6 +18,7 @@ public interface BodyStatementNode extends JottTree
     @Override
     public String convertToJott();
 
+    public boolean isReturnable(Types returnType);
 
     public static BodyStatementNode parse(ArrayList<Token> tokens) throws ParseException
     {

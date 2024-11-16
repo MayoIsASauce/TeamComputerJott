@@ -3,17 +3,22 @@ package computer.parsernodes;
 import java.util.ArrayList;
 import provided.JottTree;
 import provided.Token;
+import computer.parsernodes.Types;
 import computer.exceptions.ParseException;
 import computer.exceptions.SemanticException;
 
 public class ElseIfNode implements JottTree {
 
     private JottTree condition;
-    private JottTree body;
+    private BodyNode body;
 
-    public ElseIfNode(JottTree condition, JottTree body) {
+    public ElseIfNode(JottTree condition, BodyNode body) {
         this.condition = condition;
         this.body = body;
+    }
+
+    public boolean isReturnable(Types returnType) {
+        return body.isReturnable(returnType);
     }
 
     @Override
@@ -61,7 +66,7 @@ public class ElseIfNode implements JottTree {
         tokens.remove(0);
 
         // Parse body
-        JottTree body = BodyNode.parse(tokens);
+        BodyNode body = BodyNode.parse(tokens);
         if (body == null) {
             throw new ParseException("Invalid body in Elseif");
         }

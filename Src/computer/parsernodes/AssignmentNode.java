@@ -17,6 +17,9 @@ public class AssignmentNode implements BodyStatementNode {
     }
 
     @Override
+    public boolean isReturnable(Types returnType) { return false; }
+
+    @Override
     public boolean validateTree() throws SemanticException {
         id.validateTree();
         expr.validateTree();

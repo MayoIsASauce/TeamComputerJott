@@ -19,6 +19,9 @@ public class WhileLoopNode implements BodyStatementNode {
     }
 
     @Override
+    public boolean isReturnable(Types returnType) { return false; }
+
+    @Override
     public boolean validateTree() throws SemanticException {
         assert condition != null && body != null; // these shouldnt be null
         condition.validateTree(); body.validateTree();

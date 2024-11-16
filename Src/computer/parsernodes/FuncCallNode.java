@@ -30,6 +30,9 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
     }
 
     @Override
+    public boolean isReturnable(Types returnType) { return false; }
+
+    @Override
     public boolean validateTree() throws SemanticException
     {
         funcName.validateTree();
