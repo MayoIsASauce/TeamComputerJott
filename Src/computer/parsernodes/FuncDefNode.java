@@ -106,9 +106,21 @@ public class FuncDefNode implements JottTree {
         {
             if (SymbolTable.instance().functionInfo(funcName.id()).returnType() != Types.VOID)
             {
-                throw new SemanticException("Return type of Main must be Void",
+                throw new SemanticException("Return type of main must be Void",
                                                 funcName.getToken());
             }
+
+            if (returnNode.type() != Types.VOID)
+            {
+                throw new SemanticException("main must not return anything.",
+                        funcName.getToken()); 
+            }
+
+            SymbolTable.instance().enterScope(funcName.id());
+
+            body.validateTree();
+
+            SymbolTable.instance().exitScope();
 
             return true;
         }

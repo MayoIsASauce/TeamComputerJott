@@ -38,7 +38,9 @@ public class BodyNode implements JottTree {
             bodyStatementNode.validateTree();
         }
         
-        return returnStatement.validateTree();
+        returnStatement.validateTree();
+
+        return true;
 
     }
 
