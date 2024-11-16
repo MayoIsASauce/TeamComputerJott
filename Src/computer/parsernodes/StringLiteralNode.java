@@ -24,7 +24,7 @@ public class StringLiteralNode implements ExprNode {
 
     @Override
     public String convertToJott() {
-        return String.format("\"%s\"", contents);
+        return contents.getToken();
     }
 
     public static StringLiteralNode parse(ArrayList<Token> tokens) throws ParseException {

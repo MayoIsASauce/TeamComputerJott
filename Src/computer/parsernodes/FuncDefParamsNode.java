@@ -49,12 +49,18 @@ public class FuncDefParamsNode implements JottTree {
     @Override
     public boolean validateTree() throws SemanticException
     {
-        paramName.validateTree();
-        paramType.validateTree();
-
-        for (FuncDefParamsTailNode tailNode : paramsTailArray)
+        if (paramName != null)
         {
-            tailNode.validateTree();
+            paramName.validateTree();
+            paramType.validateTree();
+        }
+
+        if (paramsTailArray != null)
+        {
+            for (FuncDefParamsTailNode tailNode : paramsTailArray)
+            {
+                tailNode.validateTree();
+            }
         }
 
         return true;
@@ -123,9 +129,12 @@ public class FuncDefParamsNode implements JottTree {
             SymbolTable.instance().addVariableToCurrentScope(paramName.id(), paramType.type());
         }
 
-        for (FuncDefParamsTailNode tailNode : paramsTailArray)
+        if (paramsTailArray != null)
         {
-            SymbolTable.instance().addVariableToCurrentScope(tailNode.id(), tailNode.type());
+            for (FuncDefParamsTailNode tailNode : paramsTailArray)
+            {
+                SymbolTable.instance().addVariableToCurrentScope(tailNode.id(), tailNode.type());
+            }
         }
     }
 }
