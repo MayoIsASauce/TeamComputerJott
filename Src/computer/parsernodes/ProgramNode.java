@@ -43,25 +43,31 @@ public class ProgramNode implements JottTree
     @Override
     public boolean validateTree() throws SemanticException
     {
-        boolean mainExists = false;
+        try {
+            boolean mainExists = false;
 
-        for (FuncDefNode fd : fDefNodes)
-        {
-            fd.validateTree();
-
-            if (fd.getFuncName().equals("main"))
+            for (FuncDefNode fd : fDefNodes)
             {
-                mainExists = true;
-            }
-        }
+                fd.validateTree();
 
-        if (!mainExists)
-        {
-            throw new SemanticException("No main function found."
-                , lineSave);
+                if (fd.getFuncName().equals("main"))
+                {
+                    mainExists = true;
+                }
+            }
+
+            if (!mainExists)
+            {
+                throw new SemanticException("No main function found."
+                    , lineSave);
+            }
+            
+            return true;
+        } catch (SemanticException e) {
+            System.err.println("Semantic Error");
+            System.err.println(e.getMessage());
+            return false;
         }
-        
-        return true;
     }
 
 
