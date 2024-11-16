@@ -21,14 +21,9 @@ public class BodyNode implements JottTree {
     }
 
     public boolean isReturnable(Types returnType) {
-        System.out.println("checking that body with return type " + returnStatement.getDataType() + " is returnable");
-        for (int i = 0; i < bodyStatements.size(); ++i) {
-            if (bodyStatements.get(i).isReturnable(returnType)) {
-                System.out.println("found returnable block at index " + i + " not checking if future blocks are returnable");
+        for (BodyStatementNode bs : bodyStatements)
+            if (bs.isReturnable(returnType))
                 return true;
-            }
-        }
-        System.out.println("completed body statement check loop for body with return type " + returnStatement.getDataType());
         return returnStatement.getDataType() == returnType;
     }
 

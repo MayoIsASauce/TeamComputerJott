@@ -24,16 +24,11 @@ public class IfStatementNode implements BodyStatementNode {
 
     @Override
     public boolean isReturnable(Types returnType) {
-        System.out.println("beginning returnable check for if/else chain");
-        for (ElseIfNode elif : elseIfs) {
-            System.out.println("checking elif...");
-            if (!elif.isReturnable(returnType)) {
-                System.out.println("found nonreturnable elif, returning false for is if statement returnable");
+        if (!body.isReturnable(returnType))
+            return false;
+        for (ElseIfNode elif : elseIfs)
+            if (!elif.isReturnable(returnType))
                 return false;
-            }
-            System.out.println("elif returnable, continuing");
-        }
-        System.out.println("all elifs returnable, else is returnable: " + elseNode.isReturnable(returnType));
         return elseNode.isReturnable(returnType);
     }
 
