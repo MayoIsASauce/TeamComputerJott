@@ -22,7 +22,7 @@ public class Jott {
         ArrayList<Token> tokens = JottTokenizer.tokenize(filename);
 
         JottTree parse_tree = JottParser.parse(tokens);
-        if (parse_tree.validateTree()) {
+        if (parse_tree != null && parse_tree.validateTree()) {
             // TODO: execute
         }
     }
