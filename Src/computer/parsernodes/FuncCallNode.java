@@ -37,7 +37,7 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
 
         if (SymbolTable.instance().isReservedFunction(funcName.id()))
         {
-            if (funcName.id() == "print")
+            if (funcName.id().equals("print"))
             {
                 if (params.parameters().size() != 1)
                 {
@@ -48,7 +48,7 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
                 return true;
             }
 
-            else if (funcName.id() == "concat")
+            else if (funcName.id().equals("concat"))
             {
                 if (params.parameters().size() != 2 ||
                     params.parameters().get(0).getDataType() != Types.STRING ||
