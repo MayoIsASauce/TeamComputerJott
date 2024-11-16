@@ -45,6 +45,11 @@ public class SymbolTable {
         return new FunctionInfo(functionInfosByName.get(functionName));
     }
 
+    public boolean containsFunction(String functionName)
+    {
+        return functionInfosByName.containsKey(functionName);
+    }
+
     /// Returns a copy of variable info about a variable in a given scope.
     public VariableInfo variableInfoForFunction(String functionName, String variableName) {
         assert variableInfoByNameByFuncName.containsKey(functionName);

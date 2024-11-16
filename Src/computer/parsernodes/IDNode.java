@@ -33,7 +33,7 @@ public class IDNode implements OperandNode {
 
         // Ensure the identifier exists in the current scope
         if (!SymbolTable.instance().isVariableInCurrentScope(id())
-            && SymbolTable.instance().currentScope() != id())
+            && !SymbolTable.instance().containsFunction(id()))
         {
             throw new SemanticException("Variable or function name '" + id() +
                         "' is not in the current scope.", token);
