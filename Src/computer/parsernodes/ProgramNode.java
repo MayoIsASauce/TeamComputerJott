@@ -30,18 +30,14 @@ public class ProgramNode implements JottTree
 
 
     @Override
-    public boolean validateTree()
+    public boolean validateTree() throws SemanticException
     {
-        try {
-            for (FuncDefNode fd : fDefNodes) {
-                fd.validateTree();
-            }
-            return true;
-        } catch (SemanticException e) {
-            System.err.println("Semantic Error"); // TODO: what is the first line supposed to be here? read writeup
-            System.err.println(e.getMessage());
-            return false;
+        for (FuncDefNode fd : fDefNodes)
+        {
+            fd.validateTree();
         }
+        
+        return true;
     }
 
 

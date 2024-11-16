@@ -4,6 +4,7 @@ import provided.Token;
 import provided.TokenType;
 import computer.SymbolTable;
 import computer.exceptions.ParseException;
+import computer.exceptions.SemanticException;
 
 import java.util.ArrayList;
 
@@ -23,22 +24,39 @@ public class IDNode implements OperandNode {
     }
 
     @Override
-    public boolean validateTree() {
-        // Ensure the identifier exists in the current scope
-        if (!SymbolTable.instance().isVariableInCurrentScope(id())) {
-            System.err.println("Semantic Error: Variable '" + id() + "' is not declared in the current scope.");
-            return false;
+    public boolean validateTree() throws SemanticException
+    {
+        if (SymbolTable.instance().isReservedFunction(id()))
+        {
+            return true;
         }
+
+        // Ensure the identifier exists in the current scope
+        if (!SymbolTable.instance().isVariableInCurrentScope(id())
+            && SymbolTable.instance().currentScope() != id())
+        {
+            throw new SemanticException("Variable or function name '" + id() +
+                        "' is not in the current scope.", token);
+        }
+
+        if ( !Character.isLowerCase(id().charAt(0)) )
+        {
+            throw new SemanticException("Identifier " + id() + 
+                        " must start with lowercase letter.", token);
+        }
+
         return true;
     }
 
     @Override
-    public Types getDataType() {
+    public Types getDataType()
+    {
         // Retrieve the variable's type from the current scope
-        if (!SymbolTable.instance().isVariableInCurrentScope(id())) {
-            System.err.println("Semantic Error: Variable '" + id() + "' is not declared in the current scope.");
+        if (!SymbolTable.instance().isVariableInCurrentScope(id()))
+        {
             return null;
         }
+
         return SymbolTable.instance().currentScopeVar(id()).type();
     }
 

@@ -1,12 +1,19 @@
 package computer;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.ArrayList;
 import computer.parsernodes.Types;
 
 public class SymbolTable {
 
     static SymbolTable instance = null;
+    static HashSet<String> reservedFunctions = new HashSet<>(Set.of(
+        "print",
+        "concat",
+        "length"
+        ));
 
     // symbol table gets built at parse, then is readonly during execution
     boolean completed;
@@ -112,5 +119,10 @@ public class SymbolTable {
         assert !completed;
         assert currentScope == null;
         completed = true;
+    }
+
+    public boolean isReservedFunction(String funcName)
+    {
+        return reservedFunctions.contains(funcName);
     }
 }

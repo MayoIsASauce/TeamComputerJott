@@ -3,6 +3,7 @@ package computer.parsernodes;
 import java.util.ArrayList;
 
 import computer.exceptions.ParseException;
+import computer.exceptions.SemanticException;
 import computer.parsernodes.Types;
 import provided.JottTree;
 import provided.Token;
@@ -21,11 +22,18 @@ public class FuncDefParamsTailNode implements JottTree {
         return type.type(); // convert TypeNode to its inner Types value
     }
 
-    @Override
-    public boolean validateTree()
+    public String id()
     {
-        // TODO Auto-generated method stub
-        return false;
+        return id.id();
+    }
+
+    @Override
+    public boolean validateTree() throws SemanticException
+    {
+        id.validateTree();
+        type.validateTree();
+
+        return true;
     }
 
     @Override

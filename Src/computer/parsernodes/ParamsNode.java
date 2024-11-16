@@ -27,10 +27,7 @@ public class ParamsNode implements JottTree {
     public boolean validateTree() throws SemanticException {
         // Validate all parameters in the list
         for (ExprNode param : parameters) {
-            if (!param.validateTree()) {
-                System.err.println("Semantic Error: Invalid parameter in ParamsNode.");
-                return false;
-            }
+            param.validateTree();
         }
         return true;
     }

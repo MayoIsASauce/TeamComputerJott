@@ -75,6 +75,8 @@ public class FuncDefNode implements JottTree {
 
         SymbolTable.instance().beginBuildingNewScope(name.id(), returnNode.type(), params.typesRepresentation());
 
+        params.addToSymbolTable();
+
         // FuncBodyNode's parse should call variable declaration node's parse,
         // which will insert variables into the symbol table
         FuncBodyNode bodyNode = FuncBodyNode.parse(tokens);
@@ -94,8 +96,21 @@ public class FuncDefNode implements JottTree {
     @Override
     public boolean validateTree() throws SemanticException
     {
-        // TODO Auto-generated method stub
-        return false;
+        SymbolTable.instance().enterScope(funcName.id());
+
+        if (SymbolTable.instance().isReservedFunction(funcName.id()))
+        {
+            throw new SemanticException( "'" + funcName.id() + "' is a "
+            + "reserved keyword.", funcName.getToken());
+        }
+        
+        params.validateTree();
+        returnNode.validateTree();
+        body.validateTree();
+
+        SymbolTable.instance().exitScope();
+
+        return true;
     }
 
     @Override

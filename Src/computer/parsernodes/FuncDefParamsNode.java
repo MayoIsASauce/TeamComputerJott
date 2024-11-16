@@ -2,7 +2,9 @@ package computer.parsernodes;
 
 import java.util.ArrayList;
 
+import computer.SymbolTable;
 import computer.exceptions.ParseException;
+import computer.exceptions.SemanticException;
 import computer.parsernodes.Types;
 import provided.JottTree;
 import provided.Token;
@@ -45,10 +47,17 @@ public class FuncDefParamsNode implements JottTree {
 
 
     @Override
-    public boolean validateTree()
+    public boolean validateTree() throws SemanticException
     {
-        // TODO Auto-generated method stub
-        return false;
+        paramName.validateTree();
+        paramType.validateTree();
+
+        for (FuncDefParamsTailNode tailNode : paramsTailArray)
+        {
+            tailNode.validateTree();
+        }
+
+        return true;
     }
 
     @Override
@@ -105,5 +114,18 @@ public class FuncDefParamsNode implements JottTree {
     {
         // TODO Auto-generated method stub
 
+    }
+
+    public void addToSymbolTable()
+    {
+        if (paramName != null)
+        {
+            SymbolTable.instance().addVariableToCurrentScope(paramName.id(), paramType.type());
+        }
+
+        for (FuncDefParamsTailNode tailNode : paramsTailArray)
+        {
+            SymbolTable.instance().addVariableToCurrentScope(tailNode.id(), tailNode.type());
+        }
     }
 }
