@@ -26,17 +26,18 @@ public class IDNode implements OperandNode {
     @Override
     public boolean validateTree() throws SemanticException
     {
-        if (SymbolTable.instance().isReservedFunction(id()))
+        // Ensure the identifier exists in the current scope
+        if (!SymbolTable.instance().isVariableInCurrentScope(id()))
         {
-            return true;
+            throw new SemanticException("Variable '" + id() +
+                        "' is not in the current scope.", token);
         }
 
-        // Ensure the identifier exists in the current scope
-        if (!SymbolTable.instance().isVariableInCurrentScope(id())
-            && !SymbolTable.instance().containsFunction(id()))
+        // Ensure that variable is initialized;
+        if (!SymbolTable.instance().isVariableInitialized(id()))
         {
-            throw new SemanticException("Variable or function name '" + id() +
-                        "' is not in the current scope.", token);
+            throw new SemanticException("Attempt to use uninitialized variable '"
+                     + id() + "' in expression.", token);
         }
 
         if ( !Character.isLowerCase(id().charAt(0)) )

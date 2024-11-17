@@ -70,6 +70,18 @@ public class SymbolTable {
         return variableInfoByName.containsKey(variableName);
     }
 
+    public void markVariableInitialized(String variableName)
+    {
+        assert variableInfoByNameByFuncName.get(currentScope()).containsKey(variableName);
+        variableInfoByNameByFuncName.get(currentScope()).get(variableName).markInitialized();
+    }
+
+    public boolean isVariableInitialized(String variableName)
+    {
+        assert variableInfoByNameByFuncName.get(currentScope()).containsKey(variableName);
+        return variableInfoByNameByFuncName.get(currentScope()).get(variableName).isInitialized();
+    }
+
     /// For use after symbol table has been built
     public void enterScope(String functionName) {
         // no nested scopes in jott. exitScope() required, although technically

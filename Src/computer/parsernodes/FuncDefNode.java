@@ -137,7 +137,7 @@ public class FuncDefNode implements JottTree {
         if (SymbolTable.instance().isReservedFunction(funcName.id()))
         {
             throw new SemanticException( "'" + funcName.id() + "' is a "
-            + "reserved keyword.", funcName.getToken());
+            + "reserved function.", funcName.getToken());
         }
         
         params.validateTree();

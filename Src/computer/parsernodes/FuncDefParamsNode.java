@@ -127,6 +127,7 @@ public class FuncDefParamsNode implements JottTree {
         if (paramName != null)
         {
             SymbolTable.instance().addVariableToCurrentScope(paramName.id(), paramType.type());
+            SymbolTable.instance().markVariableInitialized(paramName.id());
         }
 
         if (paramsTailArray != null)
@@ -134,6 +135,7 @@ public class FuncDefParamsNode implements JottTree {
             for (FuncDefParamsTailNode tailNode : paramsTailArray)
             {
                 SymbolTable.instance().addVariableToCurrentScope(tailNode.id(), tailNode.type());
+                SymbolTable.instance().markVariableInitialized(tailNode.id());
             }
         }
     }

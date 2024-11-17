@@ -2,6 +2,7 @@ package computer.parsernodes;
 
 import java.util.ArrayList;
 
+import computer.SymbolTable;
 import computer.exceptions.ParseException;
 import computer.exceptions.SemanticException;
 import provided.Token;
@@ -21,13 +22,28 @@ public class AssignmentNode implements BodyStatementNode {
 
     @Override
     public boolean validateTree() throws SemanticException {
-        id.validateTree();
+        // Ensure the identifier exists in the current scope
+        if (!SymbolTable.instance().isVariableInCurrentScope(id.id()))
+        {
+            throw new SemanticException("Variable '" + id.id() +
+                        "' is not in the current scope.", id.getToken());
+        }
+
+        if ( !Character.isLowerCase(id.id().charAt(0)) )
+        {
+            throw new SemanticException("Identifier " + id.id() + 
+                        " must start with lowercase letter.", id.getToken());
+        }
+        
         expr.validateTree();
         if (id.getDataType() != expr.getDataType()) {
             throw new SemanticException("Attempt to assign expression of type "
                     + expr.getDataType() + " to variable of type "
                     + id.getDataType(), id.getToken());
         }
+
+        SymbolTable.instance().markVariableInitialized(id.id());
+
         return true;
     }
 

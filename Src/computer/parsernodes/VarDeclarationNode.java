@@ -21,7 +21,19 @@ public class VarDeclarationNode implements JottTree {
     public boolean validateTree() throws SemanticException
     {
         type.validateTree();
-        id.validateTree();
+        
+        // Ensure the identifier exists in the current scope
+        if (!SymbolTable.instance().isVariableInCurrentScope(id.id()))
+        {
+            throw new SemanticException("Variable '" + id.id() +
+                        "' is not in the current scope.", id.getToken());
+        }
+
+        if ( !Character.isLowerCase(id.id().charAt(0)) )
+        {
+            throw new SemanticException("Identifier " + id.id() + 
+                        " must start with lowercase letter.", id.getToken());
+        }
         
         return true;
     }

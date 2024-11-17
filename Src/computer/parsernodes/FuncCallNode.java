@@ -35,9 +35,8 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
     @Override
     public boolean validateTree() throws SemanticException
     {
-        funcName.validateTree();
         params.validateTree();
-
+        
         if (SymbolTable.instance().isReservedFunction(funcName.id()))
         {
             if (funcName.id().equals("print"))
@@ -75,6 +74,12 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
 
                 return true;
             }
+        }
+
+        if (!SymbolTable.instance().containsFunction(funcName.id()))
+        {
+            throw new SemanticException("Call to unknown function '" + 
+                    funcName.id() + "'", funcName.getToken());
         }
 
         // child nodes are valid, now make sure that arguments match parameters
