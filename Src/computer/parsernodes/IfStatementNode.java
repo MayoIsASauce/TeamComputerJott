@@ -29,7 +29,8 @@ public class IfStatementNode implements BodyStatementNode {
         for (ElseIfNode elif : elseIfs)
             if (!elif.isReturnable(returnType))
                 return false;
-        return elseNode.isReturnable(returnType);
+
+        return elseNode != null && elseNode.isReturnable(returnType);
     }
 
     @Override
