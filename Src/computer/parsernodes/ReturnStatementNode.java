@@ -3,6 +3,7 @@ package computer.parsernodes;
 import computer.FunctionInfo;
 import computer.SymbolTable;
 import computer.exceptions.ParseException;
+import computer.exceptions.ReturnException;
 import computer.exceptions.SemanticException;
 import java.util.ArrayList;
 import provided.JottTree;
@@ -102,8 +103,15 @@ public class ReturnStatementNode implements JottTree {
     }
 
     @Override
-    public void execute() {
-        // TODO Auto-generated method stub
+    public void execute() throws ReturnException {
+
+        if (expr != null)
+        {
+            ReturnException ex = new ReturnException(expr.execute());
+            throw ex;
+        }
+
+
 
     }
 }

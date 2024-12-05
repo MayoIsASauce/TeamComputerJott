@@ -1,17 +1,12 @@
 package computer.parsernodes;
 
+import computer.SymbolTable;
+import computer.exceptions.ParseException;
+import computer.exceptions.SemanticException;
 import java.util.ArrayList;
-
 import provided.JottTree;
 import provided.Token;
 import provided.TokenType;
-import computer.parsernodes.IDNode;
-import computer.parsernodes.FuncBodyNode;
-import computer.parsernodes.FuncReturnNode;
-import computer.parsernodes.FuncDefParamsNode;
-import computer.exceptions.ParseException;
-import computer.exceptions.SemanticException;
-import computer.SymbolTable;
 
 
 public class FuncDefNode implements JottTree {
@@ -86,7 +81,7 @@ public class FuncDefNode implements JottTree {
         // which will insert variables into the symbol table
         FuncBodyNode bodyNode = FuncBodyNode.parse(tokens);
 
-        SymbolTable.instance().finishBuildingCurrentScope();
+        SymbolTable.instance().finishBuildingCurrentScope(bodyNode);
 
         if (!tokens.get(0).getToken().equals("}")) 
         {

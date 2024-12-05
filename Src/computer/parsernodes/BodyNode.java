@@ -2,7 +2,6 @@ package computer.parsernodes;
 
 import computer.exceptions.ParseException;
 import computer.exceptions.SemanticException;
-import computer.parsernodes.Types;
 import java.util.ArrayList;
 import provided.JottTree;
 import provided.Token;
@@ -73,7 +72,20 @@ public class BodyNode implements JottTree {
 
     @Override
     public void execute() {
-        // TODO Auto-generated method stub
+
+        try{
+            for (BodyStatementNode bodyStatementNode : bodyStatements) {
+                bodyStatementNode.execute();
+            }
+
+            //Will return this value
+            returnStatement.execute();
+
+
+        } catch (ReturnException e) {
+            //Will return this value
+            
+        }
 
     }
 }

@@ -2,7 +2,6 @@ package computer.parsernodes;
 
 import computer.exceptions.ParseException;
 import computer.exceptions.SemanticException;
-import computer.parsernodes.Types;
 import java.util.ArrayList;
 import provided.JottTree;
 import provided.Token;
@@ -65,7 +64,7 @@ public class FuncBodyNode implements JottTree {
 
     @Override
     public void execute() {
-        // TODO Auto-generated method stub
-
+        //Double check on this with prof since I dont think execute is needed on vardecnodes but just want to be sure
+        body.execute();
     }
 }

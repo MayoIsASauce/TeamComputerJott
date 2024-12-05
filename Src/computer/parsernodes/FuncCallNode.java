@@ -1,14 +1,13 @@
 package computer.parsernodes;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import provided.Token;
-import provided.TokenType;
 import computer.FunctionInfo;
 import computer.SymbolTable;
 import computer.exceptions.ParseException;
 import computer.exceptions.SemanticException;
+import java.util.ArrayList;
+import java.util.List;
+import provided.Token;
+import provided.TokenType;
 
 public class FuncCallNode implements OperandNode, BodyStatementNode {
 
@@ -157,10 +156,37 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
         
     }
 
+
+    //TODO discuss generic classes
     @Override
     public void execute()
     {
-        // TODO Auto-generated method stub
+        if (SymbolTable.instance().isReservedFunction(funcName.id()))
+        {
+            if (funcName.id().equals("print"))
+            {
+                System.out.println(params.parameters().get(0).execute());
+            }
+
+            else if (funcName.id().equals("concat"))
+            {
+                String result = params.parameters().get(0).execute() + params.parameters().get(1).execute();
+                System.out.println(result);
+            }
+
+            else
+            {
+                String result = params.parameters().get(0).execute();
+                System.out.println(result.length());
+            }
+        }
+
+        else
+        {
+            SymbolTable.instance().enterScope(funcName.id());
+            SymbolTable.instance().functionInfo(funcName.id()).linkToFuncBody().execute();
+            SymbolTable.instance().exitScope();
+        }
 
     }
 }
