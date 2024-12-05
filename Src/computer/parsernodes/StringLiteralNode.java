@@ -23,6 +23,9 @@ public class StringLiteralNode implements ExprNode {
     public Types getDataType() { return Types.STRING; }
 
     @Override
+    public Object executeAndReturnData() { return contents.getToken(); }
+
+    @Override
     public String convertToJott() {
         return contents.getToken();
     }

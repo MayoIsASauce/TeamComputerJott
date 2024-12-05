@@ -22,6 +22,9 @@ public class BoolNode implements ExprNode {
 
     @Override
     public Types getDataType() { return Types.BOOLEAN; }
+   
+    @Override
+    public Object executeAndReturnData() { return value; }
 
     @Override
     public String convertToJott() {

@@ -58,7 +58,156 @@ public class BinaryExprNode implements ExprNode {
         // invalid. tbh this could even be an "assert validateTree()" but i dont
         // want to make debug builds too slow - Ian
         assert lhs.getDataType() == rhs.getDataType();
+        // TODO: assert that the user isnt trying to do < or > on bools / strings?
+        // also that they arent trying to do / or * on strings and bools?
+
+        if (relOp != null)
+            return Types.BOOLEAN;
         return lhs.getDataType();
+    }
+
+    @Override
+    public Object executeAndReturnData() {
+        if (relOp != null) {
+            Object leftObj = lhs.executeAndReturnData();
+            Object rightObj = rhs.executeAndReturnData();
+            switch (lhs.getDataType()) {
+                case Types.BOOLEAN: {
+                    boolean left = (boolean)leftObj;
+                    boolean right = (boolean)rightObj;
+                    switch (relOp.type()) {
+                        case RelOpType.EQ: {
+                            return left == right;
+                        }
+                        case RelOpType.NOT_EQ: {
+                            return left != right;
+                        }
+                        default: {
+                            // TODO: error! cant do greater than / less than on booleans
+                        }
+                    }
+                }
+                case Types.DOUBLE: {
+                    double left = (double)leftObj;
+                    double right = (double)rightObj;
+                    switch (relOp.type()) {
+                        case RelOpType.EQ: {
+                            return left == right;
+                        }
+                        case RelOpType.NOT_EQ: {
+                            return left != right;
+                        }
+                        case RelOpType.LESS_THAN: {
+                            return left < right;
+                        }
+                        case RelOpType.LESS_THAN_EQ: {
+                            return left <= right;
+                        }
+                        case RelOpType.GREATER_THAN: {
+                            return left > right;
+                        }
+                        case RelOpType.GREATER_THAN_EQ: {
+                            return left >= right;
+                        }
+                    }
+                }
+                case Types.INTEGER: {
+                    int left = (int)leftObj;
+                    int right = (int)rightObj;
+                    switch (relOp.type()) {
+                        case RelOpType.EQ: {
+                            return left == right;
+                        }
+                        case RelOpType.NOT_EQ: {
+                            return left != right;
+                        }
+                        case RelOpType.LESS_THAN: {
+                            return left < right;
+                        }
+                        case RelOpType.LESS_THAN_EQ: {
+                            return left <= right;
+                        }
+                        case RelOpType.GREATER_THAN: {
+                            return left > right;
+                        }
+                        case RelOpType.GREATER_THAN_EQ: {
+                            return left >= right;
+                        }
+                    }
+                }
+                case Types.STRING: {
+                    String left = (String)leftObj;
+                    String right = (String)rightObj;
+                    switch (relOp.type()) {
+                        case RelOpType.EQ: {
+                            return left.equals(right);
+                        }
+                        case RelOpType.NOT_EQ: {
+                            return !left.equals(right);
+                        }
+                        default: {
+                            // TODO: error! cant do greater than / less than on strings
+                        }
+                    }
+                }
+                case Types.VOID: {
+                    // TODO: error
+                }
+            }
+        } else {
+            Object leftObj = lhs.executeAndReturnData();
+            Object rightObj = rhs.executeAndReturnData();
+            switch (lhs.getDataType()) {
+                case Types.DOUBLE: {
+                    double left = (double)leftObj;
+                    double right = (double)rightObj;
+                    switch (mathOp.type()) {
+                        case MathOpType.MULTIPLY: {
+                            return left * right;
+                        }
+                        case MathOpType.DIVIDE: {
+                            return left / right;
+                        }
+                        case MathOpType.ADD: {
+                            return left + right;
+                        }
+                        case MathOpType.SUBTRACT: {
+                            return left - right;
+                        }
+                    }
+                }
+                case Types.INTEGER: {
+                    int left = (int)leftObj;
+                    int right = (int)rightObj;
+                    switch (mathOp.type()) {
+                        case MathOpType.MULTIPLY: {
+                            return left * right;
+                        }
+                        case MathOpType.DIVIDE: {
+                            return left / right;
+                        }
+                        case MathOpType.ADD: {
+                            return left + right;
+                        }
+                        case MathOpType.SUBTRACT: {
+                            return left - right;
+                        }
+                    }
+                }
+                case Types.STRING: {
+                    String left = (String)leftObj;
+                    String right = (String)rightObj;
+                    // string concatenation
+                    if (mathOp.type() == MathOpType.ADD) {
+                        return left + right;
+                    }
+                }
+                default: {
+                    // TODO: error
+                }
+            }
+            // TODO: error
+        }
     }
 
     @Override

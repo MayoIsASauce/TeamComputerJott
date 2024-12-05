@@ -20,6 +20,8 @@ public class RelOpNode implements JottTree {
 
     Token getToken() { return tokenRepresentation; }
 
+    RelOpType type() { return type; }
+
     @Override
     public boolean validateTree() { return true; }
 

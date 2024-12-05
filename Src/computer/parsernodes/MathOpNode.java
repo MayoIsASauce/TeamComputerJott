@@ -23,6 +23,8 @@ public class MathOpNode implements JottTree {
     @Override
     public boolean validateTree() { return true; }
 
+    public MathOpType type() { return type; }
+
     @Override
     public String convertToJott() {
         switch (type) {
