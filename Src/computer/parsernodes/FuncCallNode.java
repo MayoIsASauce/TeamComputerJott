@@ -171,6 +171,8 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
         // TODO get function node from symbol table, execute it, catch return
         // exception, return the payload inside the return exception
 
+        SymbolTable.instance().enterScope(funcName.id());
+
         // Get params
         List<ExprNode> parameters = params.parameters();
 
@@ -192,6 +194,8 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
             // Add to symbol table
             SymbolTable.instance().setVariableValue(paramNames.get(ii), param);
         }
+
+        SymbolTable.instance().exitScope();
 
         // Stub
         return new Object();
