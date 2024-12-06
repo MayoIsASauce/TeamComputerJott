@@ -1,12 +1,12 @@
 package computer.parsernodes;
 
 import computer.exceptions.ParseException;
+import computer.exceptions.ReturnException;
 import computer.exceptions.SemanticException;
 import java.util.ArrayList;
 import provided.JottTree;
 import provided.Token;
 import provided.TokenType;
-import computer.exceptions.ReturnException;
 
 public class BodyNode implements JottTree {
 
@@ -75,10 +75,10 @@ public class BodyNode implements JottTree {
     public void execute(Object outparam) throws ReturnException {
 
         for (BodyStatementNode bodyStatementNode : bodyStatements) {
-            bodyStatementNode.execute();
+            bodyStatementNode.execute(outparam);
         }
 
-        returnStatement.execute();
+        returnStatement.execute(outparam);
 
 
 
