@@ -72,8 +72,10 @@ public class BodyNode implements JottTree {
     }
 
     @Override
-    public void execute(Object outparam) {
-        // TODO Auto-generated method stub
-
+    public void execute() throws RuntimeException {
+        for (BodyStatementNode bs : bodyStatements) {
+            bs.execute();
+        }
+        returnStatement.execute();
     }
 }

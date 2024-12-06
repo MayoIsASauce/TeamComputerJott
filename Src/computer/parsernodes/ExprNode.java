@@ -12,10 +12,15 @@ import computer.parsernodes.ExprNode;
 import computer.parsernodes.Types;
 
 import computer.exceptions.ParseException;
+import computer.exceptions.RuntimeException;
 
 public interface ExprNode extends JottTree {
 
     public Types getDataType();
+
+    public Object executeAndReturnData() throws RuntimeException;
+
+    public Token getToken();
 
     public static ExprNode parse(ArrayList<Token> tokens) throws ParseException {
         Token token = tokens.get(0);

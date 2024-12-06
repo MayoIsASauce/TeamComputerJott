@@ -73,10 +73,8 @@ public class AssignmentNode implements BodyStatementNode {
     }
 
     @Override
-    public void execute(Object outparam) throws RuntimeException
-    {
-        // TODO: Get expr value
-
-        // SymbolTable.instance().setVariableValue(id.id(), value);
+    public void execute() throws RuntimeException {
+        Object value = expr.executeAndReturnData();
+        SymbolTable.instance().setVariableValue(id.id(), value);
     }
 }

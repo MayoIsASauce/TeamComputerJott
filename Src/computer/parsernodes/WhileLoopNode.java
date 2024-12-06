@@ -4,16 +4,17 @@ import java.util.ArrayList;
 import provided.JottTree;
 import provided.Token;
 import provided.TokenType;
+import computer.parsernodes.ExprNode;
 import computer.exceptions.ParseException;
 import computer.exceptions.SemanticException;
 
 public class WhileLoopNode implements BodyStatementNode {
 
-    private JottTree condition; // The condition of the while loop
+    private ExprNode condition; // The condition of the while loop
     private JottTree body; // The body of the while loop
 
     // Constructor to initialize the condition and body of the loop
-    public WhileLoopNode(JottTree condition, JottTree body) {
+    public WhileLoopNode(ExprNode condition, JottTree body) {
         this.condition = condition;
         this.body = body;
     }
@@ -50,7 +51,7 @@ public class WhileLoopNode implements BodyStatementNode {
         tokens.remove(0); // Consume '['
 
         // Parse the condition inside the while loop
-        JottTree condition = ExprNode.parse(tokens);
+        ExprNode condition = ExprNode.parse(tokens);
         if (condition == null) {
             throw new ParseException("Invalid condition in While loop");
         }
@@ -84,7 +85,9 @@ public class WhileLoopNode implements BodyStatementNode {
     }
 
     @Override
-    public void execute(Object outparam) {
-        // TODO: Implement execution logic in Phase 4
+    public void execute() throws RuntimeException {
+        while ((Boolean)condition.executeAndReturnData() == true) {
+            body.execute();
+        }
     }
 }

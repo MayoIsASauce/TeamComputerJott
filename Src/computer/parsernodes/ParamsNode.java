@@ -81,7 +81,7 @@ public class ParamsNode implements JottTree {
     }
 
     @Override
-    public void execute(Object outparam) {
+    public void execute() throws RuntimeException {
         // TODO: Implement in Phase 4
     }
 }

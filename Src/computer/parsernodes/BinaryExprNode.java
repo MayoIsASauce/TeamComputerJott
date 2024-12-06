@@ -61,6 +61,9 @@ public class BinaryExprNode implements ExprNode {
     }
 
     @Override
+    public Token getToken() { return lhs.getToken(); }
+
+    @Override
     public Types getDataType() {
         // it doesnt really make sense to call this function if the types are
         // invalid. tbh this could even be an "assert validateTree()" but i dont
@@ -72,15 +75,17 @@ public class BinaryExprNode implements ExprNode {
         return lhs.getDataType();
     }
 
-    @Override
-    public void execute(Object outparam) {
-        Object leftObj = new Object();
-        lhs.execute(leftObj);
-        Object rightObj = new Object();
-        rhs.execute(rightObj);
 
-        if (outparam == null)
-            return; // ignoring value of expression
+    @Override
+    public void execute() throws RuntimeException {
+        /// dont call this function, exprs should return something
+        assert false;
+    }
+
+    @Override
+    public Object executeAndReturnData() throws RuntimeException {
+        Object leftObj = lhs.executeAndReturnData();
+        Object rightObj = rhs.executeAndReturnData();
 
         if (relOp != null) {
             switch (lhs.getDataType()) {
@@ -89,28 +94,22 @@ public class BinaryExprNode implements ExprNode {
                     double right = (double)rightObj;
                     switch (relOp.type()) {
                         case EQ: {
-                            outparam = left == right;
-                            return;
+                            return left == right;
                         }
                         case NOT_EQ: {
-                            outparam = left != right;
-                            return;
+                            return left != right;
                         }
                         case LESS_THAN: {
-                            outparam = left < right;
-                            return;
+                            return left < right;
                         }
                         case LESS_THAN_EQ: {
-                            outparam = left <= right;
-                            return;
+                            return left <= right;
                         }
                         case GREATER_THAN: {
-                            outparam = left > right;
-                            return;
+                            return left > right;
                         }
                         case GREATER_THAN_EQ: {
-                            outparam = left >= right;
-                            return;
+                            return left >= right;
                         }
                     }
                 }
@@ -119,28 +118,22 @@ public class BinaryExprNode implements ExprNode {
                     int right = (int)rightObj;
                     switch (relOp.type()) {
                         case EQ: {
-                            outparam = left == right;
-                            return;
+                            return left == right;
                         }
                         case NOT_EQ: {
-                            outparam = left != right;
-                            return;
+                            return left != right;
                         }
                         case LESS_THAN: {
-                            outparam = left < right;
-                            return;
+                            return left < right;
                         }
                         case LESS_THAN_EQ: {
-                            outparam = left <= right;
-                            return;
+                            return left <= right;
                         }
                         case GREATER_THAN: {
-                            outparam = left > right;
-                            return;
+                            return left > right;
                         }
                         case GREATER_THAN_EQ: {
-                            outparam = left >= right;
-                            return;
+                            return left >= right;
                         }
                     }
                 }
@@ -157,20 +150,16 @@ public class BinaryExprNode implements ExprNode {
                     double right = (double)rightObj;
                     switch (mathOp.type()) {
                         case MULTIPLY: {
-                            outparam = left * right;
-                            return;
+                            return left * right;
                         }
                         case DIVIDE: {
-                            outparam = left / right;
-                            return;
+                            return left / right;
                         }
                         case ADD: {
-                            outparam = left + right;
-                            return;
+                            return left + right;
                         }
                         case SUBTRACT: {
-                            outparam = left - right;
-                            return;
+                            return left - right;
                         }
                     }
                 }
@@ -179,20 +168,16 @@ public class BinaryExprNode implements ExprNode {
                     int right = (int)rightObj;
                     switch (mathOp.type()) {
                         case MULTIPLY: {
-                            outparam = left * right;
-                            return;
+                            return left * right;
                         }
                         case DIVIDE: {
-                            outparam = left / right;
-                            return;
+                            return left / right;
                         }
                         case ADD: {
-                            outparam = left + right;
-                            return;
+                            return left + right;
                         }
                         case SUBTRACT: {
-                            outparam = left - right;
-                            return;
+                            return left - right;
                         }
                     }
                 }

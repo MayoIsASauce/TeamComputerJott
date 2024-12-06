@@ -20,9 +20,8 @@ public class IDNode implements OperandNode {
         return token.getToken();
     }
 
-    public Token getToken() {
-        return token;
-    }
+    @Override
+    public Token getToken() { return token; }
 
     @Override
     public boolean validateTree() throws SemanticException
@@ -72,7 +71,13 @@ public class IDNode implements OperandNode {
     }
 
     @Override
-    public void execute(Object outparam) throws RuntimeException 
+    public void execute() throws RuntimeException {
+        /// dont call this function, exprs should return something
+        assert false;
+    }
+
+    @Override
+    public Object executeAndReturnData() throws RuntimeException 
     {
         // Ensure that variable is initialized
         if (!SymbolTable.instance().isVariableInitialized(id()))
@@ -80,5 +85,7 @@ public class IDNode implements OperandNode {
             throw new RuntimeException("Attempt to use uninitialized variable '"
                         + id() + "' in expression.", token);
         }
+
+        return SymbolTable.instance().currentScopeVar(id()).value;
     }
 }

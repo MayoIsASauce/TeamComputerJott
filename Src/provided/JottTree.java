@@ -27,5 +27,5 @@ public interface JottTree {
 	 * This will execute the Jott code represented by this JottTree node.
      * Requires checking
 	 */
-	public void execute(Object outparam) throws RuntimeException;
+	public void execute() throws RuntimeException;
 }

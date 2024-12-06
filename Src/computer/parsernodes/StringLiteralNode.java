@@ -14,6 +14,7 @@ public class StringLiteralNode implements ExprNode {
         this.contents = string;
     }
 
+    @Override
     public Token getToken() { return contents; }
 
     @Override
@@ -23,9 +24,12 @@ public class StringLiteralNode implements ExprNode {
     public Types getDataType() { return Types.STRING; }
 
     @Override
-    public void execute(Object outparam) {
-        if (outparam != null)
-            outparam = contents.getToken();
+    public Object executeAndReturnData() throws RuntimeException { return contents.getToken(); }
+
+    @Override
+    public void execute() throws RuntimeException {
+        /// dont call this function, exprs should return something
+        assert false;
     }
 
     @Override

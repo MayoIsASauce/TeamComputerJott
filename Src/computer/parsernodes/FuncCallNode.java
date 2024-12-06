@@ -107,6 +107,9 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
     }
 
     @Override
+    public Token getToken() { return funcName.getToken(); }
+
+    @Override
     public Types getDataType() {
         return SymbolTable.instance().functionInfo(funcName.id()).returnType();
     }
@@ -153,13 +156,18 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
 
         tokens.remove(0);
 
-        return new FuncCallNode(funcName, params);
-        
+        return new FuncCallNode(funcName, params); 
     }
 
     @Override
-    public void execute(Object outparam) {
-        // TODO Auto-generated method stub
+    public void execute() throws RuntimeException {
+        /// dont call this function, exprs should return something
+        assert false;
+    }
 
+    @Override
+    public Object executeAndReturnData() throws RuntimeException {
+        // TODO get function node from symbol table, execute it, catch return
+        // exception, return the payload inside the return exception
     }
 }

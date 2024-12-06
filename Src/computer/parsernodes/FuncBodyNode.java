@@ -9,10 +9,10 @@ import provided.Token;
 
 public class FuncBodyNode implements JottTree {
 
-    ArrayList<JottTree> varDecList;
+    ArrayList<VarDeclarationNode> varDecList;
     BodyNode body;
 
-    public FuncBodyNode(ArrayList<JottTree> varDecList, BodyNode body) {
+    public FuncBodyNode(ArrayList<VarDeclarationNode> varDecList, BodyNode body) {
         this.varDecList = varDecList;
         this.body = body;
     }
@@ -48,7 +48,7 @@ public class FuncBodyNode implements JottTree {
 
     public static FuncBodyNode parse(ArrayList<Token> tokens) throws ParseException {
 
-        ArrayList<JottTree> varDecList = new ArrayList<>();
+        ArrayList<VarDeclarationNode> varDecList = new ArrayList<>();
 
         while(tokens.get(0).getToken().equals("Double")
         || tokens.get(0).getToken().equals("Integer")
@@ -64,8 +64,9 @@ public class FuncBodyNode implements JottTree {
     }
 
     @Override
-    public void execute(Object outparam) {
-        // TODO Auto-generated method stub
-
+    public void execute() throws RuntimeException {
+        for (VarDeclarationNode vd : varDecList)
+            vd.execute();
+        body.execute();
     }
 }
