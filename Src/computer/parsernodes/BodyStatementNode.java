@@ -62,5 +62,7 @@ public interface BodyStatementNode extends JottTree
     }
 
     @Override
-    public void execute();
+    public void execute(Object outparam) {
+        // TODO
+    }
 }

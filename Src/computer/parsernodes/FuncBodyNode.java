@@ -64,7 +64,7 @@ public class FuncBodyNode implements JottTree {
     }
 
     @Override
-    public void execute() {
+    public void execute(Object outparam) {
         // TODO Auto-generated method stub
 
     }

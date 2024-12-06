@@ -84,7 +84,7 @@ public class WhileLoopNode implements BodyStatementNode {
     }
 
     @Override
-    public void execute() {
+    public void execute(Object outparam) {
         // TODO: Implement execution logic in Phase 4
     }
 }

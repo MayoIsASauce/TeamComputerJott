@@ -67,47 +67,44 @@ public class BinaryExprNode implements ExprNode {
     }
 
     @Override
-    public Object executeAndReturnData() {
+    public void execute(Object outparam) {
+        Object leftObj;
+        lhs.execute(leftObj);
+        Object rightObj;
+        rhs.execute(rightObj);
+
+        if (outparam == null)
+            return;
+
         if (relOp != null) {
-            Object leftObj = lhs.executeAndReturnData();
-            Object rightObj = rhs.executeAndReturnData();
             switch (lhs.getDataType()) {
-                case Types.BOOLEAN: {
-                    boolean left = (boolean)leftObj;
-                    boolean right = (boolean)rightObj;
-                    switch (relOp.type()) {
-                        case RelOpType.EQ: {
-                            return left == right;
-                        }
-                        case RelOpType.NOT_EQ: {
-                            return left != right;
-                        }
-                        default: {
-                            // TODO: error! cant do greater than / less than on booleans
-                        }
-                    }
-                }
                 case Types.DOUBLE: {
                     double left = (double)leftObj;
                     double right = (double)rightObj;
                     switch (relOp.type()) {
                         case RelOpType.EQ: {
-                            return left == right;
+                            outparam = left == right;
+                            return;
                         }
                         case RelOpType.NOT_EQ: {
-                            return left != right;
+                            outparam = left != right;
+                            return;
                         }
                         case RelOpType.LESS_THAN: {
-                            return left < right;
+                            outparam = left < right;
+                            return;
                         }
                         case RelOpType.LESS_THAN_EQ: {
-                            return left <= right;
+                            outparam = left <= right;
+                            return;
                         }
                         case RelOpType.GREATER_THAN: {
-                            return left > right;
+                            outparam = left > right;
+                            return;
                         }
                         case RelOpType.GREATER_THAN_EQ: {
-                            return left >= right;
+                            outparam = left >= right;
+                            return;
                         }
                     }
                 }
@@ -116,63 +113,57 @@ public class BinaryExprNode implements ExprNode {
                     int right = (int)rightObj;
                     switch (relOp.type()) {
                         case RelOpType.EQ: {
-                            return left == right;
+                            outparam = left == right;
+                            return;
                         }
                         case RelOpType.NOT_EQ: {
-                            return left != right;
+                            outparam = left != right;
+                            return;
                         }
                         case RelOpType.LESS_THAN: {
-                            return left < right;
+                            outparam = left < right;
+                            return;
                         }
                         case RelOpType.LESS_THAN_EQ: {
-                            return left <= right;
+                            outparam = left <= right;
+                            return;
                         }
                         case RelOpType.GREATER_THAN: {
-                            return left > right;
+                            outparam = left > right;
+                            return;
                         }
                         case RelOpType.GREATER_THAN_EQ: {
-                            return left >= right;
+                            outparam = left >= right;
+                            return;
                         }
                     }
                 }
-                case Types.STRING: {
-                    String left = (String)leftObj;
-                    String right = (String)rightObj;
-                    switch (relOp.type()) {
-                        case RelOpType.EQ: {
-                            return left.equals(right);
-                        }
-                        case RelOpType.NOT_EQ: {
-                            return !left.equals(right);
-                        }
-                        default: {
-                            // TODO: error! cant do greater than / less than on strings
-                        }
-                    }
-                }
-                case Types.VOID: {
+
+                default: {
                     // TODO: error
                 }
             }
         } else {
-            Object leftObj = lhs.executeAndReturnData();
-            Object rightObj = rhs.executeAndReturnData();
             switch (lhs.getDataType()) {
                 case Types.DOUBLE: {
                     double left = (double)leftObj;
                     double right = (double)rightObj;
                     switch (mathOp.type()) {
                         case MathOpType.MULTIPLY: {
-                            return left * right;
+                            outparam = left * right;
+                            return;
                         }
                         case MathOpType.DIVIDE: {
-                            return left / right;
+                            outparam = left / right;
+                            return;
                         }
                         case MathOpType.ADD: {
-                            return left + right;
+                            outparam = left + right;
+                            return;
                         }
                         case MathOpType.SUBTRACT: {
-                            return left - right;
+                            outparam = left - right;
+                            return;
                         }
                     }
                 }
@@ -181,32 +172,27 @@ public class BinaryExprNode implements ExprNode {
                     int right = (int)rightObj;
                     switch (mathOp.type()) {
                         case MathOpType.MULTIPLY: {
-                            return left * right;
+                            outparam = left * right;
+                            return;
                         }
                         case MathOpType.DIVIDE: {
-                            return left / right;
+                            outparam = left / right;
+                            return;
                         }
                         case MathOpType.ADD: {
-                            return left + right;
+                            outparam = left + right;
+                            return;
                         }
                         case MathOpType.SUBTRACT: {
-                            return left - right;
+                            outparam = left - right;
+                            return;
                         }
-                    }
-                }
-                case Types.STRING: {
-                    String left = (String)leftObj;
-                    String right = (String)rightObj;
-                    // string concatenation
-                    if (mathOp.type() == MathOpType.ADD) {
-                        return left + right;
                     }
                 }
                 default: {
                     // TODO: error
                 }
             }
-            // TODO: error
         }
     }
 
@@ -239,10 +225,5 @@ public class BinaryExprNode implements ExprNode {
 
         // no expression parse was possible, this is just a lone operand
         return first;
-    }
-
-    @Override
-    public void execute() {
-        // TODO Auto-generated method stub
     }
 }

@@ -17,8 +17,6 @@ public interface ExprNode extends JottTree {
 
     public Types getDataType();
 
-    public Object executeAndReturnData();
-
     public static ExprNode parse(ArrayList<Token> tokens) throws ParseException {
         Token token = tokens.get(0);
 

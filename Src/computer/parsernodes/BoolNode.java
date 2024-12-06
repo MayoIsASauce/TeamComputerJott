@@ -24,7 +24,10 @@ public class BoolNode implements ExprNode {
     public Types getDataType() { return Types.BOOLEAN; }
    
     @Override
-    public Object executeAndReturnData() { return value; }
+    public void execute(Object outparam) {
+        if (outparam != null)
+            outparam = value;
+    }
 
     @Override
     public String convertToJott() {
@@ -48,11 +51,5 @@ public class BoolNode implements ExprNode {
         } else {
             throw new ParseException("Invalid TokenType for boolNode: " + currToken.getTokenType() + ", expected ID_KEYWORD");
         }
-    }
-
-    @Override
-    public void execute() {
-        // TODO Auto-generated method stub
-
     }
 }
