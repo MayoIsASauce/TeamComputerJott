@@ -6,6 +6,7 @@ import provided.Token;
 import provided.TokenType;
 import computer.exceptions.ParseException;
 import computer.exceptions.SemanticException;
+import computer.exceptions.RuntimeException;
 import computer.parsernodes.ExprNode;
 import computer.parsernodes.MathOpNode;
 import computer.parsernodes.RelOpNode;
@@ -33,6 +34,13 @@ public class BinaryExprNode implements ExprNode {
 
     @Override
     public boolean validateTree() throws SemanticException {
+        if (lhs.getDataType() == Types.VOID || lhs.getDataType() == Types.STRING || lhs.getDataType() == Types.BOOLEAN) {
+            return false;
+        }
+        if (rhs.getDataType() == Types.VOID || rhs.getDataType() == Types.STRING || rhs.getDataType() == Types.BOOLEAN) {
+            return false;
+        }
+
         // ops should both just return true for validate, but just in case
         if (mathOp != null)
             mathOp.validateTree();
@@ -58,8 +66,6 @@ public class BinaryExprNode implements ExprNode {
         // invalid. tbh this could even be an "assert validateTree()" but i dont
         // want to make debug builds too slow - Ian
         assert lhs.getDataType() == rhs.getDataType();
-        // TODO: assert that the user isnt trying to do < or > on bools / strings?
-        // also that they arent trying to do / or * on strings and bools?
 
         if (relOp != null)
             return Types.BOOLEAN;
@@ -68,13 +74,13 @@ public class BinaryExprNode implements ExprNode {
 
     @Override
     public void execute(Object outparam) {
-        Object leftObj;
+        Object leftObj = new Object();
         lhs.execute(leftObj);
-        Object rightObj;
+        Object rightObj = new Object();
         rhs.execute(rightObj);
 
         if (outparam == null)
-            return;
+            return; // ignoring value of expression
 
         if (relOp != null) {
             switch (lhs.getDataType()) {
@@ -140,7 +146,8 @@ public class BinaryExprNode implements ExprNode {
                 }
 
                 default: {
-                    // TODO: error
+                    // should never happen
+                    throw new RuntimeException("Cannot compare types of " + lhs.getDataType(), mathOp.getToken());
                 }
             }
         } else {
@@ -190,7 +197,8 @@ public class BinaryExprNode implements ExprNode {
                     }
                 }
                 default: {
-                    // TODO: error
+                    // should never happen
+                    throw new RuntimeException("Cannot do math on type of " + lhs.getDataType(), mathOp.getToken());
                 }
             }
         }
