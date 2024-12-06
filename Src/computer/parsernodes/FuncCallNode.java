@@ -3,6 +3,7 @@ package computer.parsernodes;
 import computer.FunctionInfo;
 import computer.SymbolTable;
 import computer.exceptions.ParseException;
+import computer.exceptions.ReturnException;
 import computer.exceptions.SemanticException;
 import java.util.ArrayList;
 import java.util.List;
@@ -159,7 +160,7 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
 
     //TODO discuss generic classes
     @Override
-    public void execute()
+    public execute()
     {
         if (SymbolTable.instance().isReservedFunction(funcName.id()))
         {
@@ -184,9 +185,16 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
         else
         {
             SymbolTable.instance().enterScope(funcName.id());
+            //set params first here
+            try{
             SymbolTable.instance().functionInfo(funcName.id()).linkToFuncBody().execute();
+            } catch (ReturnException e) {
+                SymbolTable.instance().exitScope();
+                return e;
+            }
             SymbolTable.instance().exitScope();
         }
+
 
     }
 }

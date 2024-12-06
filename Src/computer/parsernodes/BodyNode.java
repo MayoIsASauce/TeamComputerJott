@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import provided.JottTree;
 import provided.Token;
 import provided.TokenType;
+import computer.exceptions.ReturnException;
 
 public class BodyNode implements JottTree {
 
@@ -71,21 +72,16 @@ public class BodyNode implements JottTree {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws ReturnException {
 
-        try{
-            for (BodyStatementNode bodyStatementNode : bodyStatements) {
-                bodyStatementNode.execute();
-            }
-
-            //Will return this value
-            returnStatement.execute();
-
-
-        } catch (ReturnException e) {
-            //Will return this value
-            
+        for (BodyStatementNode bodyStatementNode : bodyStatements) {
+            bodyStatementNode.execute();
         }
+
+            //Will return this value
+        returnStatement.execute();
+
+
 
     }
 }
