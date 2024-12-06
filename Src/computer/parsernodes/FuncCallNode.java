@@ -184,8 +184,15 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
             {
                 String result = (String)this.params.parameters().get(0).executeAndReturnData() +
                                 (String)this.params.parameters().get(1).executeAndReturnData();
-                return result;
+                return (Object)result;
             }
+
+            else if (funcName.id().equals("length"))
+            {
+                String str = (String)this.params.parameters().get(0).executeAndReturnData();
+                return (Object)str.length();
+            }
+            
         }
         
 
