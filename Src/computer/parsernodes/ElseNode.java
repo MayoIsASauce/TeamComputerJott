@@ -2,6 +2,7 @@ package computer.parsernodes;
 
 import computer.exceptions.ParseException;
 import computer.exceptions.SemanticException;
+import computer.exceptions.RuntimeException;
 
 import java.util.ArrayList;
 import provided.JottTree;

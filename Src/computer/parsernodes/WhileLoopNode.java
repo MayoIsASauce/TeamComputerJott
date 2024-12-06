@@ -7,6 +7,7 @@ import provided.TokenType;
 import computer.parsernodes.ExprNode;
 import computer.exceptions.ParseException;
 import computer.exceptions.SemanticException;
+import computer.exceptions.RuntimeException;
 
 public class WhileLoopNode implements BodyStatementNode {
 

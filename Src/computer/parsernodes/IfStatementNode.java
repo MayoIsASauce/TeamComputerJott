@@ -2,6 +2,7 @@ package computer.parsernodes;
 
 import computer.exceptions.ParseException;
 import computer.exceptions.SemanticException;
+import computer.exceptions.RuntimeException;
 
 import java.util.ArrayList;
 import provided.JottTree;
@@ -37,6 +38,12 @@ public class IfStatementNode implements BodyStatementNode {
     public boolean validateTree() throws SemanticException {
         assert expr != null && body != null;
         expr.validateTree(); body.validateTree();
+
+        if (expr.getDataType() != Types.BOOLEAN)
+        {
+            throw new SemanticException("If condition must return a boolean",
+                         expr.getToken());
+        }
 
         if (elseIfs != null) { // if we have elseIf nodes
             for (ElseIfNode node : elseIfs) {
@@ -122,7 +129,27 @@ public class IfStatementNode implements BodyStatementNode {
     }
 
     @Override
-    public void execute() throws RuntimeException {
-        // TODO Auto-generated method stub
+    public void execute() throws RuntimeException
+    {
+        if ((boolean) expr.executeAndReturnData())
+        {
+            body.execute();
+            return;
+        }
+
+        if (elseIfs != null) { // if we have elseIf nodes
+            for (ElseIfNode node : elseIfs)
+            {
+                if ((boolean) node.getConditionalValue())
+                {
+                    node.execute();
+                    return;
+                }                
+            }
+        }
+
+        if (elseNode != null) {
+            elseNode.execute();
+        }
     }
 }

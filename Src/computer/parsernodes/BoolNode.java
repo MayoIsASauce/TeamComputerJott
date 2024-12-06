@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import provided.Token;
 import provided.TokenType;
 import computer.exceptions.ParseException;
+import computer.exceptions.RuntimeException;
 
 public class BoolNode implements ExprNode {
     boolean value;

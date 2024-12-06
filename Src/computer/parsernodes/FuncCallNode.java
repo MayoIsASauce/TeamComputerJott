@@ -9,6 +9,7 @@ import computer.FunctionInfo;
 import computer.SymbolTable;
 import computer.exceptions.ParseException;
 import computer.exceptions.SemanticException;
+import computer.exceptions.RuntimeException;
 
 public class FuncCallNode implements OperandNode, BodyStatementNode {
 

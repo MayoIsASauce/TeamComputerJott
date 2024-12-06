@@ -98,6 +98,8 @@ public class SymbolTable {
     public void exitScope() {
         assert currentScope != null;
         assert completed;
+
+        // TODO: Clear all vars
         currentScope = null;
     }
 

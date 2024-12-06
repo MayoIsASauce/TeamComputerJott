@@ -7,6 +7,7 @@ import computer.parsernodes.Types;
 import computer.parsernodes.ExprNode;
 import computer.exceptions.ParseException;
 import computer.exceptions.SemanticException;
+import computer.exceptions.RuntimeException;
 
 public class ElseIfNode implements JottTree {
 
@@ -22,6 +23,11 @@ public class ElseIfNode implements JottTree {
         return body.isReturnable(returnType);
     }
 
+    public boolean getConditionalValue() throws RuntimeException
+    {
+        return (boolean) condition.executeAndReturnData();
+    }
+
     @Override
     public boolean validateTree() throws SemanticException {
         assert condition != null && body != null;
@@ -29,7 +35,8 @@ public class ElseIfNode implements JottTree {
 
         if (condition.getDataType() != Types.BOOLEAN)
         {
-            throw new SemanticException("Failed", condition());
+            throw new SemanticException("ElseIf condition must return a boolean",
+                         condition.getToken());
         }
 
         return true;
@@ -90,6 +97,9 @@ public class ElseIfNode implements JottTree {
     @Override
     public void execute() throws RuntimeException {
         // Phase 4 logic
-        if (condition.executeAndReturnData())
+        if ( (boolean) condition.executeAndReturnData())
+        {
+            body.execute();
+        }
     }
 }

@@ -86,6 +86,6 @@ public class IDNode implements OperandNode {
                         + id() + "' in expression.", token);
         }
 
-        return SymbolTable.instance().currentScopeVar(id()).value;
+        return SymbolTable.instance().currentScopeVar(id()).getValue();
     }
 }
