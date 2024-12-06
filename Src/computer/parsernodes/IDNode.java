@@ -80,5 +80,10 @@ public class IDNode implements OperandNode {
             throw new RuntimeException("Attempt to use uninitialized variable '"
                         + id() + "' in expression.", token);
         }
+
+        if (outparam != null)
+        {
+            outparam = id();
+        }
     }
 }
