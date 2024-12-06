@@ -74,16 +74,11 @@ public class IDNode implements OperandNode {
     @Override
     public void execute(Object outparam) throws RuntimeException 
     {
-        // Ensure that variable is initialized;
+        // Ensure that variable is initialized
         if (!SymbolTable.instance().isVariableInitialized(id()))
         {
             throw new RuntimeException("Attempt to use uninitialized variable '"
                         + id() + "' in expression.", token);
-        }
-
-        if (outparam != null)
-        {
-            outparam = id();
         }
     }
 }

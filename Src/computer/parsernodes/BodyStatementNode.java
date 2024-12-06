@@ -60,7 +60,4 @@ public interface BodyStatementNode extends JottTree
             throw new ParseException("Invalid token for body statement");
         }
     }
-
-    @Override
-    public void execute(Object outparam);
 }

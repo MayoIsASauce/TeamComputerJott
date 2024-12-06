@@ -70,10 +70,10 @@ public class SymbolTable {
         return variableInfoByName.containsKey(variableName);
     }
 
-    public void markVariableInitialized(String variableName)
+    public void setVariableValue(String variableName, Object value)
     {
         assert variableInfoByNameByFuncName.get(currentScope()).containsKey(variableName);
-        variableInfoByNameByFuncName.get(currentScope()).get(variableName).markInitialized();
+        variableInfoByNameByFuncName.get(currentScope()).get(variableName).setValue(value);
     }
 
     public boolean isVariableInitialized(String variableName)

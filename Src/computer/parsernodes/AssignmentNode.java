@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import computer.SymbolTable;
 import computer.exceptions.ParseException;
 import computer.exceptions.SemanticException;
+import computer.exceptions.RuntimeException;
 import provided.Token;
 import provided.TokenType;
 
@@ -72,7 +73,10 @@ public class AssignmentNode implements BodyStatementNode {
     }
 
     @Override
-    public void execute(Object outparam) {
-        SymbolTable.instance().markVariableInitialized(id.id());
+    public void execute(Object outparam) throws RuntimeException
+    {
+        // TODO: Get expr value
+
+        // SymbolTable.instance().setVariableValue(id.id(), value);
     }
 }
