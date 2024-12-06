@@ -42,8 +42,6 @@ public class AssignmentNode implements BodyStatementNode {
                     + id.getDataType(), id.getToken());
         }
 
-        SymbolTable.instance().markVariableInitialized(id.id());
-
         return true;
     }
 
@@ -75,7 +73,6 @@ public class AssignmentNode implements BodyStatementNode {
 
     @Override
     public void execute(Object outparam) {
-        // TODO Auto-generated method stub
-
+        SymbolTable.instance().markVariableInitialized(id.id());
     }
 }

@@ -5,6 +5,7 @@ import provided.TokenType;
 import computer.SymbolTable;
 import computer.exceptions.ParseException;
 import computer.exceptions.SemanticException;
+import computer.exceptions.RuntimeException;
 
 import java.util.ArrayList;
 
@@ -31,13 +32,6 @@ public class IDNode implements OperandNode {
         {
             throw new SemanticException("Variable '" + id() +
                         "' is not in the current scope.", token);
-        }
-
-        // Ensure that variable is initialized;
-        if (!SymbolTable.instance().isVariableInitialized(id()))
-        {
-            throw new SemanticException("Attempt to use uninitialized variable '"
-                     + id() + "' in expression.", token);
         }
 
         if ( !Character.isLowerCase(id().charAt(0)) )
@@ -78,7 +72,13 @@ public class IDNode implements OperandNode {
     }
 
     @Override
-    public void execute(Object outparam) {
-        // To be implemented in Phase 4
+    public void execute(Object outparam) throws RuntimeException 
+    {
+        // Ensure that variable is initialized;
+        if (!SymbolTable.instance().isVariableInitialized(id()))
+        {
+            throw new RuntimeException("Attempt to use uninitialized variable '"
+                        + id() + "' in expression.", token);
+        }
     }
 }

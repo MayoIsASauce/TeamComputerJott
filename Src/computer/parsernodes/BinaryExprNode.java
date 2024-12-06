@@ -78,61 +78,61 @@ public class BinaryExprNode implements ExprNode {
 
         if (relOp != null) {
             switch (lhs.getDataType()) {
-                case Types.DOUBLE: {
+                case DOUBLE: {
                     double left = (double)leftObj;
                     double right = (double)rightObj;
                     switch (relOp.type()) {
-                        case RelOpType.EQ: {
+                        case EQ: {
                             outparam = left == right;
                             return;
                         }
-                        case RelOpType.NOT_EQ: {
+                        case NOT_EQ: {
                             outparam = left != right;
                             return;
                         }
-                        case RelOpType.LESS_THAN: {
+                        case LESS_THAN: {
                             outparam = left < right;
                             return;
                         }
-                        case RelOpType.LESS_THAN_EQ: {
+                        case LESS_THAN_EQ: {
                             outparam = left <= right;
                             return;
                         }
-                        case RelOpType.GREATER_THAN: {
+                        case GREATER_THAN: {
                             outparam = left > right;
                             return;
                         }
-                        case RelOpType.GREATER_THAN_EQ: {
+                        case GREATER_THAN_EQ: {
                             outparam = left >= right;
                             return;
                         }
                     }
                 }
-                case Types.INTEGER: {
+                case INTEGER: {
                     int left = (int)leftObj;
                     int right = (int)rightObj;
                     switch (relOp.type()) {
-                        case RelOpType.EQ: {
+                        case EQ: {
                             outparam = left == right;
                             return;
                         }
-                        case RelOpType.NOT_EQ: {
+                        case NOT_EQ: {
                             outparam = left != right;
                             return;
                         }
-                        case RelOpType.LESS_THAN: {
+                        case LESS_THAN: {
                             outparam = left < right;
                             return;
                         }
-                        case RelOpType.LESS_THAN_EQ: {
+                        case LESS_THAN_EQ: {
                             outparam = left <= right;
                             return;
                         }
-                        case RelOpType.GREATER_THAN: {
+                        case GREATER_THAN: {
                             outparam = left > right;
                             return;
                         }
-                        case RelOpType.GREATER_THAN_EQ: {
+                        case GREATER_THAN_EQ: {
                             outparam = left >= right;
                             return;
                         }
@@ -145,45 +145,45 @@ public class BinaryExprNode implements ExprNode {
             }
         } else {
             switch (lhs.getDataType()) {
-                case Types.DOUBLE: {
+                case DOUBLE: {
                     double left = (double)leftObj;
                     double right = (double)rightObj;
                     switch (mathOp.type()) {
-                        case MathOpType.MULTIPLY: {
+                        case MULTIPLY: {
                             outparam = left * right;
                             return;
                         }
-                        case MathOpType.DIVIDE: {
+                        case DIVIDE: {
                             outparam = left / right;
                             return;
                         }
-                        case MathOpType.ADD: {
+                        case ADD: {
                             outparam = left + right;
                             return;
                         }
-                        case MathOpType.SUBTRACT: {
+                        case SUBTRACT: {
                             outparam = left - right;
                             return;
                         }
                     }
                 }
-                case Types.INTEGER: {
+                case INTEGER: {
                     int left = (int)leftObj;
                     int right = (int)rightObj;
                     switch (mathOp.type()) {
-                        case MathOpType.MULTIPLY: {
+                        case MULTIPLY: {
                             outparam = left * right;
                             return;
                         }
-                        case MathOpType.DIVIDE: {
+                        case DIVIDE: {
                             outparam = left / right;
                             return;
                         }
-                        case MathOpType.ADD: {
+                        case ADD: {
                             outparam = left + right;
                             return;
                         }
-                        case MathOpType.SUBTRACT: {
+                        case SUBTRACT: {
                             outparam = left - right;
                             return;
                         }

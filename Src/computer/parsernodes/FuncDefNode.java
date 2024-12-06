@@ -162,7 +162,6 @@ public class FuncDefNode implements JottTree {
 
     @Override
     public void execute(Object outparam) {
-    {
         // TODO Auto-generated method stub
 
     }
