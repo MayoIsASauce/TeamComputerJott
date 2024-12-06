@@ -200,9 +200,6 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
         ArrayList<Types> paramTypes = currFunctionInfo.parameterTypes();
         FuncBodyNode body = currFunctionInfo.linkToFuncBody();
 
-
-
-
         // Make sure that types match
         for (int ii = 0; ii < paramTypes.size(); ii++)
         {
@@ -214,7 +211,6 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
             }
 
             // Add to symbol table
-            SymbolTable.instance().setVariableValue(paramNames.get(ii), param);
         }
 
         // Execute the function body
