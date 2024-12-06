@@ -80,7 +80,7 @@ public class RelOpNode implements JottTree {
     }
 
     @Override
-    public void execute(Object outparam) {
+    public void execute() throws RuntimeException {
         // TODO Auto-generated method stub
 
     }

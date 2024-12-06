@@ -4,15 +4,17 @@ import java.util.ArrayList;
 import provided.JottTree;
 import provided.Token;
 import computer.parsernodes.Types;
+import computer.parsernodes.ExprNode;
 import computer.exceptions.ParseException;
 import computer.exceptions.SemanticException;
+import computer.exceptions.RuntimeException;
 
 public class ElseIfNode implements JottTree {
 
-    private JottTree condition;
+    private ExprNode condition;
     private BodyNode body;
 
-    public ElseIfNode(JottTree condition, BodyNode body) {
+    public ElseIfNode(ExprNode condition, BodyNode body) {
         this.condition = condition;
         this.body = body;
     }
@@ -21,10 +23,21 @@ public class ElseIfNode implements JottTree {
         return body.isReturnable(returnType);
     }
 
+    public boolean getConditionalValue() throws RuntimeException
+    {
+        return (boolean) condition.executeAndReturnData();
+    }
+
     @Override
     public boolean validateTree() throws SemanticException {
         assert condition != null && body != null;
         condition.validateTree(); body.validateTree();
+
+        if (condition.getDataType() != Types.BOOLEAN)
+        {
+            throw new SemanticException("ElseIf condition must return a boolean",
+                         condition.getToken());
+        }
 
         return true;
     }
@@ -48,7 +61,7 @@ public class ElseIfNode implements JottTree {
         tokens.remove(0);
 
         // Parse condition
-        JottTree condition = ExprNode.parse(tokens);
+        ExprNode condition = ExprNode.parse(tokens);
         if (condition == null) {
             throw new ParseException("Invalid condition in Elseif");
         }
@@ -82,7 +95,11 @@ public class ElseIfNode implements JottTree {
     }
 
     @Override
-    public void execute(Object outparam) {
+    public void execute() throws RuntimeException {
         // Phase 4 logic
+        if ( (boolean) condition.executeAndReturnData())
+        {
+            body.execute();
+        }
     }
 }

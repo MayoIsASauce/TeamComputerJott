@@ -71,10 +71,10 @@ public class SymbolTable {
         return variableInfoByName.containsKey(variableName);
     }
 
-    public void markVariableInitialized(String variableName)
+    public void setVariableValue(String variableName, Object value)
     {
         assert variableInfoByNameByFuncName.get(currentScope()).containsKey(variableName);
-        variableInfoByNameByFuncName.get(currentScope()).get(variableName).markInitialized();
+        variableInfoByNameByFuncName.get(currentScope()).get(variableName).setValue(value);
     }
 
     public boolean isVariableInitialized(String variableName)
@@ -99,17 +99,26 @@ public class SymbolTable {
     public void exitScope() {
         assert currentScope != null;
         assert completed;
+
+        // Clear all vars
+        HashMap<String, VariableInfo> variableInfoByName = variableInfoByNameByFuncName.get(currentScope);
+        for (String varName : variableInfoByName.keySet())
+        {
+            variableInfoByName.get(varName).markUninitialized();
+        }
+        
         currentScope = null;
     }
 
-    public void beginBuildingNewScope(String functionName, Types returnType, ArrayList<Types> parameterTypes) {
+    public void beginBuildingNewScope(String functionName, Types returnType, ArrayList<Types> parameterTypes,
+                    ArrayList<String> parameterNames) {
         assert !completed;
         assert currentScope == null;
         assert !variableInfoByNameByFuncName.containsKey(functionName);
         assert !functionInfosByName.containsKey(functionName);
         HashMap<String, VariableInfo> scope = new HashMap<String, VariableInfo>();
         variableInfoByNameByFuncName.put(functionName, scope);
-        functionInfosByName.put(functionName, new FunctionInfo(returnType, parameterTypes));
+        functionInfosByName.put(functionName, new FunctionInfo(returnType, parameterTypes, parameterNames));
         currentScope = functionName;
     }
 

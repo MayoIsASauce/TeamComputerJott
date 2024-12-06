@@ -85,8 +85,8 @@ public class ProgramNode implements JottTree
     }
 
     @Override
-    public void execute(Object outparam) {
-        // TODO Auto-generated method stub
-        
+    public void execute() throws RuntimeException {
+        for (FuncDefNode fd : fDefNodes)
+            fd.execute();
     }
 }

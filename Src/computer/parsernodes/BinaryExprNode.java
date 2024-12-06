@@ -6,6 +6,7 @@ import provided.Token;
 import provided.TokenType;
 import computer.exceptions.ParseException;
 import computer.exceptions.SemanticException;
+import computer.exceptions.RuntimeException;
 import computer.parsernodes.ExprNode;
 import computer.parsernodes.MathOpNode;
 import computer.parsernodes.RelOpNode;
@@ -33,6 +34,13 @@ public class BinaryExprNode implements ExprNode {
 
     @Override
     public boolean validateTree() throws SemanticException {
+        if (lhs.getDataType() == Types.VOID || lhs.getDataType() == Types.STRING || lhs.getDataType() == Types.BOOLEAN) {
+            return false;
+        }
+        if (rhs.getDataType() == Types.VOID || rhs.getDataType() == Types.STRING || rhs.getDataType() == Types.BOOLEAN) {
+            return false;
+        }
+
         // ops should both just return true for validate, but just in case
         if (mathOp != null)
             mathOp.validateTree();
@@ -53,28 +61,31 @@ public class BinaryExprNode implements ExprNode {
     }
 
     @Override
+    public Token getToken() { return lhs.getToken(); }
+
+    @Override
     public Types getDataType() {
         // it doesnt really make sense to call this function if the types are
         // invalid. tbh this could even be an "assert validateTree()" but i dont
         // want to make debug builds too slow - Ian
         assert lhs.getDataType() == rhs.getDataType();
-        // TODO: assert that the user isnt trying to do < or > on bools / strings?
-        // also that they arent trying to do / or * on strings and bools?
 
         if (relOp != null)
             return Types.BOOLEAN;
         return lhs.getDataType();
     }
 
-    @Override
-    public void execute(Object outparam) {
-        Object leftObj;
-        lhs.execute(leftObj);
-        Object rightObj;
-        rhs.execute(rightObj);
 
-        if (outparam == null)
-            return;
+    @Override
+    public void execute() throws RuntimeException {
+        /// dont call this function, exprs should return something
+        assert false;
+    }
+
+    @Override
+    public Object executeAndReturnData() throws RuntimeException {
+        Object leftObj = lhs.executeAndReturnData();
+        Object rightObj = rhs.executeAndReturnData();
 
         if (relOp != null) {
             switch (lhs.getDataType()) {
@@ -83,28 +94,22 @@ public class BinaryExprNode implements ExprNode {
                     double right = (double)rightObj;
                     switch (relOp.type()) {
                         case EQ: {
-                            outparam = left == right;
-                            return;
+                            return left == right;
                         }
                         case NOT_EQ: {
-                            outparam = left != right;
-                            return;
+                            return left != right;
                         }
                         case LESS_THAN: {
-                            outparam = left < right;
-                            return;
+                            return left < right;
                         }
                         case LESS_THAN_EQ: {
-                            outparam = left <= right;
-                            return;
+                            return left <= right;
                         }
                         case GREATER_THAN: {
-                            outparam = left > right;
-                            return;
+                            return left > right;
                         }
                         case GREATER_THAN_EQ: {
-                            outparam = left >= right;
-                            return;
+                            return left >= right;
                         }
                     }
                 }
@@ -113,34 +118,29 @@ public class BinaryExprNode implements ExprNode {
                     int right = (int)rightObj;
                     switch (relOp.type()) {
                         case EQ: {
-                            outparam = left == right;
-                            return;
+                            return left == right;
                         }
                         case NOT_EQ: {
-                            outparam = left != right;
-                            return;
+                            return left != right;
                         }
                         case LESS_THAN: {
-                            outparam = left < right;
-                            return;
+                            return left < right;
                         }
                         case LESS_THAN_EQ: {
-                            outparam = left <= right;
-                            return;
+                            return left <= right;
                         }
                         case GREATER_THAN: {
-                            outparam = left > right;
-                            return;
+                            return left > right;
                         }
                         case GREATER_THAN_EQ: {
-                            outparam = left >= right;
-                            return;
+                            return left >= right;
                         }
                     }
                 }
 
                 default: {
-                    // TODO: error
+                    // should never happen
+                    throw new RuntimeException("Cannot compare types of " + lhs.getDataType(), mathOp.getToken());
                 }
             }
         } else {
@@ -150,20 +150,16 @@ public class BinaryExprNode implements ExprNode {
                     double right = (double)rightObj;
                     switch (mathOp.type()) {
                         case MULTIPLY: {
-                            outparam = left * right;
-                            return;
+                            return left * right;
                         }
                         case DIVIDE: {
-                            outparam = left / right;
-                            return;
+                            return left / right;
                         }
                         case ADD: {
-                            outparam = left + right;
-                            return;
+                            return left + right;
                         }
                         case SUBTRACT: {
-                            outparam = left - right;
-                            return;
+                            return left - right;
                         }
                     }
                 }
@@ -172,25 +168,22 @@ public class BinaryExprNode implements ExprNode {
                     int right = (int)rightObj;
                     switch (mathOp.type()) {
                         case MULTIPLY: {
-                            outparam = left * right;
-                            return;
+                            return left * right;
                         }
                         case DIVIDE: {
-                            outparam = left / right;
-                            return;
+                            return left / right;
                         }
                         case ADD: {
-                            outparam = left + right;
-                            return;
+                            return left + right;
                         }
                         case SUBTRACT: {
-                            outparam = left - right;
-                            return;
+                            return left - right;
                         }
                     }
                 }
                 default: {
-                    // TODO: error
+                    // should never happen
+                    throw new RuntimeException("Cannot do math on type of " + lhs.getDataType(), mathOp.getToken());
                 }
             }
         }

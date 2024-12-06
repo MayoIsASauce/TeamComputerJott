@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import computer.exceptions.ParseException;
 import computer.exceptions.SemanticException;
+import computer.exceptions.RuntimeException;
 import computer.parsernodes.FuncCallNode;
 import computer.parsernodes.Types;
 import provided.JottTree;
@@ -60,7 +61,4 @@ public interface BodyStatementNode extends JottTree
             throw new ParseException("Invalid token for body statement");
         }
     }
-
-    @Override
-    public void execute(Object outparam);
 }

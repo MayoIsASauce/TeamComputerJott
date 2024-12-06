@@ -26,6 +26,7 @@ public class NumNode implements OperandNode {
         this.isFloating = false;
     }
 
+    @Override
     public Token getToken() { return tokenRepresentation; }
 
     @Override
@@ -73,8 +74,13 @@ public class NumNode implements OperandNode {
     }
 
     @Override
-    public void execute(Object outparam) {
-        // TODO Auto-generated method stub
+    public void execute() throws RuntimeException {
+        /// dont call this function, exprs should return something
+        assert false;
+    }
 
+    @Override
+    public Object executeAndReturnData() throws RuntimeException {
+        return isFloating ? floatRepresentation : integerRepresentation;
     }
 }

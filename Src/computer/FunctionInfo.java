@@ -7,18 +7,14 @@ import java.util.ArrayList;
 public class FunctionInfo {
     Types returnType;
     ArrayList<Types> parameterTypes;
+    ArrayList<String> parameterNames;
     FuncBodyNode linkToFuncBody;
 
-    public FunctionInfo(Types returnType, ArrayList<Types> parameterTypes) {
+    public FunctionInfo(Types returnType, ArrayList<Types> parameterTypes, ArrayList<String> parameterNames) {
         this.returnType = returnType;
         this.parameterTypes = parameterTypes;
         this.linkToFuncBody = null;
-    }
-
-    public FunctionInfo(Types returnType, ArrayList<Types> parameterTypes, FuncBodyNode linkToFuncBody) {
-        this.returnType = returnType;
-        this.parameterTypes = parameterTypes;
-        this.linkToFuncBody = linkToFuncBody;
+        this.parameterNames = parameterNames;
     }
 
 
@@ -27,11 +23,16 @@ public class FunctionInfo {
         this.returnType = other.returnType;
         // shallow copy
         this.parameterTypes = new ArrayList<Types>(other.parameterTypes);
+        this.parameterNames = new ArrayList<String>(other.parameterNames);
         this.linkToFuncBody = other.linkToFuncBody;
     }
 
     public ArrayList<Types> parameterTypes() {
         return parameterTypes;
+    }
+
+    public ArrayList<String> parameterNames() {
+        return parameterNames;
     }
 
     public Types returnType() {
@@ -43,7 +44,7 @@ public class FunctionInfo {
     }
 
     public void setFuncBody(FuncBodyNode funcBody) {
-        linkToFuncBody = funcBody;
+        this.linkToFuncBody = funcBody;
     }
 
 }

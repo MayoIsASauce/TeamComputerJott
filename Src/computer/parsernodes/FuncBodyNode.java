@@ -2,6 +2,8 @@ package computer.parsernodes;
 
 import computer.exceptions.ParseException;
 import computer.exceptions.SemanticException;
+import computer.exceptions.RuntimeException;
+import computer.parsernodes.Types;
 import java.util.ArrayList;
 import provided.JottTree;
 import provided.Token;
@@ -9,10 +11,10 @@ import computer.exceptions.ReturnException;
 
 public class FuncBodyNode implements JottTree {
 
-    ArrayList<JottTree> varDecList;
+    ArrayList<VarDeclarationNode> varDecList;
     BodyNode body;
 
-    public FuncBodyNode(ArrayList<JottTree> varDecList, BodyNode body) {
+    public FuncBodyNode(ArrayList<VarDeclarationNode> varDecList, BodyNode body) {
         this.varDecList = varDecList;
         this.body = body;
     }
@@ -48,7 +50,7 @@ public class FuncBodyNode implements JottTree {
 
     public static FuncBodyNode parse(ArrayList<Token> tokens) throws ParseException {
 
-        ArrayList<JottTree> varDecList = new ArrayList<>();
+        ArrayList<VarDeclarationNode> varDecList = new ArrayList<>();
 
         while(tokens.get(0).getToken().equals("Double")
         || tokens.get(0).getToken().equals("Integer")
@@ -64,7 +66,9 @@ public class FuncBodyNode implements JottTree {
     }
 
     @Override
-    public void execute(Object outparam) throws ReturnException {
-        body.execute(outparam);
+    public void execute() throws RuntimeException {
+        for (VarDeclarationNode vd : varDecList)
+            vd.execute();
+        body.execute();
     }
 }

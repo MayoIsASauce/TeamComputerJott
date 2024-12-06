@@ -3,6 +3,8 @@ package computer.parsernodes;
 import computer.exceptions.ParseException;
 import computer.exceptions.ReturnException;
 import computer.exceptions.SemanticException;
+import computer.exceptions.RuntimeException;
+import computer.parsernodes.Types;
 import java.util.ArrayList;
 import provided.JottTree;
 import provided.Token;
@@ -72,15 +74,10 @@ public class BodyNode implements JottTree {
     }
 
     @Override
-    public void execute(Object outparam) throws ReturnException {
-
-        for (BodyStatementNode bodyStatementNode : bodyStatements) {
-            bodyStatementNode.execute(outparam);
+    public void execute() throws RuntimeException {
+        for (BodyStatementNode bs : bodyStatements) {
+            bs.execute();
         }
-
-        returnStatement.execute(outparam);
-
-
-
+        returnStatement.execute();
     }
 }

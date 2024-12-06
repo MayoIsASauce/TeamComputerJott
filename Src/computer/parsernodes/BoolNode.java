@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import provided.Token;
 import provided.TokenType;
 import computer.exceptions.ParseException;
+import computer.exceptions.RuntimeException;
 
 public class BoolNode implements ExprNode {
     boolean value;
@@ -15,6 +16,7 @@ public class BoolNode implements ExprNode {
         this.value = value;
     }
 
+    @Override
     public Token getToken() { return tokenRepresentation; }
 
     @Override
@@ -22,12 +24,15 @@ public class BoolNode implements ExprNode {
 
     @Override
     public Types getDataType() { return Types.BOOLEAN; }
-   
+
     @Override
-    public void execute(Object outparam) {
-        if (outparam != null)
-            outparam = value;
+    public void execute() throws RuntimeException {
+        /// dont call this function, exprs should return something
+        assert false;
     }
+
+    @Override
+    public Object executeAndReturnData() throws RuntimeException { return value; }
 
     @Override
     public String convertToJott() {

@@ -38,6 +38,21 @@ public class FuncDefParamsNode implements JottTree {
         return types;
     }
 
+    public ArrayList<String> paramNames()
+    {
+        ArrayList<String> names = new ArrayList<String>();
+        if (this.paramName != null) {
+            names.add(paramName.id());
+
+            for (FuncDefParamsTailNode otherParam : paramsTailArray)
+            {
+                names.add(otherParam.id());
+            }
+        }
+        
+        return names;
+    }
+
     public FuncDefParamsNode()
     {
         this.paramName = null;
@@ -116,7 +131,7 @@ public class FuncDefParamsNode implements JottTree {
     }
 
     @Override
-    public void execute(Object outparam) {
+    public void execute() throws RuntimeException {
         // TODO Auto-generated method stub
 
     }

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import provided.Token;
 import provided.TokenType;
+import computer.exceptions.RuntimeException;
 
 public class FuncCallNode implements OperandNode, BodyStatementNode {
 
@@ -107,6 +108,9 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
     }
 
     @Override
+    public Token getToken() { return funcName.getToken(); }
+
+    @Override
     public Types getDataType() {
         return SymbolTable.instance().functionInfo(funcName.id()).returnType();
     }
@@ -153,48 +157,49 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
 
         tokens.remove(0);
 
-        return new FuncCallNode(funcName, params);
-        
+        return new FuncCallNode(funcName, params); 
+    }
+
+    @Override
+    public void execute() throws RuntimeException {
+        /// dont call this function, exprs should return something
+        assert false;
     }
 
 
     //TODO discuss generic classes
     @Override
-    public void execute(Object outparam)
-    {
-        if (SymbolTable.instance().isReservedFunction(funcName.id()))
+    public Object executeAndReturnData() throws RuntimeException {
+        // TODO get function node from symbol table, execute it, catch return
+        // exception, return the payload inside the return exception
+
+        SymbolTable.instance().enterScope(funcName.id());
+
+        // Get params
+        List<ExprNode> parameters = params.parameters();
+
+        // Get function info
+        FunctionInfo currFunctionInfo = SymbolTable.instance().currentScopeInfo();
+        ArrayList<String> paramNames = currFunctionInfo.parameterNames();
+        ArrayList<Types> paramTypes = currFunctionInfo.parameterTypes();
+
+        // Make sure that types match
+        for (int ii = 0; ii < paramTypes.size(); ii++)
         {
-            if (funcName.id().equals("print"))
+            ExprNode param = parameters.get(ii);
+            if (paramTypes.get(ii) != param.getDataType())
             {
-                System.out.println(params.parameters().get(0).execute());
+                throw new RuntimeException("Argument type does not match expected type",
+                             param.getToken());
             }
 
-            else if (funcName.id().equals("concat"))
-            {
-                String result = params.parameters().get(0).execute() + params.parameters().get(1).execute();
-                System.out.println(result);
-            }
-
-            else if (funcName.id().equals("length"))
-            {
-                String result = params.parameters().get(0).execute();
-                System.out.println(result.length());
-            }
+            // Add to symbol table
+            SymbolTable.instance().setVariableValue(paramNames.get(ii), param);
         }
 
-        else
-        {
-            SymbolTable.instance().enterScope(funcName.id());
-            //set params first here
-            try{
-            SymbolTable.instance().functionInfo(funcName.id()).linkToFuncBody().execute();
-            } catch (ReturnException e) {
-                SymbolTable.instance().exitScope();
-                return e;
-            }
-            SymbolTable.instance().exitScope();
-        }
+        SymbolTable.instance().exitScope();
 
-
+        // Stub
+        return new Object();
     }
 }

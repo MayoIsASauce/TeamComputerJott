@@ -73,7 +73,8 @@ public class FuncDefNode implements JottTree {
 
         tokens.remove(0);
 
-        SymbolTable.instance().beginBuildingNewScope(name.id(), returnNode.type(), params.typesRepresentation());
+        SymbolTable.instance().beginBuildingNewScope(name.id(), returnNode.type(), 
+                                params.typesRepresentation(), params.paramNames());
 
         params.addToSymbolTable();
 
@@ -161,7 +162,7 @@ public class FuncDefNode implements JottTree {
     }
 
     @Override
-    public void execute(Object outparam) {
+    public void execute() throws RuntimeException {
         // TODO Auto-generated method stub
 
     }
