@@ -4,6 +4,7 @@ import computer.FunctionInfo;
 import computer.SymbolTable;
 import computer.exceptions.ParseException;
 import computer.exceptions.ReturnException;
+import computer.exceptions.RuntimeException;
 import computer.exceptions.SemanticException;
 import java.util.ArrayList;
 import provided.JottTree;
@@ -103,15 +104,14 @@ public class ReturnStatementNode implements JottTree {
     }
 
     @Override
-    public void execute() throws RuntimeException throws ReturnException {
+    public void execute() throws RuntimeException, ReturnException {
+
 
         if (expr != null)
         {
-            ReturnException ex = new ReturnException(expr.execute());
+            ReturnException ex = new ReturnException(expr.executeAndReturnData());
             throw ex;
         }
-
-
 
     }
 }
