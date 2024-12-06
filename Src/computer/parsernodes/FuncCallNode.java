@@ -159,7 +159,6 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
 
     @Override
     public void execute(Object outparam) {
-    {
         // TODO Auto-generated method stub
 
     }
