@@ -78,7 +78,6 @@ public class BodyNode implements JottTree {
             bodyStatementNode.execute();
         }
 
-            //Will return this value
         returnStatement.execute();
 
 
