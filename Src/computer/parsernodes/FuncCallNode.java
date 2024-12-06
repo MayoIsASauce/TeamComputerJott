@@ -175,22 +175,22 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
         List<ExprNode> parameters = this.params.parameters();
         //evaluate each of the parameters
 
-        List<Object> evaluatedParams = new ArrayList<>();
+        // List<Object> evaluatedParams = new ArrayList<>();
 
-        for (ExprNode expr : parameters)
-        {
-            evaluatedParams.add(expr.executeAndReturnData());
-        }
+        // for (ExprNode expr : parameters)
+        // {
+        //     evaluatedParams.add(expr.executeAndReturnData());
+        // }
 
 
-        SymbolTable.instance().enterScope(funcName.id());
+        // SymbolTable.instance().enterScope(funcName.id());
 
-        for (int i = 0; i < parameters.size(); i++)
-        {
-            SymbolTable.instance().setVariableValue(
-                    SymbolTable.instance().currentScopeInfo().parameterNames().get(i),
-                    evaluatedParams.get(i));
-        }
+        // for (int i = 0; i < parameters.size(); i++)
+        // {
+        //     SymbolTable.instance().setVariableValue(
+        //             SymbolTable.instance().currentScopeInfo().parameterNames().get(i),
+        //             evaluatedParams.get(i));
+        // }
 
         // Get params
 
@@ -211,6 +211,8 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
             }
 
             // Add to symbol table
+            SymbolTable.instance().setVariableValue(paramNames.get(ii), param.executeAndReturnData());
+
         }
 
         // Execute the function body
