@@ -1,11 +1,10 @@
 package computer.parsernodes;
 
 import computer.exceptions.ParseException;
-import computer.exceptions.SemanticException;
+import computer.exceptions.ReturnException;
 import computer.exceptions.RuntimeException;
-
+import computer.exceptions.SemanticException;
 import java.util.ArrayList;
-import provided.JottTree;
 import provided.Token;
 
 
@@ -129,7 +128,7 @@ public class IfStatementNode implements BodyStatementNode {
     }
 
     @Override
-    public void execute() throws RuntimeException
+    public void execute() throws RuntimeException, ReturnException
     {
         if ((boolean) expr.executeAndReturnData())
         {

@@ -9,4 +9,7 @@ public class ReturnException extends Exception {
         this.value = value;
     }
     
+    public Object getValue() {
+        return value;
+    }
 }

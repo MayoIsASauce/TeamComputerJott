@@ -4,13 +4,12 @@ import computer.FunctionInfo;
 import computer.SymbolTable;
 import computer.exceptions.ParseException;
 import computer.exceptions.ReturnException;
+import computer.exceptions.RuntimeException;
 import computer.exceptions.SemanticException;
 import java.util.ArrayList;
 import java.util.List;
 import provided.Token;
 import provided.TokenType;
-import computer.exceptions.RuntimeException;
-
 public class FuncCallNode implements OperandNode, BodyStatementNode {
 
     IDNode funcName;
@@ -182,6 +181,10 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
         FunctionInfo currFunctionInfo = SymbolTable.instance().currentScopeInfo();
         ArrayList<String> paramNames = currFunctionInfo.parameterNames();
         ArrayList<Types> paramTypes = currFunctionInfo.parameterTypes();
+        FuncBodyNode body = currFunctionInfo.linkToFuncBody();
+
+
+
 
         // Make sure that types match
         for (int ii = 0; ii < paramTypes.size(); ii++)
@@ -195,6 +198,17 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
 
             // Add to symbol table
             SymbolTable.instance().setVariableValue(paramNames.get(ii), param);
+        }
+
+        // Execute the function body
+        try
+        {
+            body.execute();
+        }
+        catch (ReturnException e)
+        {
+            SymbolTable.instance().exitScope();
+            return e.getValue();
         }
 
         SymbolTable.instance().exitScope();

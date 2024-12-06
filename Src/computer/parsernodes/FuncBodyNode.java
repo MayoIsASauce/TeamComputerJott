@@ -1,13 +1,12 @@
 package computer.parsernodes;
 
 import computer.exceptions.ParseException;
-import computer.exceptions.SemanticException;
+import computer.exceptions.ReturnException;
 import computer.exceptions.RuntimeException;
-import computer.parsernodes.Types;
+import computer.exceptions.SemanticException;
 import java.util.ArrayList;
 import provided.JottTree;
 import provided.Token;
-import computer.exceptions.ReturnException;
 
 public class FuncBodyNode implements JottTree {
 
@@ -66,7 +65,7 @@ public class FuncBodyNode implements JottTree {
     }
 
     @Override
-    public void execute() throws RuntimeException {
+    public void execute() throws RuntimeException, ReturnException {
         for (VarDeclarationNode vd : varDecList)
             vd.execute();
         body.execute();
