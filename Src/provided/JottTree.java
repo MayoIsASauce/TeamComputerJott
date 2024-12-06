@@ -1,6 +1,7 @@
 package provided;
 
 import computer.exceptions.SemanticException;
+import computer.exceptions.RuntimeException;
 
 /**
  * Interface for all Jott parse tree nodes
