@@ -140,7 +140,7 @@ public class BinaryExprNode implements ExprNode {
 
                 default: {
                     // should never happen
-                    throw new RuntimeException("Cannot compare types of " + lhs.getDataType(), mathOp.getToken());
+                    throw new RuntimeException("Cannot compare types of " + lhs.getDataType(), relOp.getToken());
                 }
             }
         } else {
@@ -153,6 +153,9 @@ public class BinaryExprNode implements ExprNode {
                             return left * right;
                         }
                         case DIVIDE: {
+                            if (right == 0) {
+                                throw new RuntimeException("Attempt to floating point divide by zero", mathOp.getToken());
+                            }
                             return left / right;
                         }
                         case ADD: {
@@ -171,6 +174,9 @@ public class BinaryExprNode implements ExprNode {
                             return left * right;
                         }
                         case DIVIDE: {
+                            if (right == 0) {
+                                throw new RuntimeException("Attempt to integer divide by zero", mathOp.getToken());
+                            }
                             return left / right;
                         }
                         case ADD: {
