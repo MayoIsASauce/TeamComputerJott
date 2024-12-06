@@ -74,7 +74,7 @@ public class NumNode implements OperandNode {
 
     @Override
     public void execute(Object outparam) {
-        // TODO Auto-generated method stub
-
+        if (outparam != null)
+            outparam = isFloating ? floatRepresentation : integerRepresentation;
     }
 }
