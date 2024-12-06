@@ -172,6 +172,23 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
         // TODO get function node from symbol table, execute it, catch return
         // exception, return the payload inside the return exception
 
+        if (SymbolTable.instance().isReservedFunction(funcName.id()))
+        {
+            if (funcName.id().equals("print"))
+            {
+                System.out.println(this.params.parameters().get(0).executeAndReturnData());
+                return new Object();
+            }
+
+            else if (funcName.id().equals("concat"))
+            {
+                String result = (String)this.params.parameters().get(0).executeAndReturnData() +
+                                (String)this.params.parameters().get(1).executeAndReturnData();
+                return result;
+            }
+        }
+        
+
         List<ExprNode> parameters = this.params.parameters();
         //evaluate each of the parameters
 
