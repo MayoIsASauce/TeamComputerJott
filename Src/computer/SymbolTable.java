@@ -109,14 +109,15 @@ public class SymbolTable {
         currentScope = null;
     }
 
-    public void beginBuildingNewScope(String functionName, Types returnType, ArrayList<Types> parameterTypes) {
+    public void beginBuildingNewScope(String functionName, Types returnType, ArrayList<Types> parameterTypes,
+                    ArrayList<String> parameterNames) {
         assert !completed;
         assert currentScope == null;
         assert !variableInfoByNameByFuncName.containsKey(functionName);
         assert !functionInfosByName.containsKey(functionName);
         HashMap<String, VariableInfo> scope = new HashMap<String, VariableInfo>();
         variableInfoByNameByFuncName.put(functionName, scope);
-        functionInfosByName.put(functionName, new FunctionInfo(returnType, parameterTypes));
+        functionInfosByName.put(functionName, new FunctionInfo(returnType, parameterTypes, parameterNames));
         currentScope = functionName;
     }
 

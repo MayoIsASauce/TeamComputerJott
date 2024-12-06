@@ -170,5 +170,30 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
     public Object executeAndReturnData() throws RuntimeException {
         // TODO get function node from symbol table, execute it, catch return
         // exception, return the payload inside the return exception
+
+        // Get params
+        List<ExprNode> parameters = params.parameters();
+
+        // Get function info
+        FunctionInfo currFunctionInfo = SymbolTable.instance().currentScopeInfo();
+        ArrayList<String> paramNames = currFunctionInfo.parameterNames();
+        ArrayList<Types> paramTypes = currFunctionInfo.parameterTypes();
+
+        // Make sure that types match
+        for (int ii = 0; ii < paramTypes.size(); ii++)
+        {
+            ExprNode param = parameters.get(ii);
+            if (paramTypes.get(ii) != param.getDataType())
+            {
+                throw new RuntimeException("Argument type does not match expected type",
+                             param.getToken());
+            }
+
+            // Add to symbol table
+            SymbolTable.instance().setVariableValue(paramNames.get(ii), param);
+        }
+
+        // Stub
+        return new Object();
     }
 }
