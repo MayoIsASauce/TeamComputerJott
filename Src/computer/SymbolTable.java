@@ -99,7 +99,13 @@ public class SymbolTable {
         assert currentScope != null;
         assert completed;
 
-        // TODO: Clear all vars
+        // Clear all vars
+        HashMap<String, VariableInfo> variableInfoByName = variableInfoByNameByFuncName.get(currentScope);
+        for (String varName : variableInfoByName.keySet())
+        {
+            variableInfoByName.get(varName).markUninitialized();
+        }
+        
         currentScope = null;
     }
 
