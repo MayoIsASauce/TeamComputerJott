@@ -1,6 +1,7 @@
 package provided;
 
 import computer.exceptions.SemanticException;
+import computer.exceptions.RuntimeException;
 
 /**
  * Interface for all Jott parse tree nodes
@@ -26,5 +27,5 @@ public interface JottTree {
 	 * This will execute the Jott code represented by this JottTree node.
      * Requires checking
 	 */
-	public void execute(Object outparam);
+	public void execute(Object outparam) throws RuntimeException;
 }
