@@ -103,7 +103,7 @@ public class ReturnStatementNode implements JottTree {
     }
 
     @Override
-    public void execute() throws ReturnException {
+    public void execute(Object outparam) throws ReturnException {
 
         if (expr != null)
         {

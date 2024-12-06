@@ -24,6 +24,7 @@ public interface JottTree {
 	
 	/**
 	 * This will execute the Jott code represented by this JottTree node.
+     * Requires checking
 	 */
-	public void execute();
+	public void execute(Object outparam);
 }

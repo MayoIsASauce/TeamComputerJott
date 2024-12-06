@@ -58,7 +58,142 @@ public class BinaryExprNode implements ExprNode {
         // invalid. tbh this could even be an "assert validateTree()" but i dont
         // want to make debug builds too slow - Ian
         assert lhs.getDataType() == rhs.getDataType();
+        // TODO: assert that the user isnt trying to do < or > on bools / strings?
+        // also that they arent trying to do / or * on strings and bools?
+
+        if (relOp != null)
+            return Types.BOOLEAN;
         return lhs.getDataType();
+    }
+
+    @Override
+    public void execute(Object outparam) {
+        Object leftObj;
+        lhs.execute(leftObj);
+        Object rightObj;
+        rhs.execute(rightObj);
+
+        if (outparam == null)
+            return;
+
+        if (relOp != null) {
+            switch (lhs.getDataType()) {
+                case Types.DOUBLE: {
+                    double left = (double)leftObj;
+                    double right = (double)rightObj;
+                    switch (relOp.type()) {
+                        case RelOpType.EQ: {
+                            outparam = left == right;
+                            return;
+                        }
+                        case RelOpType.NOT_EQ: {
+                            outparam = left != right;
+                            return;
+                        }
+                        case RelOpType.LESS_THAN: {
+                            outparam = left < right;
+                            return;
+                        }
+                        case RelOpType.LESS_THAN_EQ: {
+                            outparam = left <= right;
+                            return;
+                        }
+                        case RelOpType.GREATER_THAN: {
+                            outparam = left > right;
+                            return;
+                        }
+                        case RelOpType.GREATER_THAN_EQ: {
+                            outparam = left >= right;
+                            return;
+                        }
+                    }
+                }
+                case Types.INTEGER: {
+                    int left = (int)leftObj;
+                    int right = (int)rightObj;
+                    switch (relOp.type()) {
+                        case RelOpType.EQ: {
+                            outparam = left == right;
+                            return;
+                        }
+                        case RelOpType.NOT_EQ: {
+                            outparam = left != right;
+                            return;
+                        }
+                        case RelOpType.LESS_THAN: {
+                            outparam = left < right;
+                            return;
+                        }
+                        case RelOpType.LESS_THAN_EQ: {
+                            outparam = left <= right;
+                            return;
+                        }
+                        case RelOpType.GREATER_THAN: {
+                            outparam = left > right;
+                            return;
+                        }
+                        case RelOpType.GREATER_THAN_EQ: {
+                            outparam = left >= right;
+                            return;
+                        }
+                    }
+                }
+
+                default: {
+                    // TODO: error
+                }
+            }
+        } else {
+            switch (lhs.getDataType()) {
+                case Types.DOUBLE: {
+                    double left = (double)leftObj;
+                    double right = (double)rightObj;
+                    switch (mathOp.type()) {
+                        case MathOpType.MULTIPLY: {
+                            outparam = left * right;
+                            return;
+                        }
+                        case MathOpType.DIVIDE: {
+                            outparam = left / right;
+                            return;
+                        }
+                        case MathOpType.ADD: {
+                            outparam = left + right;
+                            return;
+                        }
+                        case MathOpType.SUBTRACT: {
+                            outparam = left - right;
+                            return;
+                        }
+                    }
+                }
+                case Types.INTEGER: {
+                    int left = (int)leftObj;
+                    int right = (int)rightObj;
+                    switch (mathOp.type()) {
+                        case MathOpType.MULTIPLY: {
+                            outparam = left * right;
+                            return;
+                        }
+                        case MathOpType.DIVIDE: {
+                            outparam = left / right;
+                            return;
+                        }
+                        case MathOpType.ADD: {
+                            outparam = left + right;
+                            return;
+                        }
+                        case MathOpType.SUBTRACT: {
+                            outparam = left - right;
+                            return;
+                        }
+                    }
+                }
+                default: {
+                    // TODO: error
+                }
+            }
+        }
     }
 
     @Override
@@ -90,10 +225,5 @@ public class BinaryExprNode implements ExprNode {
 
         // no expression parse was possible, this is just a lone operand
         return first;
-    }
-
-    @Override
-    public void execute() {
-        // TODO Auto-generated method stub
     }
 }

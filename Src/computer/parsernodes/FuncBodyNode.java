@@ -63,7 +63,7 @@ public class FuncBodyNode implements JottTree {
     }
 
     @Override
-    public void execute() {
+    public void execute(Object outparam) {
         //Double check on this with prof since I dont think execute is needed on vardecnodes but just want to be sure
         body.execute();
     }

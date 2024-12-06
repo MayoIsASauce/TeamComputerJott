@@ -23,6 +23,8 @@ public class MathOpNode implements JottTree {
     @Override
     public boolean validateTree() { return true; }
 
+    public MathOpType type() { return type; }
+
     @Override
     public String convertToJott() {
         switch (type) {
@@ -67,7 +69,7 @@ public class MathOpNode implements JottTree {
     }
 
     @Override
-    public void execute() {
+    public void execute(Object outparam) {
         // TODO Auto-generated method stub
 
     }

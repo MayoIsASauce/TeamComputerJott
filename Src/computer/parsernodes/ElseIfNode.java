@@ -82,7 +82,7 @@ public class ElseIfNode implements JottTree {
     }
 
     @Override
-    public void execute() {
+    public void execute(Object outparam) {
         // Phase 4 logic
     }
 }

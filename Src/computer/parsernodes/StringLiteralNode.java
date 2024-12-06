@@ -23,6 +23,12 @@ public class StringLiteralNode implements ExprNode {
     public Types getDataType() { return Types.STRING; }
 
     @Override
+    public void execute(Object outparam) {
+        if (outparam != null)
+            outparam = contents.getToken();
+    }
+
+    @Override
     public String convertToJott() {
         return contents.getToken();
     }
@@ -42,11 +48,5 @@ public class StringLiteralNode implements ExprNode {
         tokens.remove(0);
 
         return new StringLiteralNode(tokenRepresentation);
-    }
-
-    @Override
-    public void execute() {
-        // TODO Auto-generated method stub
-
     }
 }

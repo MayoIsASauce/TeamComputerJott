@@ -160,7 +160,7 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
 
     //TODO discuss generic classes
     @Override
-    public execute()
+    public void execute(Object outparam)
     {
         if (SymbolTable.instance().isReservedFunction(funcName.id()))
         {

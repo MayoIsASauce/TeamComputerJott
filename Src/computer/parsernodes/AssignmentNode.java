@@ -74,7 +74,7 @@ public class AssignmentNode implements BodyStatementNode {
     }
 
     @Override
-    public void execute() {
+    public void execute(Object outparam) {
         // TODO Auto-generated method stub
 
     }
