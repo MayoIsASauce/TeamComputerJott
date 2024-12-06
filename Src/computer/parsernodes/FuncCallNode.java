@@ -174,7 +174,7 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
                 System.out.println(result);
             }
 
-            else
+            else if (funcName.id().equals("length"))
             {
                 String result = params.parameters().get(0).execute();
                 System.out.println(result.length());
