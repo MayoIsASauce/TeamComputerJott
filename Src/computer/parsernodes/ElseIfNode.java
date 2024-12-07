@@ -95,10 +95,6 @@ public class ElseIfNode implements JottTree {
 
     @Override
     public void execute() throws RuntimeException, ReturnException {
-        // Phase 4 logic
-        if ( (boolean) condition.executeAndReturnData())
-        {
-            body.execute();
-        }
+        body.execute();
     }
 }
