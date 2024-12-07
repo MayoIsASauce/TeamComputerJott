@@ -45,12 +45,6 @@ public class IDNode implements OperandNode {
     @Override
     public Types getDataType()
     {
-        // Retrieve the variable's type from the current scope
-        if (!SymbolTable.instance().isVariableInCurrentScope(id()))
-        {
-            return null;
-        }
-
         return SymbolTable.instance().currentScopeVar(id()).type();
     }
 
