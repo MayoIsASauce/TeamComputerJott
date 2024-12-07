@@ -24,7 +24,11 @@ public class StringLiteralNode implements ExprNode {
     public Types getDataType() { return Types.STRING; }
 
     @Override
-    public Object executeAndReturnData() throws RuntimeException { return contents.getToken(); }
+    public Object executeAndReturnData() throws RuntimeException {
+        String quoted = contents.getToken();
+        assert quoted.length() >= 2;
+        return quoted.substring(1, quoted.length() - 1);
+    }
 
     @Override
     public void execute() throws RuntimeException {
