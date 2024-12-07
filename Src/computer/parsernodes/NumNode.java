@@ -9,12 +9,12 @@ import computer.parsernodes.OperandNode;
 import computer.exceptions.ParseException;
 
 public class NumNode implements OperandNode {
-    float floatRepresentation;
+    double floatRepresentation;
     int integerRepresentation;
     boolean isFloating;
     Token tokenRepresentation;
 
-    public NumNode(float number, Token token) {
+    public NumNode(double number, Token token) {
         this.tokenRepresentation = token;
         this.floatRepresentation = number;
         this.isFloating = true;
@@ -33,12 +33,21 @@ public class NumNode implements OperandNode {
     public boolean validateTree() { return true; }
 
     @Override
-    public Types getDataType() { return isFloating ? Types.DOUBLE : Types.INTEGER; }
+    public Types getDataType() { 
+        if (isFloating)
+        {
+            return Types.DOUBLE;
+        }
+        else
+        {
+            return Types.INTEGER;
+        }
+    }
 
     @Override
     public String convertToJott() {
         if (isFloating)
-            return Float.toString(floatRepresentation);
+            return Double.toString(floatRepresentation);
         return Integer.toString(integerRepresentation);
     }
 
