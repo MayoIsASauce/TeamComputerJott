@@ -2,8 +2,12 @@ package computer.parsernodes;
 
 import java.util.ArrayList;
 
+import computer.FunctionInfo;
+import computer.SymbolTable;
 import computer.exceptions.ParseException;
+import computer.exceptions.ReturnException;
 import computer.exceptions.SemanticException;
+import computer.exceptions.RuntimeException;
 import provided.JottTree;
 import provided.Token;
 
@@ -85,8 +89,10 @@ public class ProgramNode implements JottTree
     }
 
     @Override
-    public void execute() throws RuntimeException {
-        for (FuncDefNode fd : fDefNodes)
-            fd.execute();
+    public void execute() throws RuntimeException, ReturnException {
+        SymbolTable.instance().enterScope("main");
+
+        FunctionInfo currFunctionInfo = SymbolTable.instance().currentScopeInfo();
+        currFunctionInfo.linkToFuncBody().execute();
     }
 }
