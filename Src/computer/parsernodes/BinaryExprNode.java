@@ -52,7 +52,7 @@ public class BinaryExprNode implements ExprNode {
 
         // only if everything is valid, try to get and compare data types
         if (lhs.getDataType() != rhs.getDataType()) {
-            Token token = relOp.getToken();
+            Token token = relOp != null ? relOp.getToken() : mathOp.getToken();
             throw new SemanticException("Mismatched data types on either side of operator " + token.getToken(), token);
         }
 
