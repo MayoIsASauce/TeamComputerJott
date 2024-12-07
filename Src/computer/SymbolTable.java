@@ -81,7 +81,6 @@ public class SymbolTable {
     public boolean isVariableInitialized(String variableName)
     {
         assert variableInfoByNameByFuncName.get(currentScope()).containsKey(variableName);
-        System.out.println("checking if " + variableName + " is initialized");
         return variableInfoByNameByFuncName.get(currentScope()).get(variableName).isInitialized();
     }
 
