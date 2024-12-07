@@ -33,7 +33,16 @@ public class NumNode implements OperandNode {
     public boolean validateTree() { return true; }
 
     @Override
-    public Types getDataType() { return isFloating ? Types.DOUBLE : Types.INTEGER; }
+    public Types getDataType() { 
+        if (isFloating)
+        {
+            return Types.DOUBLE;
+        }
+        else
+        {
+            return Types.INTEGER;
+        }
+    }
 
     @Override
     public String convertToJott() {
