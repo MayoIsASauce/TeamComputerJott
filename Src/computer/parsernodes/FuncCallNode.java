@@ -193,11 +193,18 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
             
         }
 
-        SymbolTable.instance().enterScope(funcName.id());
-        
         // Get params
         List<ExprNode> parameters = this.params.parameters();
+        List<Object> evaluatedParams = new ArrayList<>();
 
+        // evaluating before entering scope, in case expressions use variables from current scope
+        for (ExprNode expr : parameters)
+        {
+             evaluatedParams.add(expr.executeAndReturnData());
+        }
+
+        SymbolTable.instance().enterScope(funcName.id());
+        
         // Get function info
         FunctionInfo currFunctionInfo = SymbolTable.instance().currentScopeInfo();
         ArrayList<String> paramNames = currFunctionInfo.parameterNames();
@@ -207,16 +214,16 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
         // Make sure that types match
         for (int ii = 0; ii < paramTypes.size(); ii++)
         {
-            ExprNode param = parameters.get(ii);
-            if (paramTypes.get(ii) != param.getDataType())
+            Object param = evaluatedParams.get(ii);
+            ExprNode paramNode = parameters.get(ii);
+            if (paramTypes.get(ii) != paramNode.getDataType())
             {
                 throw new RuntimeException("Argument type does not match expected type",
-                             param.getToken());
+                             paramNode.getToken());
             }
 
             // Add to symbol table
-            SymbolTable.instance().setVariableValue(paramNames.get(ii), param.executeAndReturnData());
-
+            SymbolTable.instance().setVariableValue(paramNames.get(ii), param);
         }
 
         // Execute the function body
