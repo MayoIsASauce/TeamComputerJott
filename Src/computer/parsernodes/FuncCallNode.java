@@ -204,26 +204,16 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
         }
 
         SymbolTable.instance().enterScope(funcName.id());
-        
+
         // Get function info
         FunctionInfo currFunctionInfo = SymbolTable.instance().currentScopeInfo();
         ArrayList<String> paramNames = currFunctionInfo.parameterNames();
-        ArrayList<Types> paramTypes = currFunctionInfo.parameterTypes();
         FuncBodyNode body = currFunctionInfo.linkToFuncBody();
 
         // Make sure that types match
-        for (int ii = 0; ii < paramTypes.size(); ii++)
+        for (int ii = 0; ii < paramNames.size(); ii++)
         {
-            Object param = evaluatedParams.get(ii);
-            ExprNode paramNode = parameters.get(ii);
-            if (paramTypes.get(ii) != paramNode.getDataType())
-            {
-                throw new RuntimeException("Argument type does not match expected type",
-                             paramNode.getToken());
-            }
-
-            // Add to symbol table
-            SymbolTable.instance().setVariableValue(paramNames.get(ii), param);
+            SymbolTable.instance().setVariableValue(paramNames.get(ii), evaluatedParams.get(ii));
         }
 
         // Execute the function body
