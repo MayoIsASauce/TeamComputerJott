@@ -76,7 +76,14 @@ public class BodyNode implements JottTree {
     @Override
     public void execute() throws RuntimeException, ReturnException {
         for (BodyStatementNode bs : bodyStatements) {
-            bs.execute();
+            if (bs instanceof ExprNode)
+            {
+                ((ExprNode)bs).executeAndReturnData();
+            }
+            else
+            {
+                bs.execute();
+            }
         }
 
         returnStatement.execute();

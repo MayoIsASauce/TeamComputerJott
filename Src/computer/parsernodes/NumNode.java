@@ -57,7 +57,7 @@ public class NumNode implements OperandNode {
         try {
             int intrep = Integer.parseInt(token.getToken());
             tokens.remove(0);
-            return new NumNode(intrep * multiplier, token);
+            return new NumNode((int)intrep * multiplier, token);
         } catch (NumberFormatException e) {
             try
             {
@@ -81,6 +81,13 @@ public class NumNode implements OperandNode {
 
     @Override
     public Object executeAndReturnData() throws RuntimeException {
-        return isFloating ? floatRepresentation : integerRepresentation;
+        if (isFloating)
+        {
+            return floatRepresentation;
+        }
+        else
+        {
+            return integerRepresentation;
+        }
     }
 }

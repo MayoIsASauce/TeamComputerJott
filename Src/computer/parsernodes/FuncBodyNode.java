@@ -68,6 +68,7 @@ public class FuncBodyNode implements JottTree {
     public void execute() throws RuntimeException, ReturnException {
         for (VarDeclarationNode vd : varDecList)
             vd.execute();
+
         body.execute();
     }
 }

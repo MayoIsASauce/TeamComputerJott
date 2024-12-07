@@ -89,10 +89,22 @@ public class ProgramNode implements JottTree
     }
 
     @Override
-    public void execute() throws RuntimeException, ReturnException {
-        SymbolTable.instance().enterScope("main");
+    public void execute() 
+    {
+        try
+        {
+            SymbolTable.instance().enterScope("main");
 
-        FunctionInfo currFunctionInfo = SymbolTable.instance().currentScopeInfo();
-        currFunctionInfo.linkToFuncBody().execute();
+            FunctionInfo currFunctionInfo = SymbolTable.instance().currentScopeInfo();
+            currFunctionInfo.linkToFuncBody().execute();
+        }
+        catch (RuntimeException e) {
+            System.err.println("Runtime Error");
+            System.err.println(e.getMessage());
+        }
+        catch (ReturnException e)
+        {
+
+        }
     }
 }

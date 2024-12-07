@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import provided.*;
 import computer.exceptions.SemanticException;
+import computer.parsernodes.ProgramNode;
 public class Jott {
     public static String helpMessage() {
         return """
@@ -21,9 +22,9 @@ public class Jott {
         
         ArrayList<Token> tokens = JottTokenizer.tokenize(filename);
 
-        JottTree parse_tree = JottParser.parse(tokens);
+        ProgramNode parse_tree = (ProgramNode)JottParser.parse(tokens);
         if (parse_tree != null && parse_tree.validateTree()) {
-            // TODO: execute
+            parse_tree.execute();
         }
     }
 }
