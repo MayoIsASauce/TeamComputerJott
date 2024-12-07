@@ -111,6 +111,22 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
 
     @Override
     public Types getDataType() {
+        if (SymbolTable.instance().isReservedFunction(funcName.id()))
+        {
+            if (funcName.id().equals("print"))
+            {
+                return Types.VOID;
+            }
+            else if (funcName.id().equals("concat"))
+            {
+                return Types.STRING;
+            }
+            else
+            {
+                // length
+                return Types.INTEGER;
+            }
+        }
         return SymbolTable.instance().functionInfo(funcName.id()).returnType();
     }
 
@@ -183,20 +199,20 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
             if (funcName.id().equals("print"))
             {
                 System.out.println(this.params.parameters().get(0).executeAndReturnData());
-                return new Object();
+                return null;
             }
 
             else if (funcName.id().equals("concat"))
             {
                 String result = (String)this.params.parameters().get(0).executeAndReturnData() +
                                 (String)this.params.parameters().get(1).executeAndReturnData();
-                return (Object)result;
+                return result;
             }
 
             else
             {
                 String str = (String)this.params.parameters().get(0).executeAndReturnData();
-                return (Object)str.length();
+                return str.length();
             }
             
         }
