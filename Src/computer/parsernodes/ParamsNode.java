@@ -7,6 +7,8 @@ import provided.JottTree;
 import provided.Token;
 import provided.TokenType;
 import computer.exceptions.ParseException;
+import computer.exceptions.ReturnException;
+import computer.exceptions.RuntimeException;
 import computer.exceptions.SemanticException;
 
 public class ParamsNode implements JottTree {
@@ -81,7 +83,8 @@ public class ParamsNode implements JottTree {
     }
 
     @Override
-    public void execute(Object outparam) {
-        // TODO: Implement in Phase 4
+    public void execute() throws RuntimeException, ReturnException {
+        // TODO Auto-generated method stub
+        
     }
 }
