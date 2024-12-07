@@ -138,6 +138,12 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
 
         IDNode funcName = IDNode.parse(tokens);
 
+        //check if symbol table contains function name
+        if (!SymbolTable.instance().containsFunction(funcName.id()))
+        {
+            throw new ParseException("Function name not found in symbol table");
+        }
+
         // "["
         if (tokens.get(0).getTokenType() != TokenType.L_BRACKET)
         {
