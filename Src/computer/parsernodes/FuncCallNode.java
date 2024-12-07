@@ -1,16 +1,15 @@
 package computer.parsernodes;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import provided.Token;
-import provided.TokenType;
 import computer.FunctionInfo;
 import computer.SymbolTable;
 import computer.exceptions.ParseException;
-import computer.exceptions.SemanticException;
+import computer.exceptions.ReturnException;
 import computer.exceptions.RuntimeException;
-
+import computer.exceptions.SemanticException;
+import java.util.ArrayList;
+import java.util.List;
+import provided.Token;
+import provided.TokenType;
 public class FuncCallNode implements OperandNode, BodyStatementNode {
 
     IDNode funcName;
@@ -166,20 +165,64 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
         assert false;
     }
 
+
+    //TODO discuss generic classes
     @Override
     public Object executeAndReturnData() throws RuntimeException {
         // TODO get function node from symbol table, execute it, catch return
         // exception, return the payload inside the return exception
 
-        SymbolTable.instance().enterScope(funcName.id());
+        if (SymbolTable.instance().isReservedFunction(funcName.id()))
+        {
+            if (funcName.id().equals("print"))
+            {
+                System.out.println(this.params.parameters().get(0).executeAndReturnData());
+                return new Object();
+            }
+
+            else if (funcName.id().equals("concat"))
+            {
+                String result = (String)this.params.parameters().get(0).executeAndReturnData() +
+                                (String)this.params.parameters().get(1).executeAndReturnData();
+                return (Object)result;
+            }
+
+            else if (funcName.id().equals("length"))
+            {
+                String str = (String)this.params.parameters().get(0).executeAndReturnData();
+                return (Object)str.length();
+            }
+            
+        }
+        
+
+        List<ExprNode> parameters = this.params.parameters();
+        //evaluate each of the parameters
+
+        // List<Object> evaluatedParams = new ArrayList<>();
+
+        // for (ExprNode expr : parameters)
+        // {
+        //     evaluatedParams.add(expr.executeAndReturnData());
+        // }
+
+
+        // SymbolTable.instance().enterScope(funcName.id());
+
+        // for (int i = 0; i < parameters.size(); i++)
+        // {
+        //     SymbolTable.instance().setVariableValue(
+        //             SymbolTable.instance().currentScopeInfo().parameterNames().get(i),
+        //             evaluatedParams.get(i));
+        // }
 
         // Get params
-        List<ExprNode> parameters = params.parameters();
 
         // Get function info
         FunctionInfo currFunctionInfo = SymbolTable.instance().currentScopeInfo();
         ArrayList<String> paramNames = currFunctionInfo.parameterNames();
         ArrayList<Types> paramTypes = currFunctionInfo.parameterTypes();
+        FuncBodyNode body = currFunctionInfo.linkToFuncBody();
 
         // Make sure that types match
         for (int ii = 0; ii < paramTypes.size(); ii++)
@@ -192,7 +235,19 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
             }
 
             // Add to symbol table
-            SymbolTable.instance().setVariableValue(paramNames.get(ii), param);
+            SymbolTable.instance().setVariableValue(paramNames.get(ii), param.executeAndReturnData());
+
+        }
+
+        // Execute the function body
+        try
+        {
+            body.execute();
+        }
+        catch (ReturnException e)
+        {
+            SymbolTable.instance().exitScope();
+            return e.getValue();
         }
 
         SymbolTable.instance().exitScope();

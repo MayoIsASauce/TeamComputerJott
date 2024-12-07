@@ -3,7 +3,7 @@ package computer.parsernodes;
 import computer.exceptions.ParseException;
 import computer.exceptions.SemanticException;
 import computer.exceptions.RuntimeException;
-
+import computer.exceptions.ReturnException;
 import java.util.ArrayList;
 import provided.JottTree;
 import provided.Token;
@@ -64,7 +64,7 @@ public class ElseNode implements JottTree {
     }
 
     @Override
-    public void execute() throws RuntimeException {
+    public void execute() throws RuntimeException, ReturnException {
         body.execute();
     }
 }

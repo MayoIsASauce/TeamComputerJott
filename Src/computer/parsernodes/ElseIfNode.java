@@ -1,13 +1,12 @@
 package computer.parsernodes;
 
+import computer.exceptions.ParseException;
+import computer.exceptions.ReturnException;
+import computer.exceptions.RuntimeException;
+import computer.exceptions.SemanticException;
 import java.util.ArrayList;
 import provided.JottTree;
 import provided.Token;
-import computer.parsernodes.Types;
-import computer.parsernodes.ExprNode;
-import computer.exceptions.ParseException;
-import computer.exceptions.SemanticException;
-import computer.exceptions.RuntimeException;
 
 public class ElseIfNode implements JottTree {
 
@@ -95,7 +94,7 @@ public class ElseIfNode implements JottTree {
     }
 
     @Override
-    public void execute() throws RuntimeException {
+    public void execute() throws RuntimeException, ReturnException {
         body.execute();
     }
 }

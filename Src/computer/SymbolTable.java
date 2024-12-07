@@ -1,5 +1,6 @@
 package computer;
 
+import computer.parsernodes.FuncBodyNode;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -122,7 +123,8 @@ public class SymbolTable {
     }
 
     /// Only valid to call while building symbol table, before execution
-    public void finishBuildingCurrentScope() {
+    public void finishBuildingCurrentScope(FuncBodyNode linkBodyNode) {
+        functionInfosByName.get(this.currentScope).setFuncBody(linkBodyNode);
         assert !completed;
         assert currentScope != null;
         currentScope = null;

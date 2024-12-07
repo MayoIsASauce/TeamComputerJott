@@ -1,6 +1,7 @@
 package computer.parsernodes;
 
 import computer.exceptions.ParseException;
+import computer.exceptions.ReturnException;
 import computer.exceptions.SemanticException;
 import computer.exceptions.RuntimeException;
 import computer.parsernodes.Types;
@@ -73,10 +74,12 @@ public class BodyNode implements JottTree {
     }
 
     @Override
-    public void execute() throws RuntimeException {
+    public void execute() throws RuntimeException, ReturnException {
         for (BodyStatementNode bs : bodyStatements) {
             bs.execute();
         }
+
         returnStatement.execute();
+
     }
 }

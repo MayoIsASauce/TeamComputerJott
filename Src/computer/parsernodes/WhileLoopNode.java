@@ -1,13 +1,12 @@
 package computer.parsernodes;
 
+import computer.exceptions.ParseException;
+import computer.exceptions.ReturnException;
+import computer.exceptions.RuntimeException;
+import computer.exceptions.SemanticException;
 import java.util.ArrayList;
 import provided.JottTree;
 import provided.Token;
-import provided.TokenType;
-import computer.parsernodes.ExprNode;
-import computer.exceptions.ParseException;
-import computer.exceptions.SemanticException;
-import computer.exceptions.RuntimeException;
 
 public class WhileLoopNode implements BodyStatementNode {
 
@@ -86,7 +85,7 @@ public class WhileLoopNode implements BodyStatementNode {
     }
 
     @Override
-    public void execute() throws RuntimeException {
+    public void execute() throws RuntimeException, ReturnException {
         while ((Boolean)condition.executeAndReturnData() == true) {
             body.execute();
         }
