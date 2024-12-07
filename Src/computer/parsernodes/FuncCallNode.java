@@ -169,8 +169,6 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
     //TODO discuss generic classes
     @Override
     public Object executeAndReturnData() throws RuntimeException {
-        // TODO get function node from symbol table, execute it, catch return
-        // exception, return the payload inside the return exception
 
         if (SymbolTable.instance().isReservedFunction(funcName.id()))
         {
@@ -187,36 +185,18 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
                 return (Object)result;
             }
 
-            else if (funcName.id().equals("length"))
+            else
             {
                 String str = (String)this.params.parameters().get(0).executeAndReturnData();
                 return (Object)str.length();
             }
             
         }
+
+        SymbolTable.instance().enterScope(funcName.id());
         
-
-        List<ExprNode> parameters = this.params.parameters();
-        //evaluate each of the parameters
-
-        // List<Object> evaluatedParams = new ArrayList<>();
-
-        // for (ExprNode expr : parameters)
-        // {
-        //     evaluatedParams.add(expr.executeAndReturnData());
-        // }
-
-
-        // SymbolTable.instance().enterScope(funcName.id());
-
-        // for (int i = 0; i < parameters.size(); i++)
-        // {
-        //     SymbolTable.instance().setVariableValue(
-        //             SymbolTable.instance().currentScopeInfo().parameterNames().get(i),
-        //             evaluatedParams.get(i));
-        // }
-
         // Get params
+        List<ExprNode> parameters = this.params.parameters();
 
         // Get function info
         FunctionInfo currFunctionInfo = SymbolTable.instance().currentScopeInfo();
@@ -251,8 +231,7 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
         }
 
         SymbolTable.instance().exitScope();
-
-        // Stub
-        return new Object();
+        
+        return null;
     }
 }
