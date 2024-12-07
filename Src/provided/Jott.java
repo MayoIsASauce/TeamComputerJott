@@ -2,7 +2,6 @@ package provided;
 
 import java.util.ArrayList;
 
-import provided.*;
 import computer.exceptions.SemanticException;
 import computer.parsernodes.ProgramNode;
 public class Jott {
