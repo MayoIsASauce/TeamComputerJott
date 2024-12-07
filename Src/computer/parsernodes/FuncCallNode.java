@@ -141,7 +141,9 @@ public class FuncCallNode implements OperandNode, BodyStatementNode {
         //check if symbol table contains function name
         if (!SymbolTable.instance().containsFunction(funcName.id()))
         {
-            throw new ParseException("Function name not found in symbol table");
+            if(!SymbolTable.instance().isReservedFunction(funcName.id())){
+                throw new ParseException("Function name not found in symbol table");
+            }
         }
 
         // "["
