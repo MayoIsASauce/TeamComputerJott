@@ -34,12 +34,6 @@ public class VarDeclarationNode implements JottTree {
             throw new SemanticException("Identifier " + id.id() + 
                         " must start with lowercase letter.", id.getToken());
         }
-
-        if ( !Character.isLowerCase(id.id().charAt(0)) )
-        {
-            throw new SemanticException("Identifier " + id.id() + 
-                        " must start with lowercase letter.", id.getToken());
-        }
         
         return true;
     }
